@@ -25,6 +25,7 @@ public:
         }
     }
 
+
     bool isFigureUtilisee(Figure* figure) const {
         return std::find_if(figuresUtilisees.begin(), figuresUtilisees.end(),
             [figure](const Figure* usedFigure) {
