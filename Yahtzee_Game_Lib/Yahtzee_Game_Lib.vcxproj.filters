@@ -15,31 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="figure\Figure.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Figure.h">
+    <ClInclude Include="figure\figures\carre\Carre.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Brelan.h">
+    <ClInclude Include="figure\figures\full\Full.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Carre.h">
+    <ClInclude Include="figure\figures\petiteSuite\PetiteSuite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Full.h">
+    <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="PetiteSuite.h">
+    <ClInclude Include="figure\figures\yahtzee\Yahtzee.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="GrandeSuite.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Yahtzee.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Chance.h">
+    <ClInclude Include="figure\figures\chance\Chance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="FigureFactory.h">
@@ -51,30 +45,33 @@
     <ClInclude Include="Joueur.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="figure\figures\brelan\Brelan.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Figure.cpp">
+    <ClCompile Include="figure\Figure.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Brelan.cpp">
+    <ClCompile Include="figure\figures\brelan\Brelan.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Carre.cpp">
+    <ClCompile Include="figure\figures\carre\Carre.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Full.cpp">
+    <ClCompile Include="figure\figures\full\Full.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="PetiteSuite.cpp">
+    <ClCompile Include="figure\figures\petiteSuite\PetiteSuite.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="GrandeSuite.cpp">
+    <ClCompile Include="figure\figures\grandeSuite\GrandeSuite.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Yahtzee.cpp">
+    <ClCompile Include="figure\figures\yahtzee\Yahtzee.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Chance.cpp">
+    <ClCompile Include="figure\figures\chance\Chance.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="FigureFactory.cpp">

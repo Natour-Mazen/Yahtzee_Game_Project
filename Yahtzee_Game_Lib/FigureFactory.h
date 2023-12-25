@@ -1,12 +1,12 @@
 #pragma once
 #include "Figure.h"
-#include "Brelan.h"
-#include "Carre.h"
-#include "Full.h"
-#include "PetiteSuite.h"
-#include "GrandeSuite.h"
-#include "Yahtzee.h"
-#include "Chance.h"
+#include "brelan/Brelan.h"
+#include "carre/Carre.h"
+#include "full/Full.h"
+#include "petiteSuite/PetiteSuite.h"
+#include "grandeSuite/GrandeSuite.h"
+#include "yahtzee/Yahtzee.h"
+#include "chance/Chance.h"
 
 
 class FigureFactory {

@@ -2,8 +2,8 @@
 //
 
 #include <iostream>
-#include "../Yahtzee_Game_Lib/Joueur.h"
-#include "../Yahtzee_Game_Lib/Lancer.h"
+#include "Joueur.h"
+#include "Lancer.h"
 
 int main()
 {

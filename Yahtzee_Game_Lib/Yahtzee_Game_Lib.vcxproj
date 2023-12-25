@@ -113,12 +113,16 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>figure\figures;figure;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -131,6 +135,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>figure\figures;figure;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -139,33 +144,35 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Brelan.h" />
-    <ClInclude Include="Carre.h" />
-    <ClInclude Include="Chance.h" />
-    <ClInclude Include="Figure.h" />
+    <ClInclude Include="figure\figures\brelan\Brelan.h" />
+    <ClInclude Include="figure\figures\carre\Carre.h" />
+    <ClInclude Include="figure\figures\chance\Chance.h" />
+    <ClInclude Include="figure\Figure.h" />
     <ClInclude Include="FigureFactory.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Full.h" />
-    <ClInclude Include="GrandeSuite.h" />
+    <ClInclude Include="figure\figures\full\Full.h" />
+    <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h" />
     <ClInclude Include="Joueur.h" />
     <ClInclude Include="Lancer.h" />
-    <ClInclude Include="PetiteSuite.h" />
-    <ClInclude Include="Yahtzee.h" />
+    <ClInclude Include="figure\figures\petiteSuite\PetiteSuite.h" />
+    <ClInclude Include="figure\figures\yahtzee\Yahtzee.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Brelan.cpp" />
-    <ClCompile Include="Carre.cpp" />
-    <ClCompile Include="Chance.cpp" />
-    <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="figure\figures\brelan\Brelan.cpp" />
+    <ClCompile Include="figure\figures\carre\Carre.cpp" />
+    <ClCompile Include="figure\figures\chance\Chance.cpp" />
+    <ClCompile Include="figure\Figure.cpp" />
     <ClCompile Include="FigureFactory.cpp" />
-    <ClCompile Include="Full.cpp" />
-    <ClCompile Include="GrandeSuite.cpp" />
+    <ClCompile Include="figure\figures\full\Full.cpp" />
+    <ClCompile Include="figure\figures\grandeSuite\GrandeSuite.cpp" />
     <ClCompile Include="Joueur.cpp" />
     <ClCompile Include="Lancer.cpp" />
-    <ClCompile Include="PetiteSuite.cpp" />
-    <ClCompile Include="Yahtzee.cpp" />
+    <ClCompile Include="figure\figures\petiteSuite\PetiteSuite.cpp" />
+    <ClCompile Include="figure\figures\yahtzee\Yahtzee.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
