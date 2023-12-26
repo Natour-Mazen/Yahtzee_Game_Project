@@ -34,16 +34,9 @@ public:
         default: return nullptr;
         }
     }
+
     static Figure* createFull(int value1, int value2) {
-        switch (value1) {
-        case 1: return (value2 == 2) ? new Full<1, 2>() : nullptr;
-        case 2: return (value2 == 1) ? new Full<2, 1>() : nullptr;
-        case 3: return (value2 == 4) ? new Full<3, 4>() : nullptr;
-        case 4: return (value2 == 3) ? new Full<4, 3>() : nullptr;
-        case 5: return (value2 == 6) ? new Full<5, 6>() : nullptr;
-        case 6: return (value2 == 5) ? new Full<6, 5>() : nullptr;
-        default: return nullptr;
-        }
+        return new Full(value1, value2);
     }
 
     static Figure* createPetiteSuite() {
