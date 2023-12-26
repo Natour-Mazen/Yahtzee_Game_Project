@@ -3,7 +3,7 @@
 
 class PetiteSuite : public Figure {
 public:
-    virtual int calculateScore(const std::vector<int>& diceValues) const {
+    virtual int calculateScore(const std::vector<int>& diceValues) {
         std::vector<int> sortedValues(diceValues);
         std::sort(sortedValues.begin(), sortedValues.end());
 

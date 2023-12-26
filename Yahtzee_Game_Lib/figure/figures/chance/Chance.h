@@ -3,7 +3,7 @@
 
 class Chance : public Figure {
 public:
-    virtual int calculateScore(const std::vector<int>& diceValues) const {
+    virtual int calculateScore(const std::vector<int>& diceValues) {
         int sum = 0;
         for (int value : diceValues) {
             sum += value;

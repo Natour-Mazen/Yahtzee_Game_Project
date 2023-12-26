@@ -6,7 +6,7 @@
 class Figure
 {
 public:
-    virtual int calculateScore(const std::vector<int>& diceValues) const = 0;
+    virtual int calculateScore(const std::vector<int>& diceValues) = 0;
     virtual std::string getName() const = 0;
     virtual ~Figure() {}
     static const int ID = 0;

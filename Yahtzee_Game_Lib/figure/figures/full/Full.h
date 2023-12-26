@@ -3,17 +3,21 @@
 
 class Full : public Figure {
 public:
-    // We can't have default values.
-    Full() = delete; 
-
-    Full(int value1, int value2) : m_value1(value1), m_value2(value2){
-        // Already init.
-    }
-
-    virtual int calculateScore(const std::vector<int>& diceValues) const {
-        int count1 = std::count(diceValues.begin(), diceValues.end(), m_value1);
-        int count2 = std::count(diceValues.begin(), diceValues.end(), m_value2);
-        return (count1 == 3 && count2 == 2 || count1 == 2 && count2 == 3) ? 25 : 0;
+    virtual int calculateScore(const std::vector<int>& diceValues) {
+        for (unsigned short i = 1; i <= 6; ++i)
+        {
+            int count1 = std::count(diceValues.begin(), diceValues.end(), i);
+            for (unsigned short y = i + 1; y <= 6; ++y)
+            {
+                int count2 = std::count(diceValues.begin(), diceValues.end(), y);
+                if (count1 == 2 && count2 == 3 || count1 == 3 && count2 == 2) {
+                    m_value1 = i;
+                    m_value2 = y;
+                    return 25;
+                }
+            }
+        }
+        return 0;
     }
 
     virtual std::string getName() const {
@@ -22,6 +26,6 @@ public:
     static const int ID = 3;
 
 private:
-    int m_value1;
-    int m_value2;
+    int m_value1 = 0;
+    int m_value2 = 0;
 };
