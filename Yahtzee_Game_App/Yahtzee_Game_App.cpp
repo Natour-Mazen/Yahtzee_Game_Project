@@ -13,13 +13,13 @@ int main()
 
     for (int round = 0; round < 13; ++round) { // Correction : Il y a 13 tours dans le Yahtzee
         Lancer lancer;
+
         lancer.rollDice();
 
-        std::cout << "Valeurs des des : ";
-        for (int value : lancer.getDiceValues()) {
-            std::cout << value << " ";
-        }
-        std::cout << std::endl;
+        lancer.printDices();
+
+        lancer.reRollDice();
+
         joueur.resetFigures();
 
         joueur.createFigures(lancer.getDiceValues());
