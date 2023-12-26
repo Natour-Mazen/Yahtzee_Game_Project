@@ -36,9 +36,6 @@
     <ClInclude Include="figure\figures\chance\Chance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="FigureFactory.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Lancer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="figure\figures\chance\Chance.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="FigureFactory.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Lancer.cpp">

@@ -3,7 +3,13 @@
 #include <vector>
 #include <map>
 #include "Figure.h"
-#include "FigureFactory.h"
+#include "brelan/Brelan.h"
+#include "carre/Carre.h"
+#include "full/Full.h"
+#include "chance/Chance.h"
+#include "grandeSuite/GrandeSuite.h"
+#include "petiteSuite/PetiteSuite.h"
+#include "yahtzee/Yahtzee.h"
 
 class Joueur {
 private:
@@ -36,71 +42,21 @@ public:
     void createFigures(const std::vector<int>& diceValues) {
         std::vector<Figure*> newFigures;
 
-        // Count the frequency of each dice value
-        std::map<int, int> valueCounts;
-        for (int value : diceValues) {
-            valueCounts[value]++;
-        }
-
-        // Create figures based on the frequency of values
-        for (const auto& pair : valueCounts) {
-            int value = pair.first;
-            int count = pair.second;
-
-
-            // Create a Brelan figure if the frequency is 3
-            if (count >= 3) {
-                Figure* newBrelan = FigureFactory::createBrelan(value);
-                if (newBrelan) {
-                    newFigures.push_back(newBrelan);
-                }
+        for (unsigned short i = 0; i < 7; ++i) {
+            Figure* newFigure;
+            switch (i) {
+            case 0: newFigure = new Brelan();
+            case 1: newFigure = new Carre();
+            case 2: newFigure = new Full();
+            case 3: newFigure = new PetiteSuite();
+            case 4: newFigure = new GrandeSuite();
+            case 5: newFigure = new Yahtzee();
+            case 6: newFigure = new Chance();
+            default: nullptr;
             }
-
-            // Create a Carre figure if the frequency is 4
-            if (count >= 4) {
-                Figure* newCarre = FigureFactory::createCarre(value);
-                if (newCarre) {
-                    newFigures.push_back(newCarre);
-                }
+            if (newFigure->calculateScore(diceValues) > 0 && !isFigureUtilisee(newFigure)) {
+                newFigures.push_back(newFigure);
             }
-
-            // Create a Full figure if there are two different values with frequencies 3 and 2
-            for (const auto& pair2 : valueCounts) {
-                int value2 = pair2.first;
-                int count2 = pair2.second;
-                if (value != value2 && count == 3 && count2 == 2) {
-                    Figure* newFull = FigureFactory::createFull(value, value2);
-                    if (!isFigureUtilisee(newFull)) {
-                        newFigures.push_back(FigureFactory::createFull(value, value2));
-                    }
-                }
-            }
-
-            // Create a Yahtzee figure if the frequency is 5
-            if (count == 5) {
-                Figure* newYahztee = FigureFactory::createYahtzee(value);
-                if (newYahztee) {
-                    newFigures.push_back(newYahztee);
-                }
-            }
-        }
-
-        // Create a PetiteSuite figure if the dice values form a small straight
-        Figure* newPetiteSuite = FigureFactory::createPetiteSuite();
-        if (newPetiteSuite->calculateScore(diceValues) > 0 && !isFigureUtilisee(newPetiteSuite)) {
-            newFigures.push_back(newPetiteSuite);
-        }
-
-        // Create a GrandeSuite figure if the dice values form a large straight
-        Figure* newGrandeSuite = FigureFactory::createGrandeSuite();
-        if (newGrandeSuite->calculateScore(diceValues) > 0 && !isFigureUtilisee(newGrandeSuite)) {
-            newFigures.push_back(newGrandeSuite);
-        }
-
-        // Create a Chance figure only if it's not already used
-        Figure* newChance = FigureFactory::createChance();
-        if (!isFigureUtilisee(newChance)) {
-            newFigures.push_back(newChance);
         }
 
         figures.insert(figures.end(), newFigures.begin(), newFigures.end());

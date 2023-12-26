@@ -153,7 +153,6 @@
     <ClInclude Include="figure\figures\carre\Carre.h" />
     <ClInclude Include="figure\figures\chance\Chance.h" />
     <ClInclude Include="figure\Figure.h" />
-    <ClInclude Include="FigureFactory.h" />
     <ClInclude Include="figure\figures\full\Full.h" />
     <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h" />
     <ClInclude Include="Joueur.h" />
@@ -166,7 +165,6 @@
     <ClCompile Include="figure\figures\carre\Carre.cpp" />
     <ClCompile Include="figure\figures\chance\Chance.cpp" />
     <ClCompile Include="figure\Figure.cpp" />
-    <ClCompile Include="FigureFactory.cpp" />
     <ClCompile Include="figure\figures\full\Full.cpp" />
     <ClCompile Include="figure\figures\grandeSuite\GrandeSuite.cpp" />
     <ClCompile Include="Joueur.cpp" />

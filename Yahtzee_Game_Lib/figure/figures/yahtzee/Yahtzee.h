@@ -3,16 +3,15 @@
 
 class Yahtzee : public Figure {
 public:
-    // We can't have a default value.
-    Yahtzee() = delete;
-
-    Yahtzee(int value) : m_value(value){
-        // Already init.
-    }
-
-    virtual int calculateScore(const std::vector<int>& diceValues) const {
-        int count = std::count(diceValues.begin(), diceValues.end(), m_value);
-        return (count == 5) ? 50 : 0;
+    virtual int calculateScore(const std::vector<int>& diceValues) {
+        for (unsigned short i = 1; i <= 6; ++i) {
+            int count = std::count(diceValues.begin(), diceValues.end(), i);
+            if (count >= 5) {
+                m_value = i;
+                return count * i;
+            }
+        }
+        return 0;
     }
 
     virtual std::string getName() const {
@@ -21,5 +20,5 @@ public:
     static const int ID = 6;
 
 private:
-    int m_value;
+    int m_value = 0;
 };
