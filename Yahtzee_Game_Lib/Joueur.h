@@ -43,7 +43,7 @@ public:
         std::vector<Figure*> newFigures;
 
         for (unsigned short i = 0; i < 7; ++i) {
-            Figure* newFigure;
+            Figure* newFigure = nullptr;
             switch (i) {
             case 0: newFigure = new Brelan();
             case 1: newFigure = new Carre();
@@ -54,7 +54,7 @@ public:
             case 6: newFigure = new Chance();
             default: nullptr;
             }
-            if (newFigure->calculateScore(diceValues) > 0 && !isFigureUtilisee(newFigure)) {
+            if (newFigure && newFigure->calculateScore(diceValues) > 0 && !isFigureUtilisee(newFigure)) {
                 newFigures.push_back(newFigure);
             }
         }
@@ -89,7 +89,7 @@ public:
             else {
                 int scoreForFigure = selectedFigure->calculateScore(diceValues);
 
-                if (dynamic_cast<Yahtzee<6>*>(selectedFigure) != nullptr) {
+                if (dynamic_cast<Yahtzee*>(selectedFigure) != nullptr) {
                     if (yamBonus) {
                         std::cout << "Vous avez déjà marqué un Yam's. Vous ne pouvez pas marquer de points pour un deuxième Yam's." << std::endl;
                     }
