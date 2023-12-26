@@ -68,10 +68,10 @@ public:
             for (const auto& pair2 : valueCounts) {
                 int value2 = pair2.first;
                 int count2 = pair2.second;
-                if (value != value2 && count == 3 && count2 == 2 && !isFigureUtilisee(FigureFactory::createFull(value, value2))) {
+                if (value != value2 && count == 3 && count2 == 2) {
                     Figure* newFull = FigureFactory::createFull(value, value2);
-                    if (newFull) {
-                        newFigures.push_back(newFull);
+                    if (!isFigureUtilisee(newFull)) {
+                        newFigures.push_back(FigureFactory::createFull(value, value2));
                     }
                 }
             }

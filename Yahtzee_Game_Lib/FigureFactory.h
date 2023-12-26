@@ -48,15 +48,7 @@ public:
     }
 
     static Figure* createYahtzee(int value) {
-        switch (value) {
-        case 1: return new Yahtzee<1>();
-        case 2: return new Yahtzee<2>();
-        case 3: return new Yahtzee<3>();
-        case 4: return new Yahtzee<4>();
-        case 5: return new Yahtzee<5>();
-        case 6: return new Yahtzee<6>();
-        default: return nullptr;
-        }
+        return new Yahtzee(value);
     }
 
     static Figure* createChance() {

@@ -6,8 +6,7 @@ public:
     // We can't have default values.
     Full() = delete; 
 
-    Full(int value1, int value2) : m_value1(value1), m_value2(value2)
-    {
+    Full(int value1, int value2) : m_value1(value1), m_value2(value2){
         // Already init.
     }
 
