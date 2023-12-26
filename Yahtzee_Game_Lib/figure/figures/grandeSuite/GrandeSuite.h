@@ -7,8 +7,8 @@ public:
         std::vector<int> sortedValues(diceValues);
         std::sort(sortedValues.begin(), sortedValues.end());
 
-        for (int i = 0; i < 4; ++i) {
-            if (sortedValues[i] != sortedValues[i + 1] - 1) {
+        for (unsigned short i = 0; i < sortedValues.size() - 1; ++i) {
+            if (sortedValues[i + 1] - sortedValues[i] != 1) {
                 return 0;
             }
         }

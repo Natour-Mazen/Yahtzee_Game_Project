@@ -4,16 +4,22 @@
 class PetiteSuite : public Figure {
 public:
     virtual int calculateScore(const std::vector<int>& diceValues) const {
-        std::vector<int> uniqueValues(diceValues.begin(), diceValues.end());
-        std::sort(uniqueValues.begin(), uniqueValues.end());
+        std::vector<int> sortedValues(diceValues);
+        std::sort(sortedValues.begin(), sortedValues.end());
 
-        for (size_t i = 0; i < uniqueValues.size() - 1; ++i) {
-            if (uniqueValues[i + 1] - uniqueValues[i] != 1) {
-                return 0;
+        for (unsigned char y = 0; y < 2; ++y) {
+            bool valid = true;
+            for (unsigned short i = y; i < 4 + y; ++i) {
+                if (sortedValues[i] != sortedValues[i + 1] - 1) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                return 30;
             }
         }
-
-        return 30;
+        return 0;
     }
 
     virtual std::string getName() const {
