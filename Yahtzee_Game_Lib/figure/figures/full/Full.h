@@ -3,6 +3,8 @@
 
 class Full : public Figure {
 public:
+    Full() : Figure(3) {}
+
     virtual int calculateScore(const std::vector<int>& diceValues) {
         for (unsigned short i = 1; i <= 6; ++i)
         {
@@ -23,7 +25,6 @@ public:
     virtual std::string getName() const {
         return "Full de " + std::to_string(m_value1) + " et " + std::to_string(m_value2);
     }
-    static const int ID = 3;
 
 private:
     int m_value1 = 0;

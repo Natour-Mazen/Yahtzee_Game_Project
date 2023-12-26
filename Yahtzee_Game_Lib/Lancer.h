@@ -12,9 +12,15 @@ public:
 
     void rollDice() {
         diceValues.clear();
+        /*
         for (int i = 0; i < 5; ++i) {
             diceValues.push_back(rand() % 6 + 1);
-        }
+        }*/
+        diceValues.push_back(5);
+        diceValues.push_back(5);
+        diceValues.push_back(5);
+        diceValues.push_back(5);
+        diceValues.push_back(5);
     }
 };
 

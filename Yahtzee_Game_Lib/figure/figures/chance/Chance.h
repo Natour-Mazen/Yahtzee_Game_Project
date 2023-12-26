@@ -3,6 +3,8 @@
 
 class Chance : public Figure {
 public:
+    Chance() : Figure(7) {}
+
     virtual int calculateScore(const std::vector<int>& diceValues) {
         int sum = 0;
         for (int value : diceValues) {
@@ -14,6 +16,5 @@ public:
     virtual std::string getName() const {
         return "Chance";
     }
-    static const int ID = 7;
 };
 

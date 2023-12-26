@@ -1,4 +1,5 @@
 #include "Joueur.h"
+#include <algorithm>
 
 Joueur::Joueur() : totalScore(0), yamBonus(false){
 	// Already init.
@@ -15,10 +16,12 @@ void Joueur::resetFigures() {
 }
 
 bool Joueur::isFigureUsed(Figure* figure) const {
-    return std::find_if(figuresUsed.begin(), figuresUsed.end(),
-        [figure](const Figure* usedFigure) {
-            return figure->ID == usedFigure->ID;
-        }) != figuresUsed.end();
+
+    auto is_figure = [figure](const Figure* usedFigure){
+            return figure->getID() == usedFigure->getID();
+        };
+
+    return std::find_if(figuresUsed.begin(), figuresUsed.end(), is_figure) != std::end(figuresUsed);
 }
 
 void Joueur::createFigures(const std::vector<int>& diceValues) {
@@ -27,16 +30,22 @@ void Joueur::createFigures(const std::vector<int>& diceValues) {
     for (unsigned short i = 0; i < 7; ++i) {
         Figure* newFigure = nullptr;
         switch (i) {
-        case 0: newFigure = new Brelan();
-        case 1: newFigure = new Carre();
-        case 2: newFigure = new Full();
-        case 3: newFigure = new PetiteSuite();
-        case 4: newFigure = new GrandeSuite();
-        case 5: newFigure = new Yahtzee();
-        case 6: newFigure = new Chance();
-        default: nullptr;
+        case 0: newFigure = new Brelan(); 
+            break;
+        case 1: newFigure = new Carre(); 
+            break;
+        case 2: newFigure = new Full(); 
+            break;
+        case 3: newFigure = new PetiteSuite(); 
+            break;
+        case 4: newFigure = new GrandeSuite(); 
+            break;
+        case 5: newFigure = new Yahtzee(); 
+            break;
+        case 6: newFigure = new Chance(); 
+            break;
         }
-        if (newFigure && newFigure->calculateScore(diceValues) > 0 && !isFigureUsed(newFigure)) {
+        if (newFigure->calculateScore(diceValues) > 0 && !isFigureUsed(newFigure)) {
             newFigures.push_back(newFigure);
         }
     }

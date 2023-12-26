@@ -3,6 +3,8 @@
 
 class GrandeSuite : public Figure {
 public:
+    GrandeSuite() : Figure(5) {}
+
     virtual int calculateScore(const std::vector<int>& diceValues) {
         std::vector<int> sortedValues(diceValues);
         std::sort(sortedValues.begin(), sortedValues.end());
@@ -19,7 +21,6 @@ public:
     virtual std::string getName() const {
         return "Grande Suite";
     }
-    static const int ID = 5;
 };
 
 
