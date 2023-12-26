@@ -16,6 +16,7 @@ private:
     std::vector<Figure*> figures;
     bool yamBonus;
     std::vector<Figure*> figuresUsed;
+    
 public:
     int totalScore;
 

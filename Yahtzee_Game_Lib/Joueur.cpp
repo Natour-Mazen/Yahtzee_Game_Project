@@ -105,7 +105,6 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
 }
 
 void Joueur::calculateTotalScore(const std::vector<int>& diceValues) {
-    totalScore = 0;
     for (Figure* figure : figures) {
         totalScore += figure->calculateScore(diceValues);
     }
