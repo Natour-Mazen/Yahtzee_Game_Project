@@ -10,6 +10,7 @@
 #include "grandeSuite/GrandeSuite.h"
 #include "petiteSuite/PetiteSuite.h"
 #include "yahtzee/Yahtzee.h"
+#include "numbers/Number.h"
 
 class Joueur {
 private:
@@ -17,6 +18,7 @@ private:
     bool firstYam = false;
     bool yamBonus = false;
     std::vector<Figure*> figuresUsed;
+    int minorScore;
     
 public:
     int totalScore;
@@ -36,4 +38,6 @@ public:
     void chooseFigure(const std::vector<int>& diceValues);
 
     void calculateTotalScore(const std::vector<int>& diceValues);
+
+    Figure* createNumberFigure(int id);
 };

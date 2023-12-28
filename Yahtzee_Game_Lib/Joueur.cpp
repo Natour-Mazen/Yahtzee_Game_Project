@@ -1,7 +1,7 @@
 #include "Joueur.h"
 #include <algorithm>
 
-Joueur::Joueur() : totalScore(0), yamBonus(false){
+Joueur::Joueur() : totalScore(0), yamBonus(false), minorScore(0){
 	// Already init.
 }
 
@@ -24,36 +24,57 @@ bool Joueur::isFigureUsed(Figure* figure) const {
     return std::find_if(figuresUsed.begin(), figuresUsed.end(), is_figure) != std::end(figuresUsed);
 }
 
+Figure* Joueur::createNumberFigure(int id) {
+    switch (id) {
+    case 1: return new Number<1>();
+    case 2: return new Number<2>();
+    case 3: return new Number<3>();
+    case 4: return new Number<4>();
+    case 5: return new Number<5>();
+    case 6: return new Number<6>();
+    default: return nullptr;
+    }
+}
+
 void Joueur::createFigures(const std::vector<int>& diceValues) {
     std::vector<Figure*> newFigures;
 
+    // Créer les figures pour les nombres
+    for (unsigned short i = 1; i <= 6; ++i) {
+        Figure* newFigure = createNumberFigure(i);
+        if (newFigure && !isFigureUsed(newFigure)) {
+            newFigures.push_back(newFigure);
+        }
+    }
+
+    // Créer les autres figures
     for (unsigned short i = 0; i < 7; ++i) {
         Figure* newFigure = nullptr;
         switch (i) {
-        case 0: newFigure = new Brelan<1>(); 
+        case 0: newFigure = new Brelan<7>();
             break;
-        case 1: newFigure = new Carre<2>();
+        case 1: newFigure = new Carre<8>();
             break;
-        case 2: newFigure = new Full<3>();
+        case 2: newFigure = new Full<9>();
             break;
-        case 3: newFigure = new PetiteSuite<4>();
+        case 3: newFigure = new PetiteSuite<10>();
             break;
-        case 4: newFigure = new GrandeSuite<5>();
+        case 4: newFigure = new GrandeSuite<11>();
             break;
-        // If a Yathzee have already happend, then we give a other one for the bonus. 
-        case 5: !firstYam ? newFigure = new Yahtzee<6>() : newFigure = new Yahtzee<7>();
+            // If a Yathzee have already happend, then we give a other one for the bonus. 
+        case 5: !firstYam ? newFigure = new Yahtzee<12>() : newFigure = new Yahtzee<13>();
             break;
-        case 6: newFigure = new Chance<8>();
+        case 6: newFigure = new Chance<14>();
             break;
         }
         if (!isFigureUsed(newFigure)) {
-            if (newFigure->getId() == 7) {
+            if (newFigure->getId() == 13) {
                 if (!yamBonus)
                 {
                     std::cout << "Yahtzee encore ! +100 points." << std::endl;
                     totalScore += 100;
                     yamBonus = true;
-                    
+
                 }
                 delete newFigure;
             }
@@ -105,6 +126,13 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
                 }
 
                 totalScore += scoreForFigure;
+
+                if (figureId >= 1 && figureId <= 6) {
+                    minorScore += scoreForFigure;
+                    if (minorScore >= 63) {
+                        totalScore += 35;
+                    }
+                }
 
                 std::cout << "Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points." << std::endl;
 

@@ -45,6 +45,9 @@
     <ClInclude Include="figure\figures\brelan\Brelan.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="figure\figures\numbers\Number.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="figure\Figure.cpp">
@@ -75,6 +78,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Joueur.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="figure\figures\numbers\Number.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
