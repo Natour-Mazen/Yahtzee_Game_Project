@@ -16,15 +16,15 @@ public:
 
     void rollDice() {
         diceValues.clear();
-        /*
+        
         for (int i = 0; i < 5; ++i) {
             diceValues.push_back(rand() % 6 + 1);
-        }*/
+        }/*
         diceValues.push_back(5);
         diceValues.push_back(5);
         diceValues.push_back(5);
         diceValues.push_back(5);
-        diceValues.push_back(5);
+        diceValues.push_back(5);*/
     }
     void printDices() {
         std::cout << "Valeurs des Des : ";
@@ -44,7 +44,7 @@ public:
         // Choix des dés à relancer (3 lancers au total)
         for (int lancer = 1; lancer <= 2; ++lancer) {
             int choix;
-            std::cout << "Relancer des dés? (1 pour oui, 0 pour non): ";
+            std::cout << "Relancer des Des? (1 pour oui, 0 pour non): ";
 
             while (!(std::cin >> choix) || (choix != 0 && choix != 1) || std::cin.peek() != '\n') {
                 std::cin.clear();  // Réinitialise le statut d'erreur de cin
@@ -65,7 +65,7 @@ public:
                 while (iss >> indice) {
                     // Assurez-vous que l'indice est valide
                     if (indice >= 1 && indice <= 5) {
-                        diceValues[indice - 1] = rand() % 6;
+                        diceValues[indice - 1] = rand() % 6 + 1;
                     }
                     else {
                         std::cerr << "Erreur: Indice invalide pour : " << indice << "." << std::endl;
