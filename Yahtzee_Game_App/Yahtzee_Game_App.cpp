@@ -26,7 +26,7 @@ int main()
 
         joueur.chooseFigure(lancer.getDiceValues());
 
-        joueur.calculateTotalScore(lancer.getDiceValues());
+        //joueur.calculateTotalScore(lancer.getDiceValues());
 
         std::cout << "Score total du joueur : " << joueur.totalScore << std::endl;
     }
