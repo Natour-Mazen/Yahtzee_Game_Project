@@ -1,8 +1,8 @@
 #include "Joueur.h"
 #include <algorithm>
 
-Joueur::Joueur() : totalScore(0), yamBonus(false), minorScore(0){
-	// Already init.
+Joueur::Joueur() : totalScore(0), yamBonus(false), minorScore(0), firstYam(false) {
+    // Already init.
 }
 
 Joueur::~Joueur() {
@@ -16,9 +16,8 @@ void Joueur::resetFigures() {
 }
 
 bool Joueur::isFigureUsed(Figure* figure) const {
-
-    auto is_figure = [figure](const Figure* usedFigure){
-            return figure->getId() == usedFigure->getId();
+    auto is_figure = [figure](const Figure* usedFigure) {
+        return figure->getId() == usedFigure->getId();
         };
 
     return std::find_if(figuresUsed.begin(), figuresUsed.end(), is_figure) != std::end(figuresUsed);
@@ -36,55 +35,64 @@ Figure* Joueur::createNumberFigure(int id) {
     }
 }
 
-void Joueur::createFigures(const std::vector<int>& diceValues) {
-    std::vector<Figure*> newFigures;
-
-    // Créer les figures pour les nombres
+void Joueur::createNumberFigures() {
     for (unsigned short i = 1; i <= 6; ++i) {
         Figure* newFigure = createNumberFigure(i);
         if (newFigure && !isFigureUsed(newFigure)) {
-            newFigures.push_back(newFigure);
+            figures.push_back(newFigure);
         }
     }
+}
 
-    // Créer les autres figures
+void Joueur::createOtherFigures() {
     for (unsigned short i = 0; i < 7; ++i) {
         Figure* newFigure = nullptr;
         switch (i) {
-        case 0: newFigure = new Brelan<7>();
+        case 0: 
+            newFigure = new Brelan<7>(); 
             break;
-        case 1: newFigure = new Carre<8>();
+        case 1: 
+            newFigure = new Carre<8>(); 
             break;
-        case 2: newFigure = new Full<9>();
+        case 2: 
+            newFigure = new Full<9>(); 
             break;
-        case 3: newFigure = new PetiteSuite<10>();
+        case 3: 
+            newFigure = new PetiteSuite<10>(); 
             break;
-        case 4: newFigure = new GrandeSuite<11>();
+        case 4: 
+            newFigure = new GrandeSuite<11>(); 
             break;
-            // If a Yathzee have already happend, then we give a other one for the bonus. 
-        case 5: !firstYam ? newFigure = new Yahtzee<12>() : newFigure = new Yahtzee<13>();
-            break;
-        case 6: newFigure = new Chance<14>();
+        case 5: 
+            !firstYam ? newFigure = new Yahtzee<12>() : newFigure = new Yahtzee<13>();
+                break;
+        case 6: 
+            newFigure = new Chance<14>(); 
             break;
         }
-        if (!isFigureUsed(newFigure)) {
-            if (newFigure->getId() == 13) {
-                if (!yamBonus)
-                {
-                    std::cout << "Yahtzee encore ! +100 points." << std::endl;
-                    totalScore += 100;
-                    yamBonus = true;
-
-                }
-                delete newFigure;
-            }
-            else {
-                newFigures.push_back(newFigure);
-            }
+        if (newFigure && !isFigureUsed(newFigure)) {
+            figures.push_back(newFigure);
         }
     }
+}
 
-    figures.insert(figures.end(), newFigures.begin(), newFigures.end());
+void Joueur::createFigures(const std::vector<int>& diceValues) {
+    createNumberFigures();
+    createOtherFigures();
+}
+
+void Joueur::handleYahtzeeBonus(Figure* newFigure) {
+    if (newFigure->getId() == 13) {
+        if (!yamBonus) {
+            std::cout << "Yahtzee encore ! +100 points." << std::endl;
+            totalScore += 100;
+            yamBonus = true;
+        }
+        delete newFigure;
+    }
+    else {
+        figures.push_back(newFigure);
+    }
 }
 
 void Joueur::displayFigureScores(const std::vector<int>& diceValues) const {
@@ -93,6 +101,28 @@ void Joueur::displayFigureScores(const std::vector<int>& diceValues) const {
         std::cout << i + 1 << ". " << figures[i]->getName() << ": " << figures[i]->calculateScore(diceValues) << " points" << std::endl;
     }
     std::cout << std::endl;
+}
+
+void Joueur::updateScores(int scoreForFigure, Figure* selectedFigure, const std::vector<int>& diceValues) {
+    const short figureId = selectedFigure->getId();
+
+    if (figureId == 6 && scoreForFigure > 0) {
+        firstYam = true;
+    }
+
+    totalScore += scoreForFigure;
+
+    if (figureId >= 1 && figureId <= 6) {
+        minorScore += scoreForFigure;
+        if (minorScore >= 63) {
+            totalScore += 35;
+        }
+    }
+
+    std::cout << "Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points." << std::endl;
+
+    // Remove the chosen figure from the available figures
+    figuresUsed.push_back(selectedFigure);
 }
 
 void Joueur::chooseFigure(const std::vector<int>& diceValues) {
@@ -115,29 +145,9 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
                 std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
             }
             else {
-
                 int scoreForFigure = selectedFigure->calculateScore(diceValues);
-
-                const short figureId = selectedFigure->getId();
-
-                if (figureId == 6 && scoreForFigure > 0) {
-                    
-                    firstYam = true;
-                }
-
-                totalScore += scoreForFigure;
-
-                if (figureId >= 1 && figureId <= 6) {
-                    minorScore += scoreForFigure;
-                    if (minorScore >= 63) {
-                        totalScore += 35;
-                    }
-                }
-
-                std::cout << "Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points." << std::endl;
-
-                // Remove the chosen figure from the available figures
-                figuresUsed.push_back(selectedFigure);
+                handleYahtzeeBonus(selectedFigure);
+                updateScores(scoreForFigure, selectedFigure, diceValues);
 
                 correctAnswer = true;
             }
@@ -147,4 +157,3 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
         }
     } while (!correctAnswer);
 }
-

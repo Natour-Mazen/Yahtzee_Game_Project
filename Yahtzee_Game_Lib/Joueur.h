@@ -19,6 +19,13 @@ private:
     bool yamBonus = false;
     std::vector<Figure*> figuresUsed;
     int minorScore;
+
+    bool isFigureUsed(Figure* figure) const;
+    Figure* createNumberFigure(int id);
+    void createNumberFigures();
+    void createOtherFigures();
+    void handleYahtzeeBonus(Figure* newFigure);
+    void updateScores(int scoreForFigure, Figure* selectedFigure, const std::vector<int>& diceValues);
     
 public:
     int totalScore;
@@ -27,6 +34,12 @@ public:
 
     ~Joueur();
 
+    void resetFigures();
+    void createFigures(const std::vector<int>& diceValues);
+    void displayFigureScores(const std::vector<int>& diceValues) const;
+    void chooseFigure(const std::vector<int>& diceValues);
+
+    /*
     void resetFigures();
 
     bool isFigureUsed(Figure* figure) const;
@@ -37,5 +50,5 @@ public:
 
     void chooseFigure(const std::vector<int>& diceValues);
 
-    Figure* createNumberFigure(int id);
+    Figure* createNumberFigure(int id);*/
 };
