@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueur(Joueur()), lancer(Lancer()) {
+YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueur(), lancer() {
     srand(static_cast<unsigned int>(time(nullptr)));
 }
 
@@ -12,7 +12,7 @@ YahtzeeGame::~YahtzeeGame() {}
 void YahtzeeGame::choisirDifficulte() {
     int choix;
 
-    std::cout << "Choisissez le niveau de difficulté :" << std::endl;
+    std::cout << "Choisissez le niveau de difficulte :" << std::endl;
 
     for (int i = 0; i < HARDCORE + 1; ++i) {
         std::cout << i + 1 << ". " << getDifficultyName(static_cast<DifficultyLevel>(i)) << std::endl;
@@ -24,6 +24,8 @@ void YahtzeeGame::choisirDifficulte() {
     } while (choix < 1 || choix > HARDCORE + 1);
 
     variante = static_cast<DifficultyLevel>(choix - 1);
+
+    std::cout << "Vous avez choisi le mode " << getDifficultyName(variante) << std::endl;
 }
 
 const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
@@ -50,29 +52,31 @@ void YahtzeeGame::playGame()
 
     do {
         std::cout << "Menu principal :" << std::endl;
-        std::cout << "1. Nouvelle partie" << std::endl;
-        std::cout << "2. Charger partie" << std::endl;
-        std::cout << "3. Quitter" << std::endl;
+        std::cout << "\t1. Nouvelle partie" << std::endl;
+        std::cout << "\t2. Charger partie" << std::endl;
+        std::cout << "\t3. Quitter" << std::endl;
 
-        std::cout << "Votre choix (1-3) : ";
+        std::cout << ">> Votre choix (1-3) : ";
         std::cin >> choix;
 
         switch (choix) {
         case 1:
         {
+            std::cout << std::endl;
             choisirDifficulte();
+            std::cout << std::endl;
             playHelper();
             break;
         }
         case 2:
             //reprendrePartie();
-            playHelper();
+            //playHelper();
             break;
         case 3:
             std::cout << "Au revoir!" << std::endl;
             break;
         default:
-            std::cout << "Choix invalide. Veuillez choisir à nouveau." << std::endl;
+            std::cout << "Choix invalide. Veuillez choisir a nouveau." << std::endl;
             break;
         }
     } while (choix != 3);

@@ -71,7 +71,7 @@ void Joueur::createOtherFigures() {
             break;
         }
         if (newFigure && !isFigureUsed(newFigure)) {
-            figures.push_back(newFigure);
+            handleYahtzeeBonus(newFigure);
         }
     }
 }
@@ -151,7 +151,7 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             }
             else {
                 int scoreForFigure = selectedFigure->calculateScore(diceValues);
-                handleYahtzeeBonus(selectedFigure);
+              
                 updateScores(scoreForFigure, selectedFigure, diceValues);
 
                 correctAnswer = true;

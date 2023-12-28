@@ -7,7 +7,6 @@
 int main() {
     YahtzeeGame jeu;
     jeu.playGame();
-
     return 0;
 }
 
