@@ -42,7 +42,7 @@ public:
         }
 
         // Choix des dés à relancer (3 lancers au total)
-        for (int lancer = 1; lancer <= 3; ++lancer) {
+        for (int lancer = 1; lancer <= 2; ++lancer) {
             int choix;
             std::cout << "Relancer des dés? (1 pour oui, 0 pour non): ";
 
