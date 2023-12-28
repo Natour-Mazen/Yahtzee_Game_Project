@@ -42,7 +42,7 @@ public:
         }
 
         // Choix des dés à relancer (3 lancers au total)
-        for (int lancer = 1; lancer <= 2; ++lancer) {
+        for (int lancer = 1; lancer <= 3; ++lancer) {
             int choix;
             std::cout << "Relancer des dés? (1 pour oui, 0 pour non): ";
 
@@ -56,7 +56,7 @@ public:
             if (choix) {
                 // Sélection des dés à relancer
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Vidage du tampon d'entrée
-                std::cout << "Indices des Des a relancer (separes par un espace): ";
+                std::cout << "Indices des Des a relancer (separes par un espace et de 1 a 5): ";
                 std::string ligne;
                 std::getline(std::cin, ligne);
 
@@ -68,7 +68,7 @@ public:
                         diceValues[indice - 1] = rand() % 6;
                     }
                     else {
-                        std::cerr << "Erreur: Indice invalide." << std::endl;
+                        std::cerr << "Erreur: Indice invalide pour : " << indice << "." << std::endl;
                     }
                 }
                 printDices();
