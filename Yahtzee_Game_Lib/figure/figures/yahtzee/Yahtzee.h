@@ -9,7 +9,7 @@ public:
             int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 5) {
                 m_value = i;
-                return count * i;
+                return 50;
             }
         }
         return 0;
