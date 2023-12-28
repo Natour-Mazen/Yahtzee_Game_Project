@@ -1,11 +1,10 @@
 #pragma once
 #include "Figure.h"
 
+template<short ID>
 class Chance : public Figure {
 public:
-    Chance() : Figure(7) {}
-
-    virtual int calculateScore(const std::vector<int>& diceValues) {
+    int calculateScore(const std::vector<int>& diceValues) {
         int sum = 0;
         for (int value : diceValues) {
             sum += value;
@@ -13,8 +12,15 @@ public:
         return sum;
     }
 
-    virtual std::string getName() const {
+    std::string getName() const {
         return "Chance";
     }
+
+    short getId() const {
+        return m_id;
+    }
+
+private:
+    static const int m_id = ID;
 };
 

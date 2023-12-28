@@ -1,13 +1,12 @@
 #pragma once
 #include "Figure.h"
 
+template<short ID>
 class Brelan : public Figure {
 public:
-    Brelan() : Figure(1) {}
-
-    virtual int calculateScore(const std::vector<int>& diceValues) {
+    int calculateScore(const std::vector<int>& diceValues) {
         for (unsigned short i = 1; i <= 6; ++i) {
-            int count = std::count(diceValues.begin(), diceValues.end(), i);
+            int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 3) {
                 m_value = i;
                 return count * i;
@@ -16,10 +15,15 @@ public:
         return 0;
     }
 
-    virtual std::string getName() const {
+    std::string getName() const {
         return "Brelan de " + std::to_string(m_value);
     }
 
+    short getId() const {
+        return m_id;
+    }
+
 private:
+    static const int m_id = ID;
     short m_value = 0;
 };

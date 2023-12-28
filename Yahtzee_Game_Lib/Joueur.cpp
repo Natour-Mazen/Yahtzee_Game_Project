@@ -18,7 +18,7 @@ void Joueur::resetFigures() {
 bool Joueur::isFigureUsed(Figure* figure) const {
 
     auto is_figure = [figure](const Figure* usedFigure){
-            return figure->getID() == usedFigure->getID();
+            return figure->getId() == usedFigure->getId();
         };
 
     return std::find_if(figuresUsed.begin(), figuresUsed.end(), is_figure) != std::end(figuresUsed);
@@ -30,19 +30,19 @@ void Joueur::createFigures(const std::vector<int>& diceValues) {
     for (unsigned short i = 0; i < 7; ++i) {
         Figure* newFigure = nullptr;
         switch (i) {
-        case 0: newFigure = new Brelan(); 
+        case 0: newFigure = new Brelan<1>(); 
             break;
-        case 1: newFigure = new Carre(); 
+        case 1: newFigure = new Carre<2>();
             break;
-        case 2: newFigure = new Full(); 
+        case 2: newFigure = new Full<3>();
             break;
-        case 3: newFigure = new PetiteSuite(); 
+        case 3: newFigure = new PetiteSuite<4>();
             break;
-        case 4: newFigure = new GrandeSuite(); 
+        case 4: newFigure = new GrandeSuite<5>();
             break;
-        case 5: newFigure = new Yahtzee(); 
+        case 5: newFigure = new Yahtzee<6>();
             break;
-        case 6: newFigure = new Chance(); 
+        case 6: newFigure = new Chance<7>();
             break;
         }
         if (newFigure->calculateScore(diceValues) > 0 && !isFigureUsed(newFigure)) {
@@ -80,7 +80,7 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
         else {
             int scoreForFigure = selectedFigure->calculateScore(diceValues);
 
-            if (dynamic_cast<Yahtzee*>(selectedFigure) != nullptr) {
+            if (dynamic_cast<Yahtzee<6>*>(selectedFigure) != nullptr) {
                 if (yamBonus) {
                     std::cout << "Vous avez déjà marqué un Yam's. Vous ne pouvez pas marquer de points pour un deuxième Yam's." << std::endl;
                 }
