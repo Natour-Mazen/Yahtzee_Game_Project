@@ -8,7 +8,6 @@ public:
         for (unsigned int i = 1; i <= 6; ++i) {
             int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 5) {
-                m_value = i;
                 return 50;
             }
         }
@@ -16,7 +15,7 @@ public:
     }
 
     std::string getName() const {
-        return "Yahtzee de " + std::to_string(m_value);
+        return "Yahtzee";
     }
 
     short getId() const {
@@ -25,5 +24,4 @@ public:
 
 private:
     static const int m_id = ID;
-    int m_value = 0;
 };
