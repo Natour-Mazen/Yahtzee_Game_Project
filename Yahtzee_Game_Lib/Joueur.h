@@ -37,7 +37,5 @@ public:
 
     void chooseFigure(const std::vector<int>& diceValues);
 
-    void calculateTotalScore(const std::vector<int>& diceValues);
-
     Figure* createNumberFigure(int id);
 };
