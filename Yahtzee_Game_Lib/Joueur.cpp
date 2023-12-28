@@ -48,8 +48,14 @@ void Joueur::createFigures(const std::vector<int>& diceValues) {
         }
         if (!isFigureUsed(newFigure)) {
             if (newFigure->getId() == 7) {
-                totalScore += 100;
-                yamBonus = true;
+                if (!yamBonus)
+                {
+                    std::cout << "Yahtzee encore ! +100 points." << std::endl;
+                    totalScore += 100;
+                    yamBonus = true;
+                    
+                }
+                delete newFigure;
             }
             else {
                 newFigures.push_back(newFigure);
@@ -95,7 +101,6 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
 
                 if (figureId == 6 && scoreForFigure > 0) {
                     
-                    std::cout << "YAM" << std::endl;
                     firstYam = true;
                 }
 
