@@ -110,12 +110,11 @@ void YahtzeeGame::jouerFacile() {
         joueur.createFigures();
         joueur.chooseFigure(lancer.getDiceValues());
 
-        std::cout << "Score total du joueur : " << joueur.getTotalScore() << std::endl;
+        std::cout << "Score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
     }
 }
 
-void YahtzeeGame::jouerNormal() {
-    jouerFacile(); // En mode normal, la partie supérieure doit être faite avant la partie inférieure
+void YahtzeeGame::jouerNormal() { // En mode normal, la partie supérieure doit être faite avant la partie inférieure
     for (int round = 0; round < 6; ++round) {
         lancer.rollDice();
         lancer.printDices();
@@ -127,7 +126,7 @@ void YahtzeeGame::jouerNormal() {
 
         std::cout << "Score total du joueur : " << joueur.getTotalScore() << std::endl;
     }
-    std::cout << "La partie mineure est fini, le score total du joueur : " << joueur.getTotalScore() << std::endl;
+    std::cout << "La partie mineure est fini, le score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
     for (int round = 0; round < 7; ++round) {
         lancer.rollDice();
         lancer.printDices();
@@ -137,7 +136,7 @@ void YahtzeeGame::jouerNormal() {
         joueur.createOtherFigures();
         joueur.chooseFigure(lancer.getDiceValues());
 
-        std::cout << "Score total du joueur : " << joueur.getTotalScore() << std::endl;
+        std::cout << "Score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
     }
 }
 
@@ -151,6 +150,8 @@ void YahtzeeGame::jouerHardcore() {
 
     // TODO : ADD implementation
 }
+
+
 /*
 void YahtzeeGame::sauvegarderPartie() {
     sauvegarde.sauvegarder(*this);
