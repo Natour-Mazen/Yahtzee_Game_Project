@@ -40,13 +40,20 @@ void Joueur::createFigures(const std::vector<int>& diceValues) {
             break;
         case 4: newFigure = new GrandeSuite<5>();
             break;
-        case 5: newFigure = new Yahtzee<6>();
+        // If a Yathzee have already happend, then we give a other one for the bonus. 
+        case 5: !firstYam ? newFigure = new Yahtzee<6>() : newFigure = new Yahtzee<7>();
             break;
-        case 6: newFigure = new Chance<7>();
+        case 6: newFigure = new Chance<8>();
             break;
         }
-        if (newFigure->calculateScore(diceValues) > 0 && !isFigureUsed(newFigure)) {
-            newFigures.push_back(newFigure);
+        if (!isFigureUsed(newFigure)) {
+            if (newFigure->getId() == 7) {
+                totalScore += 100;
+                yamBonus = true;
+            }
+            else {
+                newFigures.push_back(newFigure);
+            }
         }
     }
 
@@ -64,44 +71,48 @@ void Joueur::displayFigureScores(const std::vector<int>& diceValues) const {
 void Joueur::chooseFigure(const std::vector<int>& diceValues) {
     int choice;
 
-    std::cout << "Choisissez une figure parmi les options suivantes :" << std::endl;
+    std::cout << std::endl << "Choisissez une figure parmi les options suivantes :" << std::endl;
     displayFigureScores(diceValues);
 
-    std::cout << "Choix (1-" << figures.size() << ") : ";
-    std::cin >> choice;
+    bool correctAnswer = false;
 
-    if (choice >= 1 && choice <= static_cast<int>(figures.size())) {
-        Figure* selectedFigure = figures[choice - 1];
+    do {
+        std::cout << "Choix (1-" << figures.size() << ") : ";
+        std::cin >> choice;
 
-        // Vérifier si la figure a déjà été utilisée
-        if (std::find(figuresUsed.begin(), figuresUsed.end(), selectedFigure) != figuresUsed.end()) {
-            std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
+        if (choice >= 1 && choice <= static_cast<int>(figures.size())) {
+            Figure* selectedFigure = figures[choice - 1];
+
+            // Vérifier si la figure a déjà été utilisée
+            if (isFigureUsed(selectedFigure)) {
+                std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
+            }
+            else {
+
+                int scoreForFigure = selectedFigure->calculateScore(diceValues);
+
+                const short figureId = selectedFigure->getId();
+
+                if (figureId == 6 && scoreForFigure > 0) {
+                    
+                    std::cout << "YAM" << std::endl;
+                    firstYam = true;
+                }
+
+                totalScore += scoreForFigure;
+
+                std::cout << "Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points." << std::endl;
+
+                // Remove the chosen figure from the available figures
+                figuresUsed.push_back(selectedFigure);
+
+                correctAnswer = true;
+            }
         }
         else {
-            int scoreForFigure = selectedFigure->calculateScore(diceValues);
-
-            if (dynamic_cast<Yahtzee<6>*>(selectedFigure) != nullptr) {
-                if (yamBonus) {
-                    std::cout << "Vous avez déjà marqué un Yam's. Vous ne pouvez pas marquer de points pour un deuxième Yam's." << std::endl;
-                }
-                else {
-                    yamBonus = true;
-                    totalScore += 100;  // Bonus pour le deuxième Yam's
-                }
-            }
-
-            totalScore += scoreForFigure;
-
-            std::cout << "Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points." << std::endl;
-
-            // Remove the chosen figure from the available figures
-            figuresUsed.push_back(selectedFigure);
+            std::cout << "Choix invalide. Veuillez choisir une figure valide." << std::endl;
         }
-    }
-    else {
-        std::cout << "Choix invalide. Veuillez choisir une figure valide." << std::endl;
-    }
-
+    } while (!correctAnswer);
 }
 
 void Joueur::calculateTotalScore(const std::vector<int>& diceValues) {

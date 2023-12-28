@@ -14,7 +14,8 @@
 class Joueur {
 private:
     std::vector<Figure*> figures;
-    bool yamBonus;
+    bool firstYam = false;
+    bool yamBonus = false;
     std::vector<Figure*> figuresUsed;
     
 public:
