@@ -76,7 +76,7 @@ void Joueur::createOtherFigures() {
     }
 }
 
-void Joueur::createFigures(const std::vector<int>& diceValues) {
+void Joueur::createFigures() {
     createNumberFigures();
     createOtherFigures();
 }
@@ -95,7 +95,7 @@ void Joueur::handleYahtzeeBonus(Figure* newFigure) {
     }
 }
 
-void Joueur::displayFigureScores(const std::vector<int>& diceValues) const {
+void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
     std::cout << "Scores des figures possibles : " << std::endl;
     for (size_t i = 0; i < figures.size(); ++i) {
         std::cout << i + 1 << ". " << figures[i]->getName() << ": " << figures[i]->calculateScore(diceValues) << " points" << std::endl;
@@ -129,11 +129,16 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
     int choice;
 
     std::cout << std::endl << "Choisissez une figure parmi les options suivantes :" << std::endl;
-    displayFigureScores(diceValues);
+    displayFigureAndScores(diceValues);
 
     bool correctAnswer = false;
 
     do {
+        if (figures.empty()) {
+            std::cout << "Il n'y a plus de figures disponibles. Fin de la Partie." << std::endl;
+            break;
+        }
+
         std::cout << "Choix (1-" << figures.size() << ") : ";
         std::cin >> choice;
 
@@ -156,4 +161,9 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             std::cout << "Choix invalide. Veuillez choisir une figure valide." << std::endl;
         }
     } while (!correctAnswer);
+}
+
+int Joueur::getTotalScore() const
+{
+    return totalScore;
 }

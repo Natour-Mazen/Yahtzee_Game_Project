@@ -2,32 +2,11 @@
 //
 
 #include <iostream>
-#include "Joueur.h"
-#include "Lancer.h"
+#include "YahtzeeGame.h"
 
-int main()
-{
-    srand(static_cast<unsigned int>(time(nullptr)));
-
-    Joueur joueur;
-
-    for (int round = 0; round < 13; ++round) { // Correction : Il y a 13 tours dans le Yahtzee
-        Lancer lancer;
-
-        lancer.rollDice();
-
-        lancer.printDices();
-
-        lancer.reRollDice();
-
-        joueur.resetFigures();
-
-        joueur.createFigures(lancer.getDiceValues());
-
-        joueur.chooseFigure(lancer.getDiceValues());
-
-        std::cout << "Score total du joueur : " << joueur.totalScore << std::endl;
-    }
+int main() {
+    YahtzeeGame jeu;
+    jeu.playGame();
 
     return 0;
 }

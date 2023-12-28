@@ -149,17 +149,20 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="enums\difficulty.h" />
     <ClInclude Include="figure\figures\brelan\Brelan.h" />
     <ClInclude Include="figure\figures\carre\Carre.h" />
     <ClInclude Include="figure\figures\chance\Chance.h" />
     <ClInclude Include="figure\Figure.h" />
     <ClInclude Include="figure\figures\full\Full.h" />
     <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h" />
-    <ClInclude Include="Joueur.h" />
-    <ClInclude Include="Lancer.h" />
+    <ClInclude Include="player\Joueur.h" />
+    <ClInclude Include="dice\Lancer.h" />
     <ClInclude Include="figure\figures\petiteSuite\PetiteSuite.h" />
     <ClInclude Include="figure\figures\yahtzee\Yahtzee.h" />
     <ClInclude Include="figure\figures\numbers\Number.h" />
+    <ClInclude Include="saveLoadGame\Sauvegarde.h" />
+    <ClInclude Include="YahtzeeGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="figure\figures\brelan\Brelan.cpp" />
@@ -168,11 +171,13 @@
     <ClCompile Include="figure\Figure.cpp" />
     <ClCompile Include="figure\figures\full\Full.cpp" />
     <ClCompile Include="figure\figures\grandeSuite\GrandeSuite.cpp" />
-    <ClCompile Include="Joueur.cpp" />
-    <ClCompile Include="Lancer.cpp" />
+    <ClCompile Include="player\Joueur.cpp" />
+    <ClCompile Include="dice\Lancer.cpp" />
     <ClCompile Include="figure\figures\petiteSuite\PetiteSuite.cpp" />
     <ClCompile Include="figure\figures\yahtzee\Yahtzee.cpp" />
     <ClCompile Include="figure\figures\numbers\Number.cpp" />
+    <ClCompile Include="saveLoadGame\Sauvegarde.cpp" />
+    <ClCompile Include="YahtzeeGame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
