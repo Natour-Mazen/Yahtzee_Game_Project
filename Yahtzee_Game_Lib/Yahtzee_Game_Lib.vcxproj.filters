@@ -18,22 +18,22 @@
     <ClInclude Include="figure\Figure.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\carre\Carre.h">
+    <ClInclude Include="figure\figures\Carre.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\full\Full.h">
+    <ClInclude Include="figure\figures\Full.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\petiteSuite\PetiteSuite.h">
+    <ClInclude Include="figure\figures\PetiteSuite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h">
+    <ClInclude Include="figure\figures\GrandeSuite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\yahtzee\Yahtzee.h">
+    <ClInclude Include="figure\figures\Yahtzee.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\chance\Chance.h">
+    <ClInclude Include="figure\figures\Chance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="dice\Lancer.h">
@@ -42,10 +42,10 @@
     <ClInclude Include="player\Joueur.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\brelan\Brelan.h">
+    <ClInclude Include="figure\figures\Brelan.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="figure\figures\numbers\Number.h">
+    <ClInclude Include="figure\figures\Number.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="YahtzeeGame.h">

@@ -150,17 +150,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="enums\difficulty.h" />
-    <ClInclude Include="figure\figures\brelan\Brelan.h" />
-    <ClInclude Include="figure\figures\carre\Carre.h" />
-    <ClInclude Include="figure\figures\chance\Chance.h" />
+    <ClInclude Include="figure\figures\Brelan.h" />
+    <ClInclude Include="figure\figures\Carre.h" />
+    <ClInclude Include="figure\figures\Chance.h" />
     <ClInclude Include="figure\Figure.h" />
-    <ClInclude Include="figure\figures\full\Full.h" />
-    <ClInclude Include="figure\figures\grandeSuite\GrandeSuite.h" />
+    <ClInclude Include="figure\figures\Full.h" />
+    <ClInclude Include="figure\figures\GrandeSuite.h" />
     <ClInclude Include="player\Joueur.h" />
     <ClInclude Include="dice\Lancer.h" />
-    <ClInclude Include="figure\figures\petiteSuite\PetiteSuite.h" />
-    <ClInclude Include="figure\figures\yahtzee\Yahtzee.h" />
-    <ClInclude Include="figure\figures\numbers\Number.h" />
+    <ClInclude Include="figure\figures\PetiteSuite.h" />
+    <ClInclude Include="figure\figures\Yahtzee.h" />
+    <ClInclude Include="figure\figures\Number.h" />
     <ClInclude Include="saveLoadGame\Sauvegarde.h" />
     <ClInclude Include="YahtzeeGame.h" />
   </ItemGroup>
