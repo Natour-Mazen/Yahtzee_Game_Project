@@ -20,10 +20,9 @@ public:
     }
 
     short getId() const {
-        return m_id;
+        return ID;
     }
 
 private:
-    static const int m_id = ID;
     short m_value = 0;
 };

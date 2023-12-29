@@ -22,11 +22,8 @@ public:
     }
 
     short getId() const {
-        return m_id;
+        return ID;
     }
-
-private:
-    static const int m_id = ID;
 };
 
 

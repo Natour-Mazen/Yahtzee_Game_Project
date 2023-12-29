@@ -26,11 +26,10 @@ public:
     }
 
     short getId() const {
-        return m_id;
+        return ID;
     }
 
 private:
-    static const short m_id = ID;
     int m_value1 = 0;
     int m_value2 = 0;
 };
