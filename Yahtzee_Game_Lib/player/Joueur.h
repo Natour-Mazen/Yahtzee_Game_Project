@@ -14,6 +14,9 @@
 
 class Joueur {
 private:
+    static const short ID_YAHTZEE_FIRST = 12;
+    static const short ID_YAHTZEE_BONUS = 13;
+
     std::vector<Figure*> figures;
     bool firstYam = false;
     bool yamBonus = false;

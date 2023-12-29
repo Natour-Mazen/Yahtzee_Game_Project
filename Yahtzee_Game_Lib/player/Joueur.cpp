@@ -64,7 +64,7 @@ void Joueur::createOtherFigures() {
             newFigure = new GrandeSuite<11>(); 
             break;
         case 5: 
-            !firstYam ? newFigure = new Yahtzee<12>() : newFigure = new Yahtzee<13>();
+            !firstYam ? newFigure = new Yahtzee<ID_YAHTZEE_FIRST>() : newFigure = new Yahtzee<ID_YAHTZEE_BONUS>();
                 break;
         case 6: 
             newFigure = new Chance<14>(); 
@@ -82,7 +82,7 @@ void Joueur::createFigures() {
 }
 
 void Joueur::handleYahtzeeBonus(Figure* newFigure) {
-    if (newFigure->getId() == 13) {
+    if (newFigure->getId() == ID_YAHTZEE_BONUS) {
         if (!yamBonus) {
             std::cout << "Yahtzee encore ! +100 points." << std::endl;
             totalScore += 100;
@@ -106,7 +106,7 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
 void Joueur::updateScores(int scoreForFigure, Figure* selectedFigure, const std::vector<int>& diceValues) {
     const short figureId = selectedFigure->getId();
 
-    if (figureId == 6 && scoreForFigure > 0) {
+    if (figureId == ID_YAHTZEE_FIRST && scoreForFigure > 0) {
         firstYam = true;
     }
 
