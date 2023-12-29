@@ -12,15 +12,14 @@ public:
     ~YahtzeeGame();
 
     void playGame();
-    void playHelper();
-    //void sauvegarderPartie();
-    //void reprendrePartie();
+    void sauvegarderPartie();
+    void reprendrePartie();
 
 private:
     DifficultyLevel variante;
-    Joueur joueur;
+    std::vector<Joueur> joueurs;
     Lancer lancer;
-    //Sauvegarde sauvegarde;
+    Sauvegarde sauvegarde;
 
     const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
@@ -28,5 +27,6 @@ private:
     void jouerNormal();
     void jouerDifficile();
     void jouerHardcore();
+    void playHelper();
 };
 

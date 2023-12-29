@@ -9,7 +9,7 @@ public:
     void sauvegarder(const YahtzeeGame& jeu);
 
     // Méthode pour charger l'état du jeu
-    void charger(YahtzeeGame& jeu) const;
+    void charger(YahtzeeGame& jeu) ;
 };
 
 

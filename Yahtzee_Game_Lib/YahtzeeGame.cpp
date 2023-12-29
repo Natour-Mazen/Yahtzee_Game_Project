@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueur(), lancer() {
+YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer(), sauvegarde() {
     srand(static_cast<unsigned int>(time(nullptr)));
 }
 
@@ -62,6 +62,14 @@ void YahtzeeGame::playGame()
         switch (choix) {
         case 1:
         {
+            int numberOfPlayers;
+            std::cout << "Entrez le nombre de joueurs : ";
+            std::cin >> numberOfPlayers;
+
+            for (int i = 0; i < numberOfPlayers; ++i) {
+                Joueur player;
+                joueurs.push_back(player);
+            }
             std::cout << std::endl;
             choisirDifficulte();
             std::cout << std::endl;
@@ -70,7 +78,7 @@ void YahtzeeGame::playGame()
         }
         case 2:
             //reprendrePartie();
-            //playHelper();
+           // playHelper();
             break;
         case 3:
             std::cout << "Au revoir!" << std::endl;
@@ -101,42 +109,71 @@ void YahtzeeGame::playHelper() {
 }
 
 void YahtzeeGame::jouerFacile() {
-    for (int round = 0; round < 13; ++round) {
-        lancer.rollDice();
-        lancer.printDices();
-        lancer.reRollDice();
+    
+   for (int round = 0; round < 13; ++round) {
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            std::cout << "\nJoueur numero " << num_player + 1 << " a vous de joueur :\n" << std::endl;
+            lancer.rollDice();
+            lancer.printDices();
+            lancer.reRollDice();
 
-        joueur.resetFigures();
-        joueur.createFigures();
-        joueur.chooseFigure(lancer.getDiceValues());
+            joueurs[num_player].resetFigures();
+            joueurs[num_player].createFigures();
+            joueurs[num_player].chooseFigure(lancer.getDiceValues());
+        }
+    }
 
-        std::cout << "Score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
+    for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+        std::cout << "Score total du joueur " << num_player << " : " << joueurs[num_player].getTotalScore() << std::endl;
     }
 }
 
-void YahtzeeGame::jouerNormal() { // En mode normal, la partie supérieure doit être faite avant la partie inférieure
+void YahtzeeGame::jouerNormal() {
+    // En mode normal, la partie supérieure doit être faite avant la partie inférieure
     for (int round = 0; round < 6; ++round) {
-        lancer.rollDice();
-        lancer.printDices();
-        lancer.reRollDice();
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            std::cout << "\nJoueur numero : " << num_player << " à vous de jouer :\n" << std::endl;
 
-        joueur.resetFigures();
-        joueur.createNumberFigures();
-        joueur.chooseFigure(lancer.getDiceValues());
+            lancer.rollDice();
+            lancer.printDices();
+            lancer.reRollDice();
 
-        std::cout << "Score total du joueur : " << joueur.getTotalScore() << std::endl;
+            joueurs[num_player].resetFigures();
+            joueurs[num_player].createNumberFigures();
+            joueurs[num_player].chooseFigure(lancer.getDiceValues());
+
+            std::cout << "Score total du joueur : " << joueurs[num_player].getTotalScore() << std::endl;
+        }
     }
-    std::cout << "La partie mineure est fini, le score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
+
+    std::cout << "La partie supérieure est finie, le score total des joueurs :\n" << std::endl;
+
+    for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+        std::cout << "Score total du joueur " << num_player << " : " << joueurs[num_player].getTotalScore() << std::endl;
+    }
+
+    std::cout << "\nLa partie mineure commence :\n" << std::endl;
+
     for (int round = 0; round < 7; ++round) {
-        lancer.rollDice();
-        lancer.printDices();
-        lancer.reRollDice();
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            std::cout << "\nJoueur numero : " << num_player << " à vous de jouer :\n" << std::endl;
 
-        joueur.resetFigures();
-        joueur.createOtherFigures();
-        joueur.chooseFigure(lancer.getDiceValues());
+            lancer.rollDice();
+            lancer.printDices();
+            lancer.reRollDice();
 
-        std::cout << "Score total du joueur : " << joueur.getTotalScore() << "\n" << std::endl;
+            joueurs[num_player].resetFigures();
+            joueurs[num_player].createOtherFigures();
+            joueurs[num_player].chooseFigure(lancer.getDiceValues());
+
+            std::cout << "Score total du joueur : " << joueurs[num_player].getTotalScore() << std::endl;
+        }
+    }
+
+    std::cout << "La partie mineure est finie, le score total des joueurs :\n" << std::endl;
+
+    for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+        std::cout << "Score total du joueur " << num_player << " : " << joueurs[num_player].getTotalScore() << std::endl;
     }
 }
 
@@ -152,7 +189,7 @@ void YahtzeeGame::jouerHardcore() {
 }
 
 
-/*
+
 void YahtzeeGame::sauvegarderPartie() {
     sauvegarde.sauvegarder(*this);
     std::cout << "Partie sauvegardée." << std::endl;
@@ -161,4 +198,4 @@ void YahtzeeGame::sauvegarderPartie() {
 void YahtzeeGame::reprendrePartie() {
     sauvegarde.charger(*this);
     std::cout << "Partie reprise." << std::endl;
-}*/
+}

@@ -13,7 +13,7 @@ void Sauvegarde::sauvegarder(const YahtzeeGame& jeu) {
     }
 }
 
-void Sauvegarde::charger(YahtzeeGame& jeu) const {
+void Sauvegarde::charger(YahtzeeGame& jeu) {
     std::ifstream fichier("sauvegarde.txt", std::ios::in | std::ios::binary);
 
     if (fichier.is_open()) {
