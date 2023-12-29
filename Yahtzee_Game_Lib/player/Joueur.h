@@ -17,15 +17,15 @@ private:
     static const short ID_YAHTZEE_FIRST = 12;
     static const short ID_YAHTZEE_BONUS = 13;
 
-    std::vector<Figure*> figures;
-    bool firstYam = false;
-    bool yamBonus = false;
-    std::vector<Figure*> figuresUsed;
-    int minorScore;
-    int totalScore;
+    std::vector<Figure*> m_figures;
+    bool m_firstYahtzee = false;
+    bool m_yahtzeeBonus = false;
+    std::vector<Figure*> m_figuresUsed;
+    int m_minorScore;
+    int m_totalScore;
 
     bool isFigureUsed(Figure* figure) const;
-    Figure* createNumberFigure(int id);
+    Figure* createNumberFigure(unsigned int id) const;
     void handleYahtzeeBonus(Figure* newFigure);
     void updateScores(int scoreForFigure, Figure* selectedFigure, const std::vector<int>& diceValues);
     
