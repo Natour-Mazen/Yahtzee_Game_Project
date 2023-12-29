@@ -31,17 +31,18 @@ private:
     
 public:
    
-
     Joueur();
-
     ~Joueur();
 
+    void createAllFigures();
     void createNumberFigures();
     void createOtherFigures();
 
     void resetFigures();
-    void createAllFigures();
+
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigure(const std::vector<int>& diceValues);
     int getTotalScore() const;
+    void serialize(std::ostream& out) const;
+    void deserialize(std::istream& in);
 };

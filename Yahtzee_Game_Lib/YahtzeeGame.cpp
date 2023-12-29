@@ -2,13 +2,11 @@
 #include <iostream>
 #include <algorithm>
 
-YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer(), sauvegarde() {
+YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer() {
     srand(static_cast<unsigned int>(time(nullptr)));
 }
 
 YahtzeeGame::~YahtzeeGame() {}
-
-
 
 int YahtzeeGame::saisirChoix(int min, int max) {
     int choix;
@@ -189,12 +187,42 @@ void YahtzeeGame::jouerHardcore() {
     // TODO: Ajouter l'implémentation
 }
 
+// Sérialisation
 void YahtzeeGame::sauvegarderPartie() {
-    sauvegarde.sauvegarder(*this);
-    std::cout << "Partie sauvegardée." << std::endl;
+    std::ofstream fichier("sauvegarde.txt");
+    if (fichier.is_open()) {
+        fichier << variante << "\n";
+        fichier << joueurs.size() << "\n";
+        for (auto& joueur : joueurs) {
+            joueur.serialize(fichier);
+        }
+        
+        std::cout << "Partie sauvegardée." << std::endl;
+    }
+    else {
+        std::cerr << "Impossible d'ouvrir le fichier de sauvegarde." << std::endl;
+    }
 }
 
+// Désérialisation
 void YahtzeeGame::reprendrePartie() {
-    sauvegarde.charger(*this);
-    std::cout << "Partie reprise." << std::endl;
+    std::ifstream fichier("sauvegarde.txt");
+    if (fichier.is_open()) {
+        int temp;
+        fichier >> temp;
+        variante = static_cast<DifficultyLevel>(temp);
+        size_t taille;
+        fichier >> taille;
+        joueurs.resize(taille);
+        for (auto& joueur : joueurs) {
+            joueur.deserialize(fichier);
+        }
+
+        std::cout << "Partie reprise." << std::endl;
+    }
+    else {
+        std::cerr << "Impossible de charger la sauvegarde. Démarrage d'une nouvelle partie." << std::endl;
+    }
 }
+
+

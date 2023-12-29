@@ -19,7 +19,6 @@ private:
     DifficultyLevel variante;
     std::vector<Joueur> joueurs;
     Lancer lancer;
-    Sauvegarde sauvegarde;
 
     const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();

@@ -23,6 +23,14 @@ public:
         return ID;
     }
 
+    void serialize(std::ostream& out) const {
+        out << m_value << "\n";
+    }
+
+    void deserialize(std::istream& in) {
+        in >> m_value;
+    }
+
 private:
     short m_value = 0;
 };

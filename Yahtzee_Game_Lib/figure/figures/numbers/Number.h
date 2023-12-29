@@ -25,8 +25,16 @@ public:
         return ID;
     }
 
+    void serialize(std::ostream& out) const {
+        out << m_number << "\n";
+    }
+
+    void deserialize(std::istream& in) {
+        in >> m_number;
+    }
+
 private:
-    const unsigned int m_number;
+    unsigned int m_number;
 };
 
 

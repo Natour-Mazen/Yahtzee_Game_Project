@@ -184,3 +184,49 @@ int Joueur::getTotalScore() const
 {
     return m_totalScore;
 }
+
+void Joueur::serialize(std::ostream& out) const {
+    out << m_firstYahtzee << "\n";
+    out << m_yahtzeeBonus << "\n";
+    out << m_minorScore << "\n";
+    out << m_totalScore << "\n";
+
+    out << m_figures.size() << "\n";
+    for (const auto& figure : m_figures) {
+        figure->serialize(out);
+    }
+
+    out << m_figuresUsed.size() << "\n";
+    for (const auto& figure : m_figuresUsed) {
+        figure->serialize(out);
+    }
+}
+void Joueur::deserialize(std::istream& in) {
+    in >> m_firstYahtzee;
+    in >> m_yahtzeeBonus;
+    in >> m_minorScore;
+    in >> m_totalScore;
+
+    size_t taille;
+    in >> taille;
+    m_figures.resize(taille);
+    for (auto& figure : m_figures) {
+        int typeId;
+        in >> typeId;
+        switch (typeId) {
+        case 1:
+            //figure = new Brelan<65465>();
+            break;
+        case 2:
+            //figure = new SubFigure2();
+            break;
+            // Ajoutez pour chaque sous-classe de Figure
+        default:
+            throw std::runtime_error("Type de figure inconnu");
+        }
+        figure->deserialize(in);
+    }
+
+    // Faites de même pour m_figuresUsed
+}
+
