@@ -36,6 +36,6 @@ private:
     void jouerTourFacile(int num_player);
     void jouerTourNormalMineure(int num_player);
     void jouerTourNormalMajeur(int num_player);
-    void afficherScores();
+    void afficherScoresTousJoueurs();
 };
 

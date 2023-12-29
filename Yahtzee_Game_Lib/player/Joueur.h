@@ -40,7 +40,7 @@ public:
     void createOtherFigures();
 
     void resetFigures();
-    void createFigures();
+    void createAllFigures();
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigure(const std::vector<int>& diceValues);
     int getTotalScore() const;

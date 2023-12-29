@@ -91,7 +91,7 @@ void Joueur::createOtherFigures() {
 
 /** Create the figures for the minor and major part of the game.
 **/
-void Joueur::createFigures() {
+void Joueur::createAllFigures() {
     createNumberFigures();
     createOtherFigures();
 }
