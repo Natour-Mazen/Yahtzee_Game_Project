@@ -24,11 +24,11 @@ void Lancer::rollDices() {
 /** Display the 5 dices in the console.
 **/
 void Lancer::printDices() {
-    std::cout << "Valeurs des Des : ";
+    std::cout << "<<< Valeurs des Des : ";
     for (int value : m_diceValues) {
         std::cout << value << " ";
     }
-    std::cout << std::endl;
+    std::cout << " >>>" << std::endl;
 }
 
 /** Display the choice to re roll the dices two times of the dices that the user wants (between 1 and 5). 
@@ -36,26 +36,26 @@ void Lancer::printDices() {
 void Lancer::reRollDices() {
     // Look if we have 5 dices in the vector.
     if (m_diceValues.size() != 5) {
-        std::cerr << "Erreur: la taille du vecteur diceValues n'est pas correcte." << std::endl;
+        std::cerr << "  /!\\ Erreur: la taille du vecteur diceValues n'est pas correcte /!\\ " << std::endl;
         return;
     }
 
     // Choice of dice to reroll (2 rerolls maximum).
     for (int lancer = 1; lancer <= 2; ++lancer) {
         int choix;
-        std::cout << "Relancer des Des? (1 pour oui, 0 pour non): ";
+        std::cout << ">> Relancer les Des ? (1 pour oui, 0 pour non): ";
 
         while (!(std::cin >> choix) || (choix != 0 && choix != 1) || std::cin.peek() != '\n') {
             std::cin.clear();  // Reset the error statut of cin.
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Flushing the input buffer.
-            std::cerr << "Erreur: Veuillez entrer une seule valeur (0 ou 1)." << std::endl;
-            std::cout << "Relancer des dés? (1 pour oui, 0 pour non): ";
+            std::cerr << "  /!\\ Erreur: Veuillez entrer une seule valeur (0 ou 1) /!\\ " << std::endl;
+            std::cout << ">> Relancer les Des ? (1 pour oui, 0 pour non): ";
         }
 
         if (choix) {
             // Selection of dice to reroll.
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Flushing the input buffer.
-            std::cout << "Indices des Des a relancer (separes par un espace et de 1 a 5): ";
+            std::cout << ">> Indices des Des a relancer (separes par un espace et de 1 a 5): ";
             std::string ligne;
             std::getline(std::cin, ligne);
 
@@ -67,7 +67,7 @@ void Lancer::reRollDices() {
                     m_diceValues[indice - 1] = rand() % 6 + 1;
                 }
                 else {
-                    std::cerr << "Erreur: Indice invalide pour : " << indice << "." << std::endl;
+                    std::cerr << "/!\\ Erreur: Indice invalide pour : " << indice << " /!\\" << std::endl;
                 }
             }
             printDices();

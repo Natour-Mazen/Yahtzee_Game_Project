@@ -113,7 +113,7 @@ void YahtzeeGame::nouvellePartie() {
         std::cout << ">> Entrez le nombre de joueurs : ";
         std::cin >> numberOfPlayers;
         if (numberOfPlayers <= 0) {
-            std::cout << "Le nombre de joueurs doit etre superieur a 0. Veuillez reessayer.\n";
+            std::cout << "/!\\ Le nombre de joueurs doit etre superieur a 0. Veuillez reessayer /!\\ \n";
         }
     } while (numberOfPlayers <= 0);
 
