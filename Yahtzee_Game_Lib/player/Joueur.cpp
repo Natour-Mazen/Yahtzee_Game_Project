@@ -14,8 +14,12 @@ Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_fi
 /** Destructor for a player, destroy all the vectors with allocated figures.
 **/
 Joueur::~Joueur() {
-    m_figures.clear();
-    m_figuresUsed.clear();
+    for (Figure* f : m_figures) {
+        delete f;
+    }
+    for (Figure* f : m_figuresUsed) {
+        delete f;
+    }
 }
 
 /** Create all the figures for the minor part if they are not already in the used figures.
