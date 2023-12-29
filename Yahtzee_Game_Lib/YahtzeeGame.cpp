@@ -104,7 +104,7 @@ void YahtzeeGame::choisirDifficulte() {
     afficherMenuDifficulte();
     int choix = saisirChoix(1, HARDCORE + 1);
     variante = static_cast<DifficultyLevel>(choix - 1);
-    std::cout << "<< Vous avez choisi le mode " << getDifficultyName(variante) << " >>" << std::endl;
+    std::cout << "  <<=>> Vous avez choisi le mode " << getDifficultyName(variante) << " <<=>>" << std::endl;
 }
 
 void YahtzeeGame::nouvellePartie() {
@@ -152,7 +152,6 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
     joueurs[num_player].resetFigures();
     (joueurs[num_player].*createFiguresFunc)();
     joueurs[num_player].chooseFigure(lancer.getDiceValues());
-    std::cout << "Votre Score total joueur " << num_player + 1 << " : " << joueurs[num_player].getTotalScore() << std::endl;
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
@@ -186,7 +185,7 @@ void YahtzeeGame::jouerFacile() {
 
 
 void YahtzeeGame::jouerNormal() {
-    std::cout << "\n<<<<<< La partie mineure commence >>>>>>\n" << std::endl;
+    std::cout << "\n   <<===>> La partie mineure commence <<===>>\n" << std::endl;
 
     for (int round = 0; round < 6; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -195,7 +194,7 @@ void YahtzeeGame::jouerNormal() {
     }
     afficherScoresTousJoueurs();
 
-    std::cout << "\n<<<<<< La partie majeure commence >>>>>>\n" << std::endl;
+    std::cout << "\n   <<===>> La partie majeure commence <<===>>\n" << std::endl;
 
     for (int round = 0; round < 7; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {

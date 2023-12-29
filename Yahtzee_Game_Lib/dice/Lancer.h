@@ -15,5 +15,7 @@ public:
 
 private:
     std::vector<int> m_diceValues;
+    bool askReroll();
+    std::vector<int> getDiceIndicesToReroll();
 };
 
