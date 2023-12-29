@@ -7,7 +7,9 @@ YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lance
     srand(static_cast<unsigned int>(time(nullptr)));
 }
 
-YahtzeeGame::~YahtzeeGame() {}
+YahtzeeGame::~YahtzeeGame() {
+    joueurs.clear();
+}
 
 int YahtzeeGame::saisirChoix(int min, int max) {
     int choix;
@@ -19,8 +21,6 @@ int YahtzeeGame::saisirChoix(int min, int max) {
 }
 
 void YahtzeeGame::playGame() {
-    
-
     int choix;
     do {
         afficherMenuPrincipal();
