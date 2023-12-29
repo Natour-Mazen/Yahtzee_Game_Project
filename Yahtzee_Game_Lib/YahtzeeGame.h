@@ -28,5 +28,14 @@ private:
     void jouerDifficile();
     void jouerHardcore();
     void playHelper();
+    void afficherMenuDifficulte();
+    int saisirChoix(int min, int max);
+    void afficherMenuPrincipal();
+    void nouvellePartie();
+    void jouerTour(int num_player, void (Joueur::* createFiguresFunc)());
+    void jouerTourFacile(int num_player);
+    void jouerTourNormalMineure(int num_player);
+    void jouerTourNormalMajeur(int num_player);
+    void afficherScores();
 };
 
