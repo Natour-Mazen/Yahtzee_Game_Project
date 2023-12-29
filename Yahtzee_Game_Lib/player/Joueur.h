@@ -18,8 +18,8 @@ private:
     static const short ID_YAHTZEE_BONUS = 13;
 
     std::vector<Figure*> m_figures;
-    bool m_firstYahtzee = false;
-    bool m_yahtzeeBonus = false;
+    bool m_firstYahtzee;
+    bool m_yahtzeeBonus;
     std::vector<Figure*> m_figuresUsed;
     int m_minorScore;
     int m_totalScore;

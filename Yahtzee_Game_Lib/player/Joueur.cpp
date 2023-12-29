@@ -10,11 +10,17 @@ Joueur::~Joueur() {
         delete figure;
     }
 }
-
+/** Remove all the figures that we don't use anymore. 
+*   @return void 
+**/
 void Joueur::resetFigures() {
     m_figures.clear();
 }
 
+/** Look if the figure pass in parameter is in the used figures.
+*   @param figure : the figure that need to be check.
+*   @return : true if the figure is in the used figures else false.
+*/
 bool Joueur::isFigureUsed(Figure* figure) const {
     auto is_figure = [figure](const Figure* usedFigure) {
         return figure->getId() == usedFigure->getId();
@@ -23,6 +29,10 @@ bool Joueur::isFigureUsed(Figure* figure) const {
     return std::find_if(m_figuresUsed.begin(), m_figuresUsed.end(), is_figure) != std::end(m_figuresUsed);
 }
 
+/** Create a figure in the minor part of the game, base on the number on a dice.
+*   @param number : the number on a dice (form 1 to 6)
+*   @return : the figure associate with it's number.
+**/
 Figure* Joueur::createNumberFigure(unsigned int number) const {
     switch (number) {
     case 1: return new Number<1>(number);
