@@ -11,7 +11,6 @@ Joueur::~Joueur() {
     }
 }
 /** Remove all the figures that we don't use anymore. 
-*   @return void 
 **/
 void Joueur::resetFigures() {
     m_figures.clear();
@@ -45,6 +44,8 @@ Figure* Joueur::createNumberFigure(unsigned int number) const {
     }
 }
 
+/** Create all the figures for the minor part if they are not already in the used figures.
+**/
 void Joueur::createNumberFigures() {
     for (unsigned int i = 1; i <= 6; ++i) {
         Figure* newFigure = createNumberFigure(i);
@@ -54,6 +55,8 @@ void Joueur::createNumberFigures() {
     }
 }
 
+/** Create all the figures for the major part if they are not alreadyin the used figures.
+**/
 void Joueur::createOtherFigures() {
     for (unsigned short i = 0; i < 7; ++i) {
         Figure* newFigure = nullptr;
@@ -86,11 +89,15 @@ void Joueur::createOtherFigures() {
     }
 }
 
+/** Create the figures for the minor and major part of the game.
+**/
 void Joueur::createFigures() {
     createNumberFigures();
     createOtherFigures();
 }
 
+/** For one figure, look if it's the second Yahtzee and if it's the case then add 100 points to the player.
+**/
 void Joueur::handleYahtzeeBonus(Figure* newFigure) {
     if (newFigure->getId() == ID_YAHTZEE_BONUS) {
         if (!m_yahtzeeBonus) {
