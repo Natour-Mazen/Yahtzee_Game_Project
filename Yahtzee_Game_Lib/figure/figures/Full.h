@@ -8,13 +8,15 @@ public:
         for (int i = 1; i <= 6; ++i)
         {
             int count1 = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
-            for (int y = i + 1; y <= 6; ++y)
-            {
-                int count2 = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), y));
-                if (count1 == 2 && count2 == 3 || count1 == 3 && count2 == 2) {
-                    m_value1 = i;
-                    m_value2 = y;
-                    return 25;
+            if (count1 == 2 || count1 == 3) {
+                for (int y = i + 1; y <= 6; ++y)
+                {
+                    int count2 = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), y));
+                    if (count1 == 2 && count2 == 3 || count1 == 3 && count2 == 2) {
+                        m_value1 = i;
+                        m_value2 = y;
+                        return 25;
+                    }
                 }
             }
         }

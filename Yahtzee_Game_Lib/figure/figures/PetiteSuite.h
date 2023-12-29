@@ -10,7 +10,7 @@ public:
 
         for (std::size_t y = 0; y < 2; ++y) {
             bool valid = true;
-            for (std::size_t i = y; i < 4 + y; ++i) {
+            for (std::size_t i = y; i < 3 + y; ++i) {
                 if (sortedValues[i] != sortedValues[i + 1] - 1) {
                     valid = false;
                     break;
