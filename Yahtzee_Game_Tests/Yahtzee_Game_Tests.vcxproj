@@ -106,7 +106,7 @@
     <ClCompile Include="figure\figures\NumberTest.cpp" />
     <ClCompile Include="figure\figures\PetiteSuiteTest.cpp" />
     <ClCompile Include="figure\figures\YahtzeeTest.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="EntryPointTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Yahtzee_Game_Lib\Yahtzee_Game_Lib.vcxproj">
