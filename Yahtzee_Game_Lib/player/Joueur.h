@@ -23,7 +23,7 @@ public:
 
     void resetFigures();
 
-    void displayFigureAndScores(const std::vector<int>& diceValues) const;
+    
     void chooseFigure(const std::vector<int>& diceValues);
     int getTotalScore() const;
     void serialize(std::ostream& out) const;
@@ -44,4 +44,5 @@ private:
     Figure* createMinorFigure(unsigned int id) const;
     void handleYahtzeeBonus(Figure* newFigure);
     void updateScores(int scoreForFigure, Figure* selectedFigure);
+    void displayFigureAndScores(const std::vector<int>& diceValues) const;
 };

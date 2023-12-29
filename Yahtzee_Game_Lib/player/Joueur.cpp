@@ -1,5 +1,6 @@
 #include "Joueur.h"
 #include <algorithm>
+#include <iomanip>
 
 //============================================//
 //                  PUBLIC                    //
@@ -20,6 +21,7 @@ Joueur::~Joueur() {
     for (Figure* f : m_figuresUsed) {
         delete f;
     }
+
 }
 
 /** Create all the figures for the minor part if they are not already in the used figures.
@@ -84,12 +86,24 @@ void Joueur::resetFigures() {
 *   @param diveValues : vector of 5 dices.
 **/
 void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
-    std::cout << "Scores des figures possibles : " << std::endl;
+    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
+    std::cout << "|                   YAHTZEE                   |\n";
+    std::cout << "|---------------------------------------------|\n";
+
     for (size_t i = 0; i < m_figures.size(); ++i) {
-        std::cout << i + 1 << ". " << m_figures[i]->getName() << ": " << m_figures[i]->calculateScore(diceValues) << " points" << std::endl;
+        int figurescore = m_figures[i]->calculateScore(diceValues);
+        std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
+        std::cout << std::setw(8) << std::right << figurescore << " points";
+        std::cout << std::setw(5) << "|\n";
     }
+
+    std::cout << "|---------------------------------------------|\n";
+    std::cout << "| Total General: " << std::setw(19) << std::right << m_totalScore << " points";
+    std::cout << std::setw(5) << " |\n";
+    std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
     std::cout << std::endl;
 }
+
 
 
 /** Display all the figures and get the figure choose by the player.
@@ -98,7 +112,6 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
 void Joueur::chooseFigure(const std::vector<int>& diceValues) {
     int choice;
 
-    std::cout << std::endl << "Choisissez une figure parmi les options suivantes :" << std::endl;
     displayFigureAndScores(diceValues);
 
     bool correctAnswer = false;
@@ -109,7 +122,7 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             break;
         }
 
-        std::cout << "Choix (1-" << m_figures.size() << ") : ";
+        std::cout << ">> Choisissez maintenant une figure, choix (1-" << m_figures.size() << ") : ";
         std::cin >> choice;
 
         if (choice >= 1 && choice <= static_cast<int>(m_figures.size())) {
@@ -128,7 +141,7 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             }
         }
         else {
-            std::cout << "Choix invalide. Veuillez choisir une figure valide." << std::endl;
+            std::cout << "/!\\ Choix invalide. Veuillez choisir une figure valide. /!\\" << std::endl;
         }
     } while (!correctAnswer);
 }
