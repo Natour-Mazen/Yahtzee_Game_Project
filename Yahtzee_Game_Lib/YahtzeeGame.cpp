@@ -118,7 +118,7 @@ void YahtzeeGame::nouvellePartie() {
     } while (numberOfPlayers <= 0);
 
     for (int i = 0; i < numberOfPlayers; ++i) {
-        Joueur player;
+        std::shared_ptr<Joueur> player = std::make_shared<Joueur>();
         joueurs.push_back(player);
     }
     std::cout << std::endl;
@@ -149,9 +149,9 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
     lancer.rollDices();
     lancer.printDices();
     lancer.reRollDices();
-    joueurs[num_player].resetFigures();
-    (joueurs[num_player].*createFiguresFunc)();
-    joueurs[num_player].chooseFigure(lancer.getDiceValues());
+    joueurs[num_player]->resetFigures();
+    (joueurs[num_player].get()->*createFiguresFunc)();
+    joueurs[num_player]->chooseFigure(lancer.getDiceValues());
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
@@ -169,7 +169,7 @@ void YahtzeeGame::jouerTourNormalMajeur(int num_player) {
 void YahtzeeGame::afficherScoresTousJoueurs() {
     std::cout << "\n------ Voici le scores de chaque joueurs ------" << std::endl;
     for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
-        std::cout << "\t -> Score total du joueur " << num_player + 1  << " : " << joueurs[num_player].getTotalScore() << std::endl;
+        std::cout << "\t -> Score total du joueur " << num_player + 1  << " : " << joueurs[num_player]->getTotalScore() << std::endl;
     }
     std::cout << std::endl;
 }
@@ -222,7 +222,7 @@ void YahtzeeGame::sauvegarderPartie() {
         fichier << variante << "\n";
         fichier << joueurs.size() << "\n";
         for (auto& joueur : joueurs) {
-            joueur.serialize(fichier);
+            joueur->serialize(fichier);
         }
         
         std::cout << "Partie sauvegardée." << std::endl;
@@ -243,7 +243,7 @@ void YahtzeeGame::reprendrePartie() {
         fichier >> taille;
         joueurs.resize(taille);
         for (auto& joueur : joueurs) {
-            joueur.deserialize(fichier);
+            joueur->deserialize(fichier);
         }
 
         std::cout << "Partie reprise." << std::endl;

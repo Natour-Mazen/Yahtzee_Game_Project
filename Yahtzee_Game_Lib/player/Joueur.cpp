@@ -18,9 +18,14 @@ Joueur::~Joueur() {
     for (Figure* f : m_figures) {
         delete f;
     }
+    std::cout << "m_figures = " << m_figures.size() << std::endl;
+
+
     for (Figure* f : m_figuresUsed) {
         delete f;
     }
+
+    std::cout << "m_figuresUsed = " << m_figuresUsed.size() << std::endl;
 
 }
 

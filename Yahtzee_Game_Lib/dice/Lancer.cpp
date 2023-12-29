@@ -62,7 +62,7 @@ std::vector<int> Lancer::getDiceIndicesToReroll() {
             indices.push_back(indice - 1);
         }
         else {
-            std::cerr << "/!\\ Erreur: Indice invalide pour : " << indice << " /!\\" << std::endl;
+            std::cerr << "   /!\\ Erreur: Indice invalide pour : " << indice << " /!\\   " << std::endl;
         }
     }
 

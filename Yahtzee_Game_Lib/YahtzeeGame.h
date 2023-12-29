@@ -17,7 +17,7 @@ public:
 
 private:
     DifficultyLevel variante;
-    std::vector<Joueur> joueurs;
+    std::vector<std::shared_ptr<Joueur>> joueurs;
     Lancer lancer;
 
     const char* getDifficultyName(DifficultyLevel level);

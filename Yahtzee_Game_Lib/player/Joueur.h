@@ -23,7 +23,7 @@ public:
 
     void resetFigures();
 
-    
+   
     void chooseFigure(const std::vector<int>& diceValues);
     int getTotalScore() const;
     void serialize(std::ostream& out) const;
