@@ -15,26 +15,16 @@ Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_fi
 /** Destructor for a player, destroy all the vectors with allocated figures.
 **/
 Joueur::~Joueur() {
-    for (Figure* f : m_figures) {
-        delete f;
-    }
-    std::cout << "m_figures = " << m_figures.size() << std::endl;
-
-
-    for (Figure* f : m_figuresUsed) {
-        delete f;
-    }
-
-    std::cout << "m_figuresUsed = " << m_figuresUsed.size() << std::endl;
-
+    m_figures.clear();
+    m_figuresUsed.clear();
 }
 
 /** Create all the figures for the minor part if they are not already in the used figures.
 **/
 void Joueur::createMinorFigures() {
     for (unsigned int i = 1; i <= 6; ++i) {
-        Figure* newFigure = createMinorFigure(i);
-        if (newFigure && !isFigureUsed(newFigure)) {
+        std::shared_ptr<Figure> newFigure = createMinorFigure(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
     }
@@ -44,31 +34,31 @@ void Joueur::createMinorFigures() {
 **/
 void Joueur::createMajorFigures() {
     for (unsigned short i = 0; i < 7; ++i) {
-        Figure* newFigure = nullptr;
+        std::shared_ptr<Figure> newFigure = nullptr;
         switch (i) {
         case 0:
-            newFigure = new Brelan<7>();
+            newFigure = std::make_shared<Brelan<7>>();
             break;
         case 1:
-            newFigure = new Carre<8>();
+            newFigure = std::make_shared<Carre<8>>();
             break;
         case 2:
-            newFigure = new Full<9>();
+            newFigure = std::make_shared<Full<9>>();
             break;
         case 3:
-            newFigure = new PetiteSuite<10>();
+            newFigure = std::make_shared<PetiteSuite<10>>();
             break;
         case 4:
-            newFigure = new GrandeSuite<11>();
+            newFigure = std::make_shared<GrandeSuite<11>>();
             break;
         case 5:
-            !m_firstYahtzee ? newFigure = new Yahtzee<ID_YAHTZEE_FIRST>() : newFigure = new Yahtzee<ID_YAHTZEE_BONUS>();
+            !m_firstYahtzee ? newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>() : newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>();
             break;
         case 6:
-            newFigure = new Chance<14>();
+            newFigure = std::make_shared<Chance<14>>();
             break;
         }
-        if (newFigure && !isFigureUsed(newFigure)) {
+        if (newFigure && !isFigureUsed(newFigure.get())) {
             handleYahtzeeBonus(newFigure);
         }
     }
@@ -131,16 +121,19 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
         std::cin >> choice;
 
         if (choice >= 1 && choice <= static_cast<int>(m_figures.size())) {
-            Figure* selectedFigure = m_figures[choice - 1];
+            std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
 
             // Vérifier si la figure a déjà été utilisée
-            if (isFigureUsed(selectedFigure)) {
+            if (isFigureUsed(selectedFigure.get())) {
                 std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
             }
             else {
                 int scoreForFigure = selectedFigure->calculateScore(diceValues);
               
                 updateScores(scoreForFigure, selectedFigure);
+
+                // Add the selected figure to the list of figures used.
+                m_figuresUsed.push_back(selectedFigure);
 
                 correctAnswer = true;
             }
@@ -215,7 +208,7 @@ void Joueur::deserialize(std::istream& in) {
 *   @return : true if the figure is in the used figures else false.
 */
 bool Joueur::isFigureUsed(Figure* figure) const {
-    auto is_figure = [figure](const Figure* usedFigure) {
+    auto is_figure = [figure](const std::shared_ptr<Figure> usedFigure) {
         return figure->getId() == usedFigure->getId();
         };
 
@@ -226,14 +219,14 @@ bool Joueur::isFigureUsed(Figure* figure) const {
 *   @param number : the number on a dice (form 1 to 6)
 *   @return : the figure associate with it's number.
 **/
-Figure* Joueur::createMinorFigure(unsigned int number) const {
+std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
     switch (number) {
-    case 1: return new Number<1>(number);
-    case 2: return new Number<2>(number);
-    case 3: return new Number<3>(number);
-    case 4: return new Number<4>(number);
-    case 5: return new Number<5>(number);
-    case 6: return new Number<6>(number);
+    case 1: return std::make_shared<Number<1>>(number);
+    case 2: return std::make_shared<Number<2>>(number);
+    case 3: return std::make_shared<Number<3>>(number);
+    case 4: return std::make_shared<Number<4>>(number);
+    case 5: return std::make_shared<Number<5>>(number);
+    case 6: return std::make_shared<Number<6>>(number);
     default: return nullptr;
     }
 }
@@ -241,14 +234,13 @@ Figure* Joueur::createMinorFigure(unsigned int number) const {
 /** For one figure, look if it's the second Yahtzee and if it's the case then add 100 points to the player.
 *   @param newFigure : the figure that we want to check for the second Yahtzee.
 **/
-void Joueur::handleYahtzeeBonus(Figure* newFigure) {
+void Joueur::handleYahtzeeBonus(std::shared_ptr<Figure> newFigure) {
     if (newFigure->getId() == ID_YAHTZEE_BONUS) {
         if (!m_yahtzeeBonus) {
             std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
             m_totalScore += 100;
             m_yahtzeeBonus = true;
         }
-        delete newFigure;
     }
     else {
         m_figures.push_back(newFigure);
@@ -259,7 +251,7 @@ void Joueur::handleYahtzeeBonus(Figure* newFigure) {
 *   @param scoreForFigure : is the score for the selected figure.
 *   @param selectedFigure : the figure selected.
 **/
-void Joueur::updateScores(int scoreForFigure, Figure* selectedFigure) {
+void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure) {
     const short figureId = selectedFigure->getId();
 
     if (figureId == ID_YAHTZEE_FIRST && scoreForFigure > 0) {
@@ -277,7 +269,6 @@ void Joueur::updateScores(int scoreForFigure, Figure* selectedFigure) {
 
     std::cout << "   <<=>> Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points <<=>>" << std::endl;
 
-    // Add the selected figure to the list of figures used.
-    m_figuresUsed.push_back(selectedFigure);
+    
 }
 
