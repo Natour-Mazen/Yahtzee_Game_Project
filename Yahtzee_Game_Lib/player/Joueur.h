@@ -3,14 +3,14 @@
 #include <vector>
 #include <map>
 #include "Figure.h"
-#include "brelan/Brelan.h"
-#include "carre/Carre.h"
-#include "full/Full.h"
-#include "chance/Chance.h"
-#include "grandeSuite/GrandeSuite.h"
-#include "petiteSuite/PetiteSuite.h"
-#include "yahtzee/Yahtzee.h"
-#include "numbers/Number.h"
+#include "Brelan.h"
+#include "Carre.h"
+#include "Full.h"
+#include "Chance.h"
+#include "GrandeSuite.h"
+#include "PetiteSuite.h"
+#include "Yahtzee.h"
+#include "Number.h"
 
 class Joueur {
 public:
