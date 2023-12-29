@@ -136,7 +136,7 @@ int Joueur::getTotalScore() const
 {
     return m_totalScore;
 }
-
+// TODO : METTRE UN COM
 void Joueur::serialize(std::ostream& out) const {
     out << m_firstYahtzee << "\n";
     out << m_yahtzeeBonus << "\n";
@@ -153,6 +153,8 @@ void Joueur::serialize(std::ostream& out) const {
         figure->serialize(out);
     }
 }
+
+// TODO : METTRE UN COM
 void Joueur::deserialize(std::istream& in) {
     in >> m_firstYahtzee;
     in >> m_yahtzeeBonus;

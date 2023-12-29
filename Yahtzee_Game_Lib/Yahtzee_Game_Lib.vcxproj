@@ -165,17 +165,8 @@
     <ClInclude Include="YahtzeeGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="figure\figures\brelan\Brelan.cpp" />
-    <ClCompile Include="figure\figures\carre\Carre.cpp" />
-    <ClCompile Include="figure\figures\chance\Chance.cpp" />
-    <ClCompile Include="figure\Figure.cpp" />
-    <ClCompile Include="figure\figures\full\Full.cpp" />
-    <ClCompile Include="figure\figures\grandeSuite\GrandeSuite.cpp" />
     <ClCompile Include="player\Joueur.cpp" />
     <ClCompile Include="dice\Lancer.cpp" />
-    <ClCompile Include="figure\figures\petiteSuite\PetiteSuite.cpp" />
-    <ClCompile Include="figure\figures\yahtzee\Yahtzee.cpp" />
-    <ClCompile Include="figure\figures\numbers\Number.cpp" />
     <ClCompile Include="saveLoadGame\Sauvegarde.cpp" />
     <ClCompile Include="YahtzeeGame.cpp" />
   </ItemGroup>
