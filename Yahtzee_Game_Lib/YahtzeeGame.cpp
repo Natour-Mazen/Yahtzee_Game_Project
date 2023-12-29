@@ -118,9 +118,9 @@ void YahtzeeGame::playHelper() {
 
 void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()) {
     std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
-    lancer.rollDice();
+    lancer.rollDices();
     lancer.printDices();
-    lancer.reRollDice();
+    lancer.reRollDices();
     joueurs[num_player].resetFigures();
     (joueurs[num_player].*createFiguresFunc)();
     joueurs[num_player].chooseFigure(lancer.getDiceValues());
