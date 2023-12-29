@@ -9,14 +9,14 @@ public:
             int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 4) {
                 m_value = i;
-                return count * i;
+                return 4 * i;
             }
         }
         return 0;
     }
 
     std::string getName() const {
-        return "Carré de " + std::to_string(m_value);
+        return "Carre de " + std::to_string(m_value);
     }
 
     short getId() const {
