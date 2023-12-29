@@ -13,6 +13,22 @@
 #include "numbers/Number.h"
 
 class Joueur {
+public:
+    Joueur();
+    ~Joueur();
+
+    void createMinorFigures();
+    void createMajorFigures();
+    void createAllFigures();
+
+    void resetFigures();
+
+    void displayFigureAndScores(const std::vector<int>& diceValues) const;
+    void chooseFigure(const std::vector<int>& diceValues);
+    int getTotalScore() const;
+    void serialize(std::ostream& out) const;
+    void deserialize(std::istream& in);
+
 private:
     static const short ID_YAHTZEE_FIRST = 12;
     static const short ID_YAHTZEE_BONUS = 13;
@@ -25,24 +41,7 @@ private:
     int m_totalScore;
 
     bool isFigureUsed(Figure* figure) const;
-    Figure* createNumberFigure(unsigned int id) const;
+    Figure* createMinorFigure(unsigned int id) const;
     void handleYahtzeeBonus(Figure* newFigure);
-    void updateScores(int scoreForFigure, Figure* selectedFigure, const std::vector<int>& diceValues);
-    
-public:
-   
-    Joueur();
-    ~Joueur();
-
-    void createAllFigures();
-    void createNumberFigures();
-    void createOtherFigures();
-
-    void resetFigures();
-
-    void displayFigureAndScores(const std::vector<int>& diceValues) const;
-    void chooseFigure(const std::vector<int>& diceValues);
-    int getTotalScore() const;
-    void serialize(std::ostream& out) const;
-    void deserialize(std::istream& in);
+    void updateScores(int scoreForFigure, Figure* selectedFigure);
 };

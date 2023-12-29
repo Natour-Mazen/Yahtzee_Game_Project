@@ -132,11 +132,11 @@ void YahtzeeGame::jouerTourFacile(int num_player) {
 }
 
 void YahtzeeGame::jouerTourNormalMineure(int num_player) {
-    jouerTour(num_player, &Joueur::createNumberFigures);
+    jouerTour(num_player, &Joueur::createMinorFigures);
 }
 
 void YahtzeeGame::jouerTourNormalMajeur(int num_player) {
-    jouerTour(num_player, &Joueur::createOtherFigures);
+    jouerTour(num_player, &Joueur::createMajorFigures);
 }
 
 void YahtzeeGame::afficherScoresTousJoueurs() {
