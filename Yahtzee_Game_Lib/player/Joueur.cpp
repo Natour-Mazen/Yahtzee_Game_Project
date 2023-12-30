@@ -8,7 +8,7 @@
 
 /** Create a player with a total and minor score of 0 and a game grid empty.
 **/
-Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false) {
+Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false), aleardyHardFigureCreated(false ){
     // Already init.
 }
 
@@ -59,7 +59,7 @@ void Joueur::createMajorFigures() {
             break;
         }
         if (newFigure && !isFigureUsed(newFigure.get())) {
-            handleYahtzeeBonus(newFigure);
+            m_figures.push_back(newFigure);
         }
     }
 }
@@ -70,6 +70,40 @@ void Joueur::createAllFigures() {
     createMinorFigures();
     createMajorFigures();
 }
+
+void Joueur::createHardcoreFigures() {
+   
+    std::vector<int> ordreFigures{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+    std::random_shuffle(ordreFigures.begin(), ordreFigures.end());
+
+    for (int i : ordreFigures) {
+        std::shared_ptr<Figure> newFigure = nullptr;
+        switch (i) {
+        case 1: newFigure = createMinorFigure(1); break;
+        case 2: newFigure = createMinorFigure(2); break;
+        case 3: newFigure = createMinorFigure(3); break;
+        case 4: newFigure = createMinorFigure(4); break;
+        case 5: newFigure = createMinorFigure(5); break;
+        case 6: newFigure = createMinorFigure(6); break;
+        case 7: newFigure = std::make_shared<Brelan<7>>(); break;
+        case 8: newFigure = std::make_shared<Carre<8>>(); break;
+        case 9: newFigure = std::make_shared<Full<9>>(); break;
+        case 10: newFigure = std::make_shared<PetiteSuite<10>>(); break;
+        case 11: newFigure = std::make_shared<GrandeSuite<11>>(); break;
+        case 12: !m_firstYahtzee ? newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>() : newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>(); break;
+        case 13: newFigure = std::make_shared<Chance<14>>(); break;
+        }
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
+        }
+    }
+    aleardyHardFigureCreated = true;
+}
+
+bool Joueur::getIsaleardyHardFigureCreated() const {
+    return aleardyHardFigureCreated;
+}
+
 
 /** Remove all the figures that we don't use anymore. 
 **/
@@ -237,19 +271,21 @@ std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
     }
 }
 
-/** For one figure, look if it's the second Yahtzee and if it's the case then add 100 points to the player.
-*   @param newFigure : the figure that we want to check for the second Yahtzee.
+/** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
+*   @param diceValues : vector of 5 dices.
 **/
-void Joueur::handleYahtzeeBonus(std::shared_ptr<Figure> newFigure) {
-    if (newFigure->getId() == ID_YAHTZEE_BONUS) {
-        if (!m_yahtzeeBonus) {
-            std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
-            m_totalScore += 100;
-            m_yahtzeeBonus = true;
+void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
+    for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
+        Figure* figure = it->get();
+        if (figure->getId() == ID_YAHTZEE_BONUS) {
+            if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
+                std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
+                m_totalScore += 100;
+                m_yahtzeeBonus = true;
+            }
+            m_figures.erase(it);
+            break;
         }
-    }
-    else {
-        m_figures.push_back(newFigure);
     }
 }
 
@@ -258,7 +294,10 @@ void Joueur::handleYahtzeeBonus(std::shared_ptr<Figure> newFigure) {
 *   @param selectedFigure : the figure selected.
 **/
 void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure) {
-    const short figureId = selectedFigure->getId();
+    //const short figureId = selectedFigure->getId();
+    const Figure* figure = selectedFigure.get();
+    const short figureId = figure->getId();
+
 
     if (figureId == ID_YAHTZEE_FIRST && scoreForFigure > 0) {
         m_firstYahtzee = true;

@@ -20,8 +20,11 @@ public:
     void createMinorFigures();
     void createMajorFigures();
     void createAllFigures();
+    void createHardcoreFigures();
 
     void resetFigures();
+    bool getIsaleardyHardFigureCreated() const;
+    void handleYahtzeeBonus(const std::vector<int>& diceValues);
 
    
     void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
@@ -40,11 +43,13 @@ private:
     std::vector<std::shared_ptr<Figure>> m_figuresUsed;
     int m_minorScore;
     int m_totalScore;
+    bool aleardyHardFigureCreated;
 
     bool isFigureUsed(Figure* figure) const;
     std::shared_ptr<Figure> createMinorFigure(unsigned int id) const;
-    void handleYahtzeeBonus(std::shared_ptr<Figure> newFigure);
+   // void handleYahtzeeBonus(std::shared_ptr<Figure> newFigure);
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);
+  
 };
