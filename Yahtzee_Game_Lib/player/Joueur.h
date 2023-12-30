@@ -23,7 +23,7 @@ public:
 
     void resetFigures();
 
-   
+    void handleYahtzeeBonus(const std::vector<int>& diceValues);
     void chooseFigure(const std::vector<int>& diceValues);
     int getTotalScore() const;
     void serialize(std::ostream& out) const;
@@ -42,7 +42,6 @@ private:
 
     bool isFigureUsed(Figure* figure) const;
     std::shared_ptr<Figure> createMinorFigure(unsigned int id) const;
-    void handleYahtzeeBonus(std::shared_ptr<Figure> newFigure);
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
 };

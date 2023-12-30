@@ -59,7 +59,7 @@ void Joueur::createMajorFigures() {
             break;
         }
         if (newFigure && !isFigureUsed(newFigure.get())) {
-            handleYahtzeeBonus(newFigure);
+            m_figures.push_back(newFigure);
         }
     }
 }
@@ -77,29 +77,23 @@ void Joueur::resetFigures() {
     m_figures.clear();
 }
 
-/** Display the differents figures possible for a set of dice.
-*   @param diveValues : vector of 5 dices.
+/** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
+*   @param diceValues : vector of 5 dices.
 **/
-void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
-    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
-    std::cout << "|                   YAHTZEE                   |\n";
-    std::cout << "|---------------------------------------------|\n";
-
-    for (size_t i = 0; i < m_figures.size(); ++i) {
-        int figurescore = m_figures[i]->calculateScore(diceValues);
-        std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
-        std::cout << std::setw(8) << std::right << figurescore << " points";
-        std::cout << std::setw(5) << "|\n";
+void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
+    for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
+        Figure* figure = it->get();
+        if (figure->getId() == ID_YAHTZEE_BONUS) {
+            if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
+                std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
+                m_totalScore += 100;
+                m_yahtzeeBonus = true;
+            }
+            m_figures.erase(it);
+            break;
+        }
     }
-
-    std::cout << "|---------------------------------------------|\n";
-    std::cout << "| Votre score Total: " << std::setw(15) << std::right << m_totalScore << " points";
-    std::cout << std::setw(5) << " |\n";
-    std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
-    std::cout << std::endl;
 }
-
-
 
 /** Display all the figures and get the figure choose by the player.
 *   @param diceValues : vector of 5 dices.
@@ -231,28 +225,13 @@ std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
     }
 }
 
-/** For one figure, look if it's the second Yahtzee and if it's the case then add 100 points to the player.
-*   @param newFigure : the figure that we want to check for the second Yahtzee.
-**/
-void Joueur::handleYahtzeeBonus(std::shared_ptr<Figure> newFigure) {
-    if (newFigure->getId() == ID_YAHTZEE_BONUS) {
-        if (!m_yahtzeeBonus) {
-            std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
-            m_totalScore += 100;
-            m_yahtzeeBonus = true;
-        }
-    }
-    else {
-        m_figures.push_back(newFigure);
-    }
-}
-
 /** Update the total score base on the points that the selected figure give us.
 *   @param scoreForFigure : is the score for the selected figure.
 *   @param selectedFigure : the figure selected.
 **/
 void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure) {
-    const short figureId = selectedFigure->getId();
+    const Figure* figure = selectedFigure.get();
+    const short figureId = figure->getId();
 
     if (figureId == ID_YAHTZEE_FIRST && scoreForFigure > 0) {
         m_firstYahtzee = true;
@@ -267,8 +246,27 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
         }
     }
 
-    std::cout << "   <<=>> Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points <<=>>" << std::endl;
-
-    
+    std::cout << "   <<=>> Vous avez choisi " << figure->getName() << " et vous avez obtenu " << scoreForFigure << " points <<=>>" << std::endl;
 }
 
+/** Display the differents figures possible for a set of dice.
+*   @param diveValues : vector of 5 dices.
+**/
+void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
+    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
+    std::cout << "|                   YAHTZEE                   |\n";
+    std::cout << "|---------------------------------------------|\n";
+
+    for (size_t i = 0; i < m_figures.size(); ++i) {
+        int figurescore = m_figures[i]->calculateScore(diceValues);
+        std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
+        std::cout << std::setw(8) << std::right << figurescore << " points";
+        std::cout << std::setw(5) << "|\n";
+    }
+
+    std::cout << "|---------------------------------------------|\n";
+    std::cout << "| Votre score Total: " << std::setw(15) << std::right << m_totalScore << " points";
+    std::cout << std::setw(5) << " |\n";
+    std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
+    std::cout << std::endl;
+}

@@ -149,9 +149,11 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
     lancer.rollDices();
     lancer.printDices();
     lancer.reRollDices();
-    joueurs[num_player]->resetFigures();
-    (joueurs[num_player].get()->*createFiguresFunc)();
-    joueurs[num_player]->chooseFigure(lancer.getDiceValues());
+    Joueur* player = joueurs[num_player].get();
+    (player->*createFiguresFunc)();
+    player->handleYahtzeeBonus(lancer.getDiceValues());
+    player->chooseFigure(lancer.getDiceValues());
+    player->resetFigures();
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
