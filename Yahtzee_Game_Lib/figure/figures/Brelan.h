@@ -16,6 +16,9 @@ public:
     }
 
     std::string getName() const {
+        if (m_value == 0) {
+            return "Brelan";
+        }
         return "Brelan de " + std::to_string(m_value);
     }
 

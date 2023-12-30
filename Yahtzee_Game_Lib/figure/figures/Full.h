@@ -24,6 +24,9 @@ public:
     }
 
     std::string getName() const {
+        if (m_value1 == 0) {
+            return "Full";
+        }
         return "Full de " + std::to_string(m_value1) + " et " + std::to_string(m_value2);
     }
 
