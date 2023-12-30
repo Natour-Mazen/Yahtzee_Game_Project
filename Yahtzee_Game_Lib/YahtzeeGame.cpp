@@ -110,6 +110,15 @@ void YahtzeeGame::nouvellePartie() {
     do {
         std::cout << ">> Entrez le nombre de joueurs : ";
         std::cin >> numberOfPlayers;
+
+        // Vérifiez si l'entrée était un nombre entier
+        if (std::cin.fail()) {
+            std::cin.clear(); // efface l'état d'erreur sur cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore les caractères incorrects
+            std::cout << "/!\\ Vous devez entrer un nombre. Veuillez reessayer /!\\ \n";
+            continue;
+        }
+
         if (numberOfPlayers <= 0) {
             std::cout << "/!\\ Le nombre de joueurs doit etre superieur a 0. Veuillez reessayer /!\\ \n";
         }
