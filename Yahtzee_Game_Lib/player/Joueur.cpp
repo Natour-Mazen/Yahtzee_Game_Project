@@ -102,11 +102,6 @@ void Joueur::createHardcoreFigures() {
     }
 }
 
-bool Joueur::getIsaleardyHardFigureCreated() const {
-    return aleardyHardFigureCreated;
-}
-
-
 /** Remove all the figures that we don't use anymore. 
 **/
 void Joueur::resetFigures() {

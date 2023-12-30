@@ -23,7 +23,6 @@ public:
     void createHardcoreFigures();
 
     void resetFigures();
-    bool getIsaleardyHardFigureCreated() const;
     void handleYahtzeeBonus(const std::vector<int>& diceValues);
 
    
