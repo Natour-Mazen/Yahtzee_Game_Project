@@ -144,26 +144,41 @@ void YahtzeeGame::playHelper() {
     }
 }
 
-void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()) {
+void YahtzeeGame::jouerTourFacileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)()) {
     std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
     lancer.rollDices();
     lancer.printDices();
     lancer.reRollDices();
     joueurs[num_player]->resetFigures();
     (joueurs[num_player].get()->*createFiguresFunc)();
-    joueurs[num_player]->chooseFigure(lancer.getDiceValues());
+    joueurs[num_player]->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+}
+
+
+void YahtzeeGame::jouerTourDifficileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)(),const int& NombreMaxOfFigureTopick) {
+    std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
+    lancer.rollDices();
+    lancer.printDices();
+    lancer.reRollDices();
+    joueurs[num_player]->resetFigures();
+    (joueurs[num_player].get()->*createFiguresFunc)();
+    joueurs[num_player]->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
-    jouerTour(num_player, &Joueur::createAllFigures);
+    jouerTourFacileAndPlusModes(num_player, &Joueur::createAllFigures);
 }
 
 void YahtzeeGame::jouerTourNormalMineure(int num_player) {
-    jouerTour(num_player, &Joueur::createMinorFigures);
+    jouerTourFacileAndPlusModes(num_player, &Joueur::createMinorFigures);
 }
 
 void YahtzeeGame::jouerTourNormalMajeur(int num_player) {
-    jouerTour(num_player, &Joueur::createMajorFigures);
+    jouerTourFacileAndPlusModes(num_player, &Joueur::createMajorFigures);
+}
+
+void YahtzeeGame::jouerTourDifficile(int num_player) {
+    jouerTourDifficileAndPlusModes(num_player, &Joueur::createAllFigures,1);
 }
 
 void YahtzeeGame::afficherScoresTousJoueurs() {
@@ -205,7 +220,12 @@ void YahtzeeGame::jouerNormal() {
 }
 
 void YahtzeeGame::jouerDifficile() {
-    // TODO: Ajouter l'implémentation
+    for (int round = 0; round < 13; ++round) {
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            jouerTourDifficile(num_player);
+        }
+    }
+    afficherScoresTousJoueurs();
 }
 
 void YahtzeeGame::jouerHardcore() {

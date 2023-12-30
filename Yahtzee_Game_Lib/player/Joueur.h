@@ -24,7 +24,8 @@ public:
     void resetFigures();
 
    
-    void chooseFigure(const std::vector<int>& diceValues);
+    void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
+    void chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick);
     int getTotalScore() const;
     void serialize(std::ostream& out) const;
     void deserialize(std::istream& in);
@@ -45,4 +46,5 @@ private:
     void handleYahtzeeBonus(std::shared_ptr<Figure> newFigure);
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
+    void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);
 };

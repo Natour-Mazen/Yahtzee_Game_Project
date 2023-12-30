@@ -93,7 +93,7 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
     }
 
     std::cout << "|---------------------------------------------|\n";
-    std::cout << "| Votre score Total: " << std::setw(15) << std::right << m_totalScore << " points";
+    std::cout << "| Votre score Total : " << std::setw(14) << std::right << m_totalScore << " points";
     std::cout << std::setw(5) << " |\n";
     std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
     std::cout << std::endl;
@@ -101,26 +101,23 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
 
 
 
-/** Display all the figures and get the figure choose by the player.
-*   @param diceValues : vector of 5 dices.
-**/
-void Joueur::chooseFigure(const std::vector<int>& diceValues) {
+void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
     int choice;
 
     displayFigureAndScores(diceValues);
 
     bool correctAnswer = false;
 
-    do {
-        if (m_figures.empty()) {
-            std::cout << "Il n'y a plus de figures disponibles. Fin de la Partie." << std::endl;
-            break;
-        }
+    if (maxFigures > m_figures.size()) {
+        std::cout << "   /!\\ Error : Le nombre de figure max à recuperer est superieur au nombre de figure du jeu /!\\   " << std::endl;
+        return;
+    }
 
-        std::cout << ">> Choisissez maintenant une figure, choix (1-" << m_figures.size() << ") : ";
+    do {
+        std::cout << ">> Choisissez maintenant une figure, choix (1-" << maxFigures << ") : ";
         std::cin >> choice;
 
-        if (choice >= 1 && choice <= static_cast<int>(m_figures.size())) {
+        if (choice >= 1 && choice <= maxFigures) {
             std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
 
             // Vérifier si la figure a déjà été utilisée
@@ -129,7 +126,7 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             }
             else {
                 int scoreForFigure = selectedFigure->calculateScore(diceValues);
-              
+
                 updateScores(scoreForFigure, selectedFigure);
 
                 // Add the selected figure to the list of figures used.
@@ -142,6 +139,15 @@ void Joueur::chooseFigure(const std::vector<int>& diceValues) {
             std::cout << "  /!\\ Choix invalide. Veuillez choisir une figure valide. /!\\  " << std::endl;
         }
     } while (!correctAnswer);
+}
+
+void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
+    chooseFigureHelper(diceValues, m_figures.size());
+}
+
+void Joueur::chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick) {
+    std::cout << "   <<=>> Vous ne pourrez choisir que la/les " << NombreMaxOfFigureTopick << "er(es) figure(s), cela fait parti du mode de jeu choisit <<=>>   " << std::endl;
+    chooseFigureHelper(diceValues, NombreMaxOfFigureTopick);
 }
 
 /** Give the total score of the game in progress.

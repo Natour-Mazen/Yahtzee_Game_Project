@@ -31,10 +31,12 @@ private:
     int saisirChoix(int min, int max);
     void afficherMenuPrincipal();
     void nouvellePartie();
-    void jouerTour(int num_player, void (Joueur::* createFiguresFunc)());
+    void jouerTourFacileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)());
+    void jouerTourDifficileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick);
     void jouerTourFacile(int num_player);
     void jouerTourNormalMineure(int num_player);
     void jouerTourNormalMajeur(int num_player);
+    void jouerTourDifficile(int num_player);
     void afficherScoresTousJoueurs();
 };
 
