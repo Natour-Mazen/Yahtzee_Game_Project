@@ -164,6 +164,7 @@ void YahtzeeGame::jouerTourDifficileAndPlusModes(int num_player, void (Joueur::*
     (player->*createFiguresFunc)();
     player->handleYahtzeeBonus(lancer.getDiceValues());
     player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
+    player->resetFigures();
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
@@ -187,8 +188,9 @@ void YahtzeeGame::jouerTourHardcore(int num_player) {
 }
 
 
-
 void YahtzeeGame::afficherScoresTousJoueurs() {
+    std::cout << "\n-------------------Fin du Jeu------------------" << std::endl;
+    std::cout << "\n|                                             |" << std::endl;
     std::cout << "\n------ Voici le scores de chaque joueurs ------" << std::endl;
     for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
         std::cout << "\t -> Score total du joueur " << num_player + 1  << " : " << joueurs[num_player]->getTotalScore() << std::endl;

@@ -20,6 +20,7 @@ private:
     std::vector<std::shared_ptr<Joueur>> joueurs;
     Lancer lancer;
 
+
     const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
     void jouerFacile();
@@ -31,6 +32,7 @@ private:
     int saisirChoix(int min, int max);
     void afficherMenuPrincipal();
     void nouvellePartie();
+
     void jouerTourFacileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)());
     void jouerTourDifficileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick);
     void jouerTourFacile(int num_player);
@@ -38,6 +40,7 @@ private:
     void jouerTourNormalMajeur(int num_player);
     void jouerTourDifficile(int num_player);
     void jouerTourHardcore(int num_player);
+
     void afficherScoresTousJoueurs();
 };
 

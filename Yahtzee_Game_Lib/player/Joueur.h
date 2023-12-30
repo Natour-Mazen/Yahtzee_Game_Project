@@ -38,16 +38,19 @@ private:
     static const short ID_YAHTZEE_BONUS = 13;
 
     std::vector<std::shared_ptr<Figure>> m_figures;
+    std::vector<std::shared_ptr<Figure>> m_figuresUsed;
+   
     bool m_firstYahtzee;
     bool m_yahtzeeBonus;
-    std::vector<std::shared_ptr<Figure>> m_figuresUsed;
     int m_minorScore;
     int m_totalScore;
+
+
     bool aleardyHardFigureCreated;
+    std::vector<int> ordreCreationFiguresHardcore;
 
     bool isFigureUsed(Figure* figure) const;
     std::shared_ptr<Figure> createMinorFigure(unsigned int id) const;
-   // void handleYahtzeeBonus(std::shared_ptr<Figure> newFigure);
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);

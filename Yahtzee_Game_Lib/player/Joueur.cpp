@@ -73,10 +73,13 @@ void Joueur::createAllFigures() {
 
 void Joueur::createHardcoreFigures() {
    
-    std::vector<int> ordreFigures{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-    std::random_shuffle(ordreFigures.begin(), ordreFigures.end());
+    if (!aleardyHardFigureCreated) {
+        ordreCreationFiguresHardcore = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+        std::random_shuffle(ordreCreationFiguresHardcore.begin(), ordreCreationFiguresHardcore.end());
+        aleardyHardFigureCreated = true;
+    }
 
-    for (int i : ordreFigures) {
+    for (int i : ordreCreationFiguresHardcore) {
         std::shared_ptr<Figure> newFigure = nullptr;
         switch (i) {
         case 1: newFigure = createMinorFigure(1); break;
@@ -97,7 +100,6 @@ void Joueur::createHardcoreFigures() {
             m_figures.push_back(newFigure);
         }
     }
-    aleardyHardFigureCreated = true;
 }
 
 bool Joueur::getIsaleardyHardFigureCreated() const {
