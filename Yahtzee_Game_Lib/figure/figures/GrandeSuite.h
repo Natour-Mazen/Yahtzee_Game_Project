@@ -25,11 +25,7 @@ public:
     }
 
     void serialize(std::ostream& out) const {
-        // La classe GrandeSuite n'a pas de membres de données à sérialiser
-    }
-
-    void deserialize(std::istream& in) {
-        // La classe GrandeSuite n'a pas de membres de données à désérialiser
+        out << "id: " << ID << "\n";
     }
 };
 

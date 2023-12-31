@@ -35,13 +35,7 @@ public:
     }
 
     void serialize(std::ostream& out) const {
-        out << m_value1 << "\n";
-        out << m_value2 << "\n";
-    }
-
-    void deserialize(std::istream& in) {
-        in >> m_value1;
-        in >> m_value2;
+        out << "id: " << ID << "\n";
     }
 
 private:

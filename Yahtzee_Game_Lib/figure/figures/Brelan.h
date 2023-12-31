@@ -27,11 +27,7 @@ public:
     }
 
     void serialize(std::ostream& out) const {
-        out << m_value << "\n";
-    }
-
-    void deserialize(std::istream& in)  {
-        in >> m_value;
+        out << "id: " << ID << "\n";
     }
 
 private:

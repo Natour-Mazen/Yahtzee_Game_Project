@@ -32,11 +32,6 @@ public:
     }
 
     void serialize(std::ostream& out) const {
-        // La classe PetiteSuite n'a pas de membres de données à sérialiser
+        out << "id: " << ID << "\n";
     }
-
-    void deserialize(std::istream& in) {
-        // La classe PetiteSuite n'a pas de membres de données à désérialiser
-    }
-
 };

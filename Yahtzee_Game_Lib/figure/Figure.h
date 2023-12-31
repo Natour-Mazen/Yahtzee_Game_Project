@@ -28,9 +28,5 @@ public:
     /** TODO
     **/
     virtual void serialize(std::ostream& out) const = 0;
-    
-    /** TODO
-    **/
-    virtual void deserialize(std::istream& in) = 0;
 };
 
