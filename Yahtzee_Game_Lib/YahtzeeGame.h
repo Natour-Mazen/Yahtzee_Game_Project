@@ -23,24 +23,32 @@ private:
     Lancer lancer;
 
 
+    void afficherMenuDifficulte();
     const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
-    void jouerFacile();
-    void jouerNormal();
-    void jouerDifficile();
-    void jouerHardcore();
-    void playHelper();
-    void afficherMenuDifficulte();
-    int saisirChoix(int min, int max);
-    void afficherMenuPrincipal();
+
     void nouvellePartie();
+    void playHelper();
+    
+    void afficherMenuPrincipal();
+
+    int saisirChoix(int min, int max);
 
     void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick, const bool& isDifficileMode);
+   
+    void jouerFacile();
     void jouerTourFacile(int num_player);
+
+    void jouerNormal();
     void jouerTourNormalMineure(int num_player);
     void jouerTourNormalMajeur(int num_player);
+
+    void jouerDifficile();
     void jouerTourDifficile(int num_player);
+
+    void jouerHardcore();
     void jouerTourHardcore(int num_player);
+    
 
     void afficherScoresTousJoueurs();
 };
