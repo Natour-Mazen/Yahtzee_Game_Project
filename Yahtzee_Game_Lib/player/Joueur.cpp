@@ -112,7 +112,7 @@ void Joueur::resetFigures() {
 *   @param diveValues : vector of 5 dices.
 **/
 void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
-    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
+    std::cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
     std::cout << "|                   YAHTZEE                   |\n";
     std::cout << "|---------------------------------------------|\n";
 
