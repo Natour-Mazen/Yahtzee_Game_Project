@@ -1,7 +1,5 @@
 ﻿#include "YahtzeeGame.h"
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
+
 
 YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer() {
     srand(static_cast<unsigned int>(time(nullptr)));

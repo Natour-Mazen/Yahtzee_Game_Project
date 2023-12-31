@@ -2,8 +2,10 @@
 #include "player/Joueur.h"
 #include "dice/Lancer.h"
 #include "enums/difficulty.h"
-#include "saveLoadGame/Sauvegarde.h"
-
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
 
 class YahtzeeGame {
 public:

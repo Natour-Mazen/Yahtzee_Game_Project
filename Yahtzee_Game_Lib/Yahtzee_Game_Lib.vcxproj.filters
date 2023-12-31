@@ -54,9 +54,6 @@
     <ClInclude Include="enums\difficulty.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="saveLoadGame\Sauvegarde.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dice\Lancer.cpp">
@@ -66,9 +63,6 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="YahtzeeGame.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="saveLoadGame\Sauvegarde.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

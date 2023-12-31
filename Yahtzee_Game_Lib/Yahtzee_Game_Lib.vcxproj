@@ -161,13 +161,11 @@
     <ClInclude Include="figure\figures\PetiteSuite.h" />
     <ClInclude Include="figure\figures\Yahtzee.h" />
     <ClInclude Include="figure\figures\Number.h" />
-    <ClInclude Include="saveLoadGame\Sauvegarde.h" />
     <ClInclude Include="YahtzeeGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="player\Joueur.cpp" />
     <ClCompile Include="dice\Lancer.cpp" />
-    <ClCompile Include="saveLoadGame\Sauvegarde.cpp" />
     <ClCompile Include="YahtzeeGame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
