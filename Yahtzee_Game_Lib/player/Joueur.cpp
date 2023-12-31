@@ -22,7 +22,7 @@ Joueur::~Joueur() {
 
 void Joueur::createAllFigures() {
     for (unsigned int i = 1; i <= 13; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigure(i);
+        std::shared_ptr<Figure> newFigure = createFigures(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
@@ -32,7 +32,7 @@ void Joueur::createAllFigures() {
 
 void Joueur::createMinorFigures() {
     for (unsigned int i = 1; i <= 6; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigure(i);
+        std::shared_ptr<Figure> newFigure = createFigures(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
@@ -42,7 +42,7 @@ void Joueur::createMinorFigures() {
 
 void Joueur::createMajorFigures() {
     for (unsigned int i = 7; i <= 13; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigure(i);
+        std::shared_ptr<Figure> newFigure = createFigures(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
@@ -58,7 +58,7 @@ void Joueur::createHardcoreFigures() {
     }
 
     for (int i : ordreCreationFiguresHardcore) {
-        std::shared_ptr<Figure> newFigure = createFigure(i);
+        std::shared_ptr<Figure> newFigure = createFigures(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
@@ -192,7 +192,7 @@ void Joueur::deserialize(std::istream& in) {
         getline(in, ligne);
         int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
 
-        std::shared_ptr<Figure> figure = createFigure(figureId);
+        std::shared_ptr<Figure> figure = createFigures(figureId);
         if (figure) {
             m_figuresUsed.push_back(figure);
         }
@@ -233,7 +233,7 @@ std::shared_ptr<Figure> Joueur::createNumberFigure(unsigned int number) const {
     }
 }
 
-std::shared_ptr<Figure> Joueur::createFigure(unsigned int id) const {
+std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
     switch (id) {
     case 1: case 2: case 3: case 4: case 5: case 6:
         return createNumberFigure(id);
