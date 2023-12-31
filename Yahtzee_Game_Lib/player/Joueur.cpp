@@ -8,7 +8,7 @@
 
 /** Create a player with a total and minor score of 0 and a game grid empty.
 **/
-Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false), aleardyHardFigureCreated(false ){
+Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false), aleardyHardFigureCreated(false){
     // Already init.
 }
 
@@ -272,16 +272,19 @@ std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
 *   @param diceValues : vector of 5 dices.
 **/
 void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
-    for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
-        Figure* figure = it->get();
-        if (figure->getId() == ID_YAHTZEE_BONUS) {
-            if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
-                std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
-                m_totalScore += 100;
-                m_yahtzeeBonus = true;
+    if (m_firstYahtzee)
+    {
+        for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
+            Figure* figure = it->get();
+            if (figure->getId() == ID_YAHTZEE_BONUS) {
+                if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
+                    std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
+                    m_totalScore += 100;
+                    m_yahtzeeBonus = true;
+                }
+                m_figures.erase(it);
+                break;
             }
-            m_figures.erase(it);
-            break;
         }
     }
 }

@@ -53,5 +53,4 @@ private:
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);
-  
 };
