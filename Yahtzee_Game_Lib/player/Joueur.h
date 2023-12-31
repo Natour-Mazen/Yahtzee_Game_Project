@@ -29,10 +29,11 @@ public:
     void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
     void chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick);
     int getTotalScore() const;
+    bool isFiguresEmpty() const;
     void serialize(std::ostream& out) const;
     void deserialize(std::istream& in);
 
-private:
+protected:
     static const short ID_YAHTZEE_FIRST = 12;
     static const short ID_YAHTZEE_BONUS = 13;
 

@@ -23,6 +23,7 @@ int YahtzeeGame::saisirChoix(int min, int max) {
 void YahtzeeGame::playGame() {
     int choix;
     do {
+        joueurs.clear();
         afficherMenuPrincipal();
         choix = saisirChoix(1, 3);
 
@@ -155,28 +156,34 @@ void YahtzeeGame::playHelper() {
 }
 
 void YahtzeeGame::jouerTourFacileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)()) {
-    std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
-    lancer.rollDices();
-    lancer.printDices();
-    lancer.reRollDices();
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
-    player->handleYahtzeeBonus(lancer.getDiceValues());
-    player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
-    player->resetFigures();
+    if (!player->isFiguresEmpty())
+    {
+        std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
+        lancer.rollDices();
+        lancer.printDices();
+        lancer.reRollDices();
+        player->handleYahtzeeBonus(lancer.getDiceValues());
+        player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+        player->resetFigures();
+    }
 }
 
 
 void YahtzeeGame::jouerTourDifficileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)(),const int& NombreMaxOfFigureTopick) {
-    std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
-    lancer.rollDices();
-    lancer.printDices();
-    lancer.reRollDices();
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
-    player->handleYahtzeeBonus(lancer.getDiceValues());
-    player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
-    player->resetFigures();
+    if (!player->isFiguresEmpty())
+    {
+        std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
+        lancer.rollDices();
+        lancer.printDices();
+        lancer.reRollDices();
+        player->handleYahtzeeBonus(lancer.getDiceValues());
+        player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
+        player->resetFigures();
+    }
 }
 
 void YahtzeeGame::jouerTourFacile(int num_player) {

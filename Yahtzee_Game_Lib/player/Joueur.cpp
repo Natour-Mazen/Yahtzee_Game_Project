@@ -188,6 +188,11 @@ int Joueur::getTotalScore() const
 {
     return m_totalScore;
 }
+
+bool Joueur::isFiguresEmpty() const {
+    return m_figures.size() == 0;
+}
+
 // TODO : METTRE UN COM
 void Joueur::serialize(std::ostream& out) const {
     out << "m_firstYahtzee: " << m_firstYahtzee << "\n";
