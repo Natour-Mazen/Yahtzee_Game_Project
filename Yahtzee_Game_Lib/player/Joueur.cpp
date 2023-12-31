@@ -130,8 +130,6 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
     std::cout << std::endl;
 }
 
-
-
 void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
     int choice;
 
@@ -205,6 +203,7 @@ void Joueur::serialize(std::ostream& out) const {
         figure->serialize(out);
     }
 }
+
 void Joueur::deserialize(std::istream& in) {
     std::string ligne;
 
@@ -228,7 +227,7 @@ void Joueur::deserialize(std::istream& in) {
     for (int i = 0; i < tailleFiguresUtilisees; i++) {
         getline(in, ligne);
         int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
-        std::cout << figureId << std::endl;
+
         // Use a switch or if-else statements to determine the figure type based on ID
         std::shared_ptr<Figure> figure;
         switch (figureId) {
@@ -302,7 +301,7 @@ void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
             Figure* figure = it->get();
             if (figure->getId() == ID_YAHTZEE_BONUS) {
                 if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
-                    std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>" << std::endl;
+                    std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
                     m_totalScore += 100;
                     m_yahtzeeBonus = true;
                 }
