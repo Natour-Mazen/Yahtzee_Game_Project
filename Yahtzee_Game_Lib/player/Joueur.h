@@ -22,6 +22,7 @@ public:
     void createAllFigures();
     void createHardcoreFigures();
 
+   
     void resetFigures();
     void handleYahtzeeBonus(const std::vector<int>& diceValues);
 
@@ -50,7 +51,8 @@ protected:
     std::vector<int> ordreCreationFiguresHardcore;
 
     bool isFigureUsed(Figure* figure) const;
-    std::shared_ptr<Figure> createMinorFigure(unsigned int id) const;
+    std::shared_ptr<Figure> createNumberFigure(unsigned int id) const;
+    std::shared_ptr<Figure> createFigure(unsigned int id) const;
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
     void displayFigureAndScores(const std::vector<int>& diceValues) const;
     void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);

@@ -19,60 +19,38 @@ Joueur::~Joueur() {
     m_figuresUsed.clear();
 }
 
-/** Create all the figures for the minor part if they are not already in the used figures.
-**/
+
+void Joueur::createAllFigures() {
+    for (unsigned int i = 1; i <= 13; ++i) {
+        std::shared_ptr<Figure> newFigure = createFigure(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
+        }
+    }
+}
+
+
 void Joueur::createMinorFigures() {
     for (unsigned int i = 1; i <= 6; ++i) {
-        std::shared_ptr<Figure> newFigure = createMinorFigure(i);
+        std::shared_ptr<Figure> newFigure = createFigure(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
     }
 }
 
-/** Create all the figures for the major part if they are not alreadyin the used figures.
-**/
+
 void Joueur::createMajorFigures() {
-    for (unsigned short i = 0; i < 7; ++i) {
-        std::shared_ptr<Figure> newFigure = nullptr;
-        switch (i) {
-        case 0:
-            newFigure = std::make_shared<Brelan<7>>();
-            break;
-        case 1:
-            newFigure = std::make_shared<Carre<8>>();
-            break;
-        case 2:
-            newFigure = std::make_shared<Full<9>>();
-            break;
-        case 3:
-            newFigure = std::make_shared<PetiteSuite<10>>();
-            break;
-        case 4:
-            newFigure = std::make_shared<GrandeSuite<11>>();
-            break;
-        case 5:
-            !m_firstYahtzee ? newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>() : newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>();
-            break;
-        case 6:
-            newFigure = std::make_shared<Chance<14>>();
-            break;
-        }
+    for (unsigned int i = 7; i <= 13; ++i) {
+        std::shared_ptr<Figure> newFigure = createFigure(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
     }
 }
 
-/** Create the figures for the minor and major part of the game.
-**/
-void Joueur::createAllFigures() {
-    createMinorFigures();
-    createMajorFigures();
-}
 
 void Joueur::createHardcoreFigures() {
-   
     if (!aleardyHardFigureCreated) {
         ordreCreationFiguresHardcore = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
         std::random_shuffle(ordreCreationFiguresHardcore.begin(), ordreCreationFiguresHardcore.end());
@@ -80,27 +58,13 @@ void Joueur::createHardcoreFigures() {
     }
 
     for (int i : ordreCreationFiguresHardcore) {
-        std::shared_ptr<Figure> newFigure = nullptr;
-        switch (i) {
-        case 1: newFigure = createMinorFigure(1); break;
-        case 2: newFigure = createMinorFigure(2); break;
-        case 3: newFigure = createMinorFigure(3); break;
-        case 4: newFigure = createMinorFigure(4); break;
-        case 5: newFigure = createMinorFigure(5); break;
-        case 6: newFigure = createMinorFigure(6); break;
-        case 7: newFigure = std::make_shared<Brelan<7>>(); break;
-        case 8: newFigure = std::make_shared<Carre<8>>(); break;
-        case 9: newFigure = std::make_shared<Full<9>>(); break;
-        case 10: newFigure = std::make_shared<PetiteSuite<10>>(); break;
-        case 11: newFigure = std::make_shared<GrandeSuite<11>>(); break;
-        case 12: !m_firstYahtzee ? newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>() : newFigure = std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>(); break;
-        case 13: newFigure = std::make_shared<Chance<14>>(); break;
-        }
+        std::shared_ptr<Figure> newFigure = createFigure(i);
         if (newFigure && !isFigureUsed(newFigure.get())) {
             m_figures.push_back(newFigure);
         }
     }
 }
+
 
 /** Remove all the figures that we don't use anymore. 
 **/
@@ -228,35 +192,12 @@ void Joueur::deserialize(std::istream& in) {
         getline(in, ligne);
         int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
 
-        // Use a switch or if-else statements to determine the figure type based on ID
-        std::shared_ptr<Figure> figure;
-        switch (figureId) {
-        case 1: figure = createMinorFigure(1); break;
-        case 2: figure = createMinorFigure(2); break;
-        case 3: figure = createMinorFigure(3); break;
-        case 4: figure = createMinorFigure(4); break;
-        case 5: figure = createMinorFigure(5); break;
-        case 6: figure = createMinorFigure(6); break;
-        case 7: figure = std::make_shared<Brelan<7>>(); break;
-        case 8: figure = std::make_shared<Carre<8>>(); break;
-        case 9: figure = std::make_shared<Full<9>>(); break;
-        case 10: figure = std::make_shared<PetiteSuite<10>>(); break;
-        case 11: figure = std::make_shared<GrandeSuite<11>>(); break;
-        case 12: figure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>(); break;
-        case 14: figure = std::make_shared<Chance<14>>(); break;
-        default:
-            // Handle unknown ID or throw an exception
-            break;
-        }
+        std::shared_ptr<Figure> figure = createFigure(figureId);
         if (figure) {
             m_figuresUsed.push_back(figure);
         }
     }
 }
-
-
-
-
 
 
 //============================================//
@@ -279,7 +220,8 @@ bool Joueur::isFigureUsed(Figure* figure) const {
 *   @param number : the number on a dice (form 1 to 6)
 *   @return : the figure associate with it's number.
 **/
-std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
+
+std::shared_ptr<Figure> Joueur::createNumberFigure(unsigned int number) const {
     switch (number) {
     case 1: return std::make_shared<Number<1>>(number);
     case 2: return std::make_shared<Number<2>>(number);
@@ -288,6 +230,32 @@ std::shared_ptr<Figure> Joueur::createMinorFigure(unsigned int number) const {
     case 5: return std::make_shared<Number<5>>(number);
     case 6: return std::make_shared<Number<6>>(number);
     default: return nullptr;
+    }
+}
+
+std::shared_ptr<Figure> Joueur::createFigure(unsigned int id) const {
+    switch (id) {
+    case 1: case 2: case 3: case 4: case 5: case 6:
+        return createNumberFigure(id);
+    case 7:
+        return std::make_shared<Brelan<7>>();
+    case 8:
+        return std::make_shared<Carre<8>>();
+    case 9:
+        return std::make_shared<Full<9>>();
+    case 10:
+        return std::make_shared<PetiteSuite<10>>();
+    case 11:
+        return std::make_shared<GrandeSuite<11>>();
+    case 12:
+        if (m_firstYahtzee) {
+            return std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>();
+        }
+        return std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>();
+    case 13: case 14: // The 14 for the load sys
+        return std::make_shared<Chance<14>>();
+    default:
+        return nullptr;
     }
 }
 
