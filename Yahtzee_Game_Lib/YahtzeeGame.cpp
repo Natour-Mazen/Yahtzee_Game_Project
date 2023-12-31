@@ -31,8 +31,8 @@ void YahtzeeGame::playGame() {
             nouvellePartie();
             break;
         case 2:
-            // reprendrePartie();
-            // playHelper();
+            reprendrePartie();
+            playHelper();
             break;
         case 3:
             std::cout << "Au revoir!" << std::endl;
@@ -148,6 +148,9 @@ void YahtzeeGame::playHelper() {
     case HARDCORE:
         jouerHardcore();
         break;
+    default:
+        throw std::exception("erreur de variante");
+        break;
     }
 }
 
@@ -198,9 +201,9 @@ void YahtzeeGame::jouerTourHardcore(int num_player) {
 
 
 void YahtzeeGame::afficherScoresTousJoueurs() {
-    std::cout << "\n-------------------Fin du Jeu------------------" << std::endl;
-    std::cout << "\n|                                             |" << std::endl;
-    std::cout << "\n------ Voici le scores de chaque joueurs ------" << std::endl;
+    std::cout << "\n|------------------Fin du Jeu-----------------|\n";
+    std::cout << "|                                             |\n";
+    std::cout << "|------Voici le scores de chaque joueurs------|\n";
     for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
         std::cout << "\t -> Score total du joueur " << num_player + 1  << " : " << joueurs[num_player]->getTotalScore() << std::endl;
     }
@@ -212,6 +215,7 @@ void YahtzeeGame::jouerFacile() {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
             jouerTourFacile(num_player);  
         }
+        //sauvegarderPartie();
     }
     afficherScoresTousJoueurs();
 }
@@ -259,10 +263,13 @@ void YahtzeeGame::jouerHardcore() {
 void YahtzeeGame::sauvegarderPartie() {
     std::ofstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {
-        fichier << variante << "\n";
-        fichier << joueurs.size() << "\n";
+        fichier << "variante :" << variante << "\n";
+        fichier << "Combien de joueurs : " << joueurs.size() << "\n";
+        int i = 0;
         for (auto& joueur : joueurs) {
+            fichier << "Joueur numero: "  << i << "\n";
             joueur->serialize(fichier);
+            i++;
         }
         
         std::cout << "Partie sauvegardée." << std::endl;
@@ -272,25 +279,28 @@ void YahtzeeGame::sauvegarderPartie() {
     }
 }
 
-// Désérialisation
 void YahtzeeGame::reprendrePartie() {
     std::ifstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {
-        int temp;
-        fichier >> temp;
-        variante = static_cast<DifficultyLevel>(temp);
-        size_t taille;
-        fichier >> taille;
-        joueurs.resize(taille);
-        for (auto& joueur : joueurs) {
+        std::string ligne;
+        getline(fichier, ligne);
+        variante = static_cast<DifficultyLevel>(std::stoi(ligne.substr(ligne.find(":") + 1)));
+
+        getline(fichier, ligne);
+        int nombreJoueurs = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+        joueurs.clear();
+        for (int i = 0; i < nombreJoueurs; i++) {
+            getline(fichier, ligne);  // Lire "Joueur numero X"
+            auto joueur = std::make_shared<Joueur>();
             joueur->deserialize(fichier);
+            joueurs.push_back(joueur);
         }
 
-        std::cout << "Partie reprise." << std::endl;
+        std::cout << "Partie chargée." << std::endl;
     }
     else {
-        std::cerr << "Impossible de charger la sauvegarde. Démarrage d'une nouvelle partie." << std::endl;
+        std::cerr << "Impossible d'ouvrir le fichier de sauvegarde." << std::endl;
     }
 }
-
 

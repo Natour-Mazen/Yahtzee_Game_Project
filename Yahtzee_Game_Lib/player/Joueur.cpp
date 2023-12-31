@@ -190,51 +190,70 @@ int Joueur::getTotalScore() const
 }
 // TODO : METTRE UN COM
 void Joueur::serialize(std::ostream& out) const {
-    out << m_firstYahtzee << "\n";
-    out << m_yahtzeeBonus << "\n";
-    out << m_minorScore << "\n";
-    out << m_totalScore << "\n";
-
-    out << m_figures.size() << "\n";
-    for (const auto& figure : m_figures) {
-        figure->serialize(out);
-    }
-
-    out << m_figuresUsed.size() << "\n";
+    out << "m_firstYahtzee: " << m_firstYahtzee << "\n";
+    out << "m_yahtzeeBonus: " << m_yahtzeeBonus << "\n";
+    out << "m_minorScore: " << m_minorScore << "\n";
+    out << "m_totalScore: " << m_totalScore << "\n";
+ 
+    out << "m_figuresUsed size: " << m_figuresUsed.size() << "\n";
     for (const auto& figure : m_figuresUsed) {
         figure->serialize(out);
     }
 }
-
-// TODO : METTRE UN COM
 void Joueur::deserialize(std::istream& in) {
-    in >> m_firstYahtzee;
-    in >> m_yahtzeeBonus;
-    in >> m_minorScore;
-    in >> m_totalScore;
+    std::string ligne;
 
-    size_t taille;
-    in >> taille;
-    m_figures.resize(taille);
-    for (auto& figure : m_figures) {
-        int typeId;
-        in >> typeId;
-        switch (typeId) {
-        case 1:
-            //figure = new Brelan<65465>();
-            break;
-        case 2:
-            //figure = new SubFigure2();
-            break;
-            // Ajoutez pour chaque sous-classe de Figure
+    getline(in, ligne);
+    m_firstYahtzee = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_yahtzeeBonus = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_minorScore = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_totalScore = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    m_figuresUsed.clear();
+
+    for (int i = 0; i < tailleFiguresUtilisees; i++) {
+        getline(in, ligne);
+        int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
+        std::cout << figureId << std::endl;
+        // Use a switch or if-else statements to determine the figure type based on ID
+        std::shared_ptr<Figure> figure;
+        switch (figureId) {
+        case 1: figure = createMinorFigure(1); break;
+        case 2: figure = createMinorFigure(2); break;
+        case 3: figure = createMinorFigure(3); break;
+        case 4: figure = createMinorFigure(4); break;
+        case 5: figure = createMinorFigure(5); break;
+        case 6: figure = createMinorFigure(6); break;
+        case 7: figure = std::make_shared<Brelan<7>>(); break;
+        case 8: figure = std::make_shared<Carre<8>>(); break;
+        case 9: figure = std::make_shared<Full<9>>(); break;
+        case 10: figure = std::make_shared<PetiteSuite<10>>(); break;
+        case 11: figure = std::make_shared<GrandeSuite<11>>(); break;
+        case 12: figure = std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>(); break;
+        case 14: figure = std::make_shared<Chance<14>>(); break;
         default:
-            throw std::runtime_error("Type de figure inconnu");
+            // Handle unknown ID or throw an exception
+            break;
         }
-        figure->deserialize(in);
+        if (figure) {
+            m_figuresUsed.push_back(figure);
+        }
     }
-
-    // Faites de même pour m_figuresUsed
 }
+
+
+
+
+
 
 //============================================//
 //                  PRIVATE                   //
@@ -246,7 +265,7 @@ void Joueur::deserialize(std::istream& in) {
 */
 bool Joueur::isFigureUsed(Figure* figure) const {
     auto is_figure = [figure](const std::shared_ptr<Figure> usedFigure) {
-        return figure->getId() == usedFigure->getId();
+        return figure->getId() == usedFigure.get()->getId();
         };
 
     return std::find_if(m_figuresUsed.begin(), m_figuresUsed.end(), is_figure) != std::end(m_figuresUsed);
