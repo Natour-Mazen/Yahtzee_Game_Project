@@ -153,7 +153,7 @@ void YahtzeeGame::playHelper() {
     }
 }
 
-void YahtzeeGame::jouerTourFacileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)()) {
+void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0,const bool& isDifficileMode = false) {
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
     if (!player->isFiguresEmpty())
@@ -163,45 +163,35 @@ void YahtzeeGame::jouerTourFacileAndPlusModes(int num_player, void (Joueur::* cr
         lancer.printDices();
         lancer.reRollDices();
         player->handleYahtzeeBonus(lancer.getDiceValues());
-        player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+        if (isDifficileMode) {
+            player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
+        }
+        else {
+            player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+        }
         player->resetFigures();
     }
 }
 
-
-void YahtzeeGame::jouerTourDifficileAndPlusModes(int num_player, void (Joueur::* createFiguresFunc)(),const int& NombreMaxOfFigureTopick) {
-    Joueur* player = joueurs[num_player].get();
-    (player->*createFiguresFunc)();
-    if (!player->isFiguresEmpty())
-    {
-        std::cout << "\n======== Joueur numero " << num_player + 1 << " a vous de jouer ========\n" << std::endl;
-        lancer.rollDices();
-        lancer.printDices();
-        lancer.reRollDices();
-        player->handleYahtzeeBonus(lancer.getDiceValues());
-        player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
-        player->resetFigures();
-    }
-}
 
 void YahtzeeGame::jouerTourFacile(int num_player) {
-    jouerTourFacileAndPlusModes(num_player, &Joueur::createAllFigures);
+    jouerTour(num_player, &Joueur::createAllFigures);
 }
 
 void YahtzeeGame::jouerTourNormalMineure(int num_player) {
-    jouerTourFacileAndPlusModes(num_player, &Joueur::createMinorFigures);
+    jouerTour(num_player, &Joueur::createMinorFigures);
 }
 
 void YahtzeeGame::jouerTourNormalMajeur(int num_player) {
-    jouerTourFacileAndPlusModes(num_player, &Joueur::createMajorFigures);
+    jouerTour(num_player, &Joueur::createMajorFigures);
 }
 
 void YahtzeeGame::jouerTourDifficile(int num_player) {
-    jouerTourDifficileAndPlusModes(num_player, &Joueur::createAllFigures,1);
+    jouerTour(num_player, &Joueur::createAllFigures, 1, true);
 }
 
 void YahtzeeGame::jouerTourHardcore(int num_player) {
-   jouerTourDifficileAndPlusModes(num_player, &Joueur::createHardcoreFigures, 1);
+    jouerTour(num_player, &Joueur::createHardcoreFigures, 1, true);
 }
 
 
