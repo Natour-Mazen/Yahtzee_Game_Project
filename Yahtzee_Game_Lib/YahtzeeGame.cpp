@@ -9,74 +9,6 @@ YahtzeeGame::~YahtzeeGame() {
     joueurs.clear();
 }
 
-int YahtzeeGame::saisirChoix(int min, int max) {
-    int choix;
-    bool isNumber;
-
-    do {
-        std::cout << ">> Votre choix (" << min << "-" << max << ") : ";
-        std::cin >> choix;
-
-        // Vérifie si l'entrée précédente sur le flux était un entier
-        isNumber = std::cin.good();
-
-        if (!isNumber) {
-            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre /!\\   \n";
-        }
-        else if (choix < min || choix > max) {
-            std::cout << "   /!\\ Erreur : Votre choix doit etre entre " << min << " et " << max << " /!\\   \n";
-        }
-
-        // Efface l'état de l'erreur précédente
-        std::cin.clear();
-
-        // Ignore le reste de la ligne
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    } while (!isNumber || choix < min || choix > max);
-
-    return choix;
-}
-
-void YahtzeeGame::playGame() {
-    int choix;
-    do {
-        joueurs.clear();
-        afficherMenuPrincipal();
-        choix = saisirChoix(1, 3);
-
-        switch (choix) {
-        case 1:
-            nouvellePartie();
-            break;
-        case 2:
-            reprendrePartie();
-          
-            break;
-        case 3:
-            std::cout << "  <<=>> Au revoir ! <<=>>   " << std::endl;
-            break;
-        default:
-            std::cout << "Choix invalide. Veuillez choisir a nouveau." << std::endl;
-            break;
-        }
-    } while (choix != 3);
-}
-
-const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
-    switch (level) {
-    case FACILE:
-        return "Facile";
-    case NORMAL:
-        return "Normal";
-    case DIFFICILE:
-        return "Difficile";
-    case HARDCORE:
-        return "Hardcore";
-    default:
-        return "Inconnu";
-    }
-}
 
 void YahtzeeGame::afficherMenuDifficulte() {
     const char UPPER_LEFT_CORNER = 218;
@@ -117,40 +49,32 @@ void YahtzeeGame::afficherMenuPrincipal() {
 }
 
 
-void YahtzeeGame::choisirDifficulte() {
-    afficherMenuDifficulte();
-    int choix = saisirChoix(1, HARDCORE + 1);
-    variante = static_cast<DifficultyLevel>(choix - 1);
-    std::cout << "  <<=>> Vous avez choisi le mode " << getDifficultyName(variante) << " <<=>>   " << std::endl;
-}
 
-void YahtzeeGame::nouvellePartie() {
-    int numberOfPlayers;
+
+
+
+void YahtzeeGame::playGame() {
+    int choix;
     do {
-        std::cout << ">> Entrez le nombre de joueurs : ";
-        std::cin >> numberOfPlayers;
+        joueurs.clear();
+        afficherMenuPrincipal();
+        choix = saisirChoix(1, 3);
 
-        // Vérifiez si l'entrée était un nombre entier
-        if (std::cin.fail()) {
-            std::cin.clear(); // efface l'état d'erreur sur cin
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore les caractères incorrects
-            std::cout << "   /!\\ Vous devez entrer un nombre. Veuillez reessayer /!\\    \n";
-            continue;
+        switch (choix) {
+        case 1:
+            nouvellePartie();
+            break;
+        case 2:
+            reprendrePartie();
+            break;
+        case 3:
+            std::cout << "  <<=>> Au revoir ! <<=>>   " << std::endl;
+            break;
+        default:
+            std::cout << "Choix invalide. Veuillez choisir a nouveau." << std::endl;
+            break;
         }
-
-        if (numberOfPlayers <= 0) {
-            std::cout << "/!\\ Le nombre de joueurs doit etre superieur a 0. Veuillez reessayer /!\\ \n";
-        }
-    } while (numberOfPlayers <= 0);
-
-    for (int i = 0; i < numberOfPlayers; ++i) {
-        std::shared_ptr<Joueur> player = std::make_shared<Joueur>();
-        joueurs.push_back(player);
-    }
-    std::cout << std::endl;
-    choisirDifficulte();
-    std::cout << std::endl;
-    playHelper();
+    } while (choix != 3);
 }
 
 void YahtzeeGame::playHelper() {
@@ -173,6 +97,117 @@ void YahtzeeGame::playHelper() {
     }
 }
 
+void YahtzeeGame::nouvellePartie() {
+    int numberOfPlayers;
+    do {
+        std::cout << ">> Entrez le nombre de joueurs (max 8) : ";
+        std::cin >> numberOfPlayers;
+
+        // Vérifiez si l'entrée était un nombre entier
+        if (std::cin.fail()) {
+            std::cin.clear(); // efface l'état d'erreur sur cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore les caractères incorrects
+            std::cout << "   /!\\ Vous devez entrer un nombre. Veuillez reessayer /!\\    \n";
+            continue;
+        }
+
+        if (numberOfPlayers <= 0 || numberOfPlayers > 8) {
+            std::cout << "   /!\\ Le nombre de joueurs doit etre superieur a 0 et inferieur a 8. Veuillez reessayer /!\\    \n";
+        }
+    } while (numberOfPlayers <= 0 || numberOfPlayers > 8);
+
+    for (int i = 0; i < numberOfPlayers; ++i) {
+        std::shared_ptr<Joueur> player = std::make_shared<Joueur>();
+        joueurs.push_back(player);
+    }
+    std::cout << std::endl;
+    choisirDifficulte();
+    std::cout << std::endl;
+    playHelper();
+}
+
+void YahtzeeGame::sauvegarderPartie() {
+    serialize();
+}
+
+void YahtzeeGame::reprendrePartie() {
+    deserialize();
+    std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
+    std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
+    std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
+    playHelper();
+}
+
+
+
+
+
+int YahtzeeGame::saisirChoix(int min, int max) {
+    int choix;
+    bool isNumber;
+
+    do {
+        std::cout << ">> Votre choix (" << min << "-" << max << ") : ";
+        std::cin >> choix;
+
+        // Vérifie si l'entrée précédente sur le flux était un entier
+        isNumber = std::cin.good();
+
+        if (!isNumber) {
+            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre /!\\   \n";
+        }
+        else if (choix < min || choix > max) {
+            std::cout << "   /!\\ Erreur : Votre choix doit etre entre " << min << " et " << max << " /!\\   \n";
+        }
+
+        // Efface l'état de l'erreur précédente
+        std::cin.clear();
+
+        // Ignore le reste de la ligne
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    } while (!isNumber || choix < min || choix > max);
+
+    return choix;
+}
+
+void YahtzeeGame::choisirDifficulte() {
+    afficherMenuDifficulte();
+    int choix = saisirChoix(1, HARDCORE + 1);
+    variante = static_cast<DifficultyLevel>(choix - 1);
+    std::cout << "  <<=>> Vous avez choisi le mode " << getDifficultyName(variante) << " <<=>>   " << std::endl;
+}
+
+const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
+    switch (level) {
+    case FACILE:
+        return "Facile";
+    case NORMAL:
+        return "Normal";
+    case DIFFICILE:
+        return "Difficile";
+    case HARDCORE:
+        return "Hardcore";
+    default:
+        return "Inconnu";
+    }
+}
+
+void YahtzeeGame::afficherScoresTousJoueurs() {
+    std::cout << "\n|------------------Fin du Jeu-----------------|\n";
+    std::cout << "|                                             |\n";
+    std::cout << "|------Voici le scores de chaque joueurs------|\n";
+    for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+        std::cout << "\t -> Score total du joueur " << num_player + 1 << " : " << joueurs[num_player]->getTotalScore() << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+
+
+
+
+
 void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0,const bool& isDifficileMode = false) {
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
@@ -194,7 +229,6 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
     }
 }
 
-
 void YahtzeeGame::jouerTourFacile(int num_player) {
     jouerTour(num_player, &Joueur::createAllFigures);
 }
@@ -215,17 +249,6 @@ void YahtzeeGame::jouerTourHardcore(int num_player) {
     jouerTour(num_player, &Joueur::createHardcoreFigures, 1, true);
 }
 
-
-void YahtzeeGame::afficherScoresTousJoueurs() {
-    std::cout << "\n|------------------Fin du Jeu-----------------|\n";
-    std::cout << "|                                             |\n";
-    std::cout << "|------Voici le scores de chaque joueurs------|\n";
-    for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
-        std::cout << "\t -> Score total du joueur " << num_player + 1  << " : " << joueurs[num_player]->getTotalScore() << std::endl;
-    }
-    std::cout << std::endl;
-}
-
 void YahtzeeGame::jouerFacile() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -234,7 +257,6 @@ void YahtzeeGame::jouerFacile() {
     }
     afficherScoresTousJoueurs();
 }
-
 
 void YahtzeeGame::jouerNormal() {
     std::cout << "\n   <<===>> La partie mineure commence <<===>>\n" << std::endl;
@@ -273,20 +295,10 @@ void YahtzeeGame::jouerHardcore() {
     afficherScoresTousJoueurs();
 }
 
-void YahtzeeGame::sauvegarderPartie() {
-    serialize();
-}
-
-void YahtzeeGame::reprendrePartie() {
-    deserialize();
-    std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
-    std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
-    std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
-    playHelper();
-}
 
 
-// Sérialisation
+
+// Save/Load
 void YahtzeeGame::serialize() const {
     std::ofstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {

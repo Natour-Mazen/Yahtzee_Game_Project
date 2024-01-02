@@ -20,204 +20,37 @@ Joueur::~Joueur() {
 }
 
 
-void Joueur::createAllFigures() {
-    for (unsigned int i = 1; i <= 13; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigures(i);
-        if (newFigure && !isFigureUsed(newFigure.get())) {
-            m_figures.push_back(newFigure);
-        }
-    }
-}
-
-
-void Joueur::createMinorFigures() {
-    for (unsigned int i = 1; i <= 6; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigures(i);
-        if (newFigure && !isFigureUsed(newFigure.get())) {
-            m_figures.push_back(newFigure);
-        }
-    }
-}
-
-
-void Joueur::createMajorFigures() {
-    for (unsigned int i = 7; i <= 13; ++i) {
-        std::shared_ptr<Figure> newFigure = createFigures(i);
-        if (newFigure && !isFigureUsed(newFigure.get())) {
-            m_figures.push_back(newFigure);
-        }
-    }
-}
-
-
-void Joueur::createHardcoreFigures() {
-    if (!aleardyHardFigureCreated) {
-        ordreCreationFiguresHardcore = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-        std::random_shuffle(ordreCreationFiguresHardcore.begin(), ordreCreationFiguresHardcore.end());
-        aleardyHardFigureCreated = true;
-    }
-
-    for (int i : ordreCreationFiguresHardcore) {
-        std::shared_ptr<Figure> newFigure = createFigures(i);
-        if (newFigure && !isFigureUsed(newFigure.get())) {
-            m_figures.push_back(newFigure);
-        }
-    }
-}
-
-
-/** Remove all the figures that we don't use anymore. 
+/** Remove all the figures that we don't use anymore.
 **/
 void Joueur::resetFigures() {
     m_figures.clear();
 }
-
-/** Display the differents figures possible for a set of dice.
-*   @param diveValues : vector of 5 dices.
+/** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
+*   @param diceValues : vector of 5 dices.
 **/
-void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
-    std::cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
-    std::cout << "|                   YAHTZEE                   |\n";
-    std::cout << "|---------------------------------------------|\n";
 
-    for (size_t i = 0; i < m_figures.size(); ++i) {
-        int figurescore = m_figures[i]->calculateScore(diceValues);
-        std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
-        std::cout << std::setw(8) << std::right << figurescore << " points";
-        std::cout << std::setw(5) << "|\n";
-    }
-
-    std::cout << "|---------------------------------------------|\n";
-    std::cout << "| Votre score Total : " << std::setw(14) << std::right << m_totalScore << " points";
-    std::cout << std::setw(5) << " |\n";
-    std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
-    std::cout << std::endl;
-}
-
-void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
-    int choice;
-    bool isNumber;
-
-    displayFigureAndScores(diceValues);
-
-    bool correctAnswer = false;
-
-    if (maxFigures > m_figures.size()) {
-        std::cout << "   /!\\ Error : Le nombre de figure max à recuperer est superieur au nombre de figure du jeu /!\\   " << std::endl;
-        return;
-    }
-
-    do {
-        std::cout << ">> Choisissez maintenant une figure, choix (1-" << maxFigures << ") : ";
-        std::cin >> choice;
-
-        // Vérifie si l'entrée précédente sur le flux était un entier
-        isNumber = std::cin.good();
-
-        if (!isNumber) {
-            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre.  /!\\ \n";
-        }
-        else if (choice >= 1 && choice <= maxFigures) {
-            std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
-
-            // Vérifier si la figure a déjà été utilisée
-            if (isFigureUsed(selectedFigure.get())) {
-                std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
-            }
-            else {
-                int scoreForFigure = selectedFigure->calculateScore(diceValues);
-
-                updateScores(scoreForFigure, selectedFigure);
-
-                // Add the selected figure to the list of figures used.
-                m_figuresUsed.push_back(selectedFigure);
-
-                correctAnswer = true;
+void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
+    if (m_firstYahtzee)
+    {
+        for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
+            Figure* figure = it->get();
+            if (figure->getId() == ID_YAHTZEE_BONUS) {
+                if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
+                    std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
+                    m_totalScore += 100;
+                    m_yahtzeeBonus = true;
+                }
+                m_figures.erase(it);
+                break;
             }
         }
-        else {
-            std::cout << "   /!\\ Choix invalide. Veuillez choisir une figure valide /!\\  " << std::endl;
-        }
-
-        // Efface l'état de l'erreur précédente
-        std::cin.clear();
-
-        // Ignore le reste de la ligne
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    } while (!correctAnswer);
-}
-
-
-void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
-    chooseFigureHelper(diceValues, m_figures.size());
-}
-
-void Joueur::chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick) {
-    std::cout << "   <<=>> Vous ne pourrez choisir que la/les " << NombreMaxOfFigureTopick << "er(es) figure(s), cela fait parti du mode de jeu choisit <<=>>   " << std::endl;
-    chooseFigureHelper(diceValues, NombreMaxOfFigureTopick);
-}
-
-/** Give the total score of the game in progress.
-*   @return : the total score.
-**/
-int Joueur::getTotalScore() const
-{
-    return m_totalScore;
-}
-
-bool Joueur::isFiguresEmpty() const {
-    return m_figures.size() == 0;
-}
-
-// TODO : METTRE UN COM
-void Joueur::serialize(std::ostream& out) const {
-    out << "m_firstYahtzee: " << m_firstYahtzee << "\n";
-    out << "m_yahtzeeBonus: " << m_yahtzeeBonus << "\n";
-    out << "m_minorScore: " << m_minorScore << "\n";
-    out << "m_totalScore: " << m_totalScore << "\n";
- 
-    out << "m_figuresUsed size: " << m_figuresUsed.size() << "\n";
-    for (const auto& figure : m_figuresUsed) {
-        figure->serialize(out);
-    }
-}
-
-void Joueur::deserialize(std::istream& in) {
-    std::string ligne;
-
-    getline(in, ligne);
-    m_firstYahtzee = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-    getline(in, ligne);
-    m_yahtzeeBonus = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-    getline(in, ligne);
-    m_minorScore = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-    getline(in, ligne);
-    m_totalScore = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-    getline(in, ligne);
-    int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-    m_figuresUsed.clear();
-
-    for (int i = 0; i < tailleFiguresUtilisees; i++) {
-        getline(in, ligne);
-        int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
-
-        std::shared_ptr<Figure> figure = createFigures(figureId);
-        if (figure) {
-            m_figuresUsed.push_back(figure);
-        }
     }
 }
 
 
-//============================================//
-//                  PRIVATE                   //
-//============================================//
+
+
+
 
 /** Look if the figure pass in parameter is in the used figures.
 *   @param figure : the figure that need to be check.
@@ -274,25 +107,71 @@ std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
     }
 }
 
-/** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
-*   @param diceValues : vector of 5 dices.
-**/
-void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
-    if (m_firstYahtzee)
-    {
-        for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
-            Figure* figure = it->get();
-            if (figure->getId() == ID_YAHTZEE_BONUS) {
-                if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
-                    std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
-                    m_totalScore += 100;
-                    m_yahtzeeBonus = true;
-                }
-                m_figures.erase(it);
-                break;
-            }
+void Joueur::createAllFigures() {
+    for (unsigned int i = 1; i <= 13; ++i) {
+        std::shared_ptr<Figure> newFigure = createFigures(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
         }
     }
+}
+
+void Joueur::createMinorFigures() {
+    for (unsigned int i = 1; i <= 6; ++i) {
+        std::shared_ptr<Figure> newFigure = createFigures(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
+        }
+    }
+}
+
+void Joueur::createMajorFigures() {
+    for (unsigned int i = 7; i <= 13; ++i) {
+        std::shared_ptr<Figure> newFigure = createFigures(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
+        }
+    }
+}
+
+void Joueur::createHardcoreFigures() {
+    if (!aleardyHardFigureCreated) {
+        ordreCreationFiguresHardcore = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+        std::random_shuffle(ordreCreationFiguresHardcore.begin(), ordreCreationFiguresHardcore.end());
+        aleardyHardFigureCreated = true;
+    }
+
+    for (int i : ordreCreationFiguresHardcore) {
+        std::shared_ptr<Figure> newFigure = createFigures(i);
+        if (newFigure && !isFigureUsed(newFigure.get())) {
+            m_figures.push_back(newFigure);
+        }
+    }
+}
+
+
+
+
+/** Display the differents figures possible for a set of dice.
+*   @param diveValues : vector of 5 dices.
+**/
+void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
+    std::cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
+    std::cout << "|                   YAHTZEE                   |\n";
+    std::cout << "|---------------------------------------------|\n";
+
+    for (size_t i = 0; i < m_figures.size(); ++i) {
+        int figurescore = m_figures[i]->calculateScore(diceValues);
+        std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
+        std::cout << std::setw(8) << std::right << figurescore << " points";
+        std::cout << std::setw(5) << "|\n";
+    }
+
+    std::cout << "|---------------------------------------------|\n";
+    std::cout << "| Votre score Total : " << std::setw(14) << std::right << m_totalScore << " points";
+    std::cout << std::setw(5) << " |\n";
+    std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
+    std::cout << std::endl;
 }
 
 /** Update the total score base on the points that the selected figure give us.
@@ -318,7 +197,136 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
     }
 
     std::cout << "   <<=>> Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points <<=>>" << std::endl;
-
-    
 }
 
+void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
+    int choice;
+    bool isNumber;
+
+    displayFigureAndScores(diceValues);
+
+    bool correctAnswer = false;
+
+    if (maxFigures > m_figures.size()) {
+        std::cout << "   /!\\ Error : Le nombre de figure max à recuperer est superieur au nombre de figure du jeu /!\\   " << std::endl;
+        return;
+    }
+
+    do {
+        std::cout << ">> Choisissez maintenant une figure, choix (1-" << maxFigures << ") : ";
+        std::cin >> choice;
+
+        // Vérifie si l'entrée précédente sur le flux était un entier
+        isNumber = std::cin.good();
+
+        if (!isNumber) {
+            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre  /!\\ \n";
+        }
+        else if (choice >= 1 && choice <= maxFigures) {
+            std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
+
+            // Vérifier si la figure a déjà été utilisée
+            if (isFigureUsed(selectedFigure.get())) {
+                std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
+            }
+            else {
+                int scoreForFigure = selectedFigure->calculateScore(diceValues);
+
+                updateScores(scoreForFigure, selectedFigure);
+
+                // Add the selected figure to the list of figures used.
+                m_figuresUsed.push_back(selectedFigure);
+
+                correctAnswer = true;
+            }
+        }
+        else {
+            std::cout << "   /!\\ Choix invalide. Veuillez choisir une figure valide /!\\  " << std::endl;
+        }
+
+        // Efface l'état de l'erreur précédente
+        std::cin.clear();
+
+        // Ignore le reste de la ligne
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    } while (!correctAnswer);
+}
+
+void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
+    chooseFigureHelper(diceValues, m_figures.size());
+}
+
+void Joueur::chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick) {
+    std::cout << "   <<=>> Vous ne pourrez choisir que la/les " << NombreMaxOfFigureTopick << "er(es) figure(s), cela fait parti du mode de jeu choisit <<=>>   " << std::endl;
+    chooseFigureHelper(diceValues, NombreMaxOfFigureTopick);
+}
+
+
+
+
+
+
+
+
+/** Give the total score of the game in progress.
+*   @return : the total score.
+**/
+int Joueur::getTotalScore() const
+{
+    return m_totalScore;
+}
+
+bool Joueur::isFiguresEmpty() const {
+    return m_figures.size() == 0;
+}
+
+
+
+
+
+
+
+// TODO : METTRE UN COM
+void Joueur::serialize(std::ostream& out) const {
+    out << "m_firstYahtzee: " << m_firstYahtzee << "\n";
+    out << "m_yahtzeeBonus: " << m_yahtzeeBonus << "\n";
+    out << "m_minorScore: " << m_minorScore << "\n";
+    out << "m_totalScore: " << m_totalScore << "\n";
+ 
+    out << "m_figuresUsed size: " << m_figuresUsed.size() << "\n";
+    for (const auto& figure : m_figuresUsed) {
+        figure->serialize(out);
+    }
+}
+
+void Joueur::deserialize(std::istream& in) {
+    std::string ligne;
+
+    getline(in, ligne);
+    m_firstYahtzee = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_yahtzeeBonus = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_minorScore = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_totalScore = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    m_figuresUsed.clear();
+
+    for (int i = 0; i < tailleFiguresUtilisees; i++) {
+        getline(in, ligne);
+        int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+        std::shared_ptr<Figure> figure = createFigures(figureId);
+        if (figure) {
+            m_figuresUsed.push_back(figure);
+        }
+    }
+}
