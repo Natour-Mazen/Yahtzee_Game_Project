@@ -285,7 +285,6 @@ void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
 *   @param selectedFigure : the figure selected.
 **/
 void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure) {
-    //const short figureId = selectedFigure->getId();
     const Figure* figure = selectedFigure.get();
     const short figureId = figure->getId();
 

@@ -253,6 +253,19 @@ void YahtzeeGame::jouerHardcore() {
     afficherScoresTousJoueurs();
 }
 
+void YahtzeeGame::sauvegarderPartie() {
+    serialize();
+}
+
+void YahtzeeGame::reprendrePartie() {
+    deserialize();
+    std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
+    std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
+    std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
+    playHelper();
+}
+
+
 // Sérialisation
 void YahtzeeGame::serialize() const {
     std::ofstream fichier("sauvegarde.txt");
@@ -266,7 +279,7 @@ void YahtzeeGame::serialize() const {
             i++;
         }
 
-        std::cout << "   <<===>> Partie sauvegardee <<===>>   \n" << std::endl;
+        std::cout << "\n   <<===>> Partie sauvegardee <<===>>   \n" << std::endl;
     }
     else {
         std::cerr << "\n   <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
@@ -299,15 +312,4 @@ void YahtzeeGame::deserialize() {
 }
 
 
-void YahtzeeGame::sauvegarderPartie() {
-    serialize();
-}
-
-void YahtzeeGame::reprendrePartie() {
-    deserialize();
-    std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
-    std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
-    std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
-    playHelper();
-}
 

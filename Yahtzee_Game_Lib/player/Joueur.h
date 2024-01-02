@@ -27,8 +27,12 @@ public:
 
     void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
     void chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick);
+
+
     int getTotalScore() const;
     bool isFiguresEmpty() const;
+
+
     void serialize(std::ostream& out) const;
     void deserialize(std::istream& in);
 
