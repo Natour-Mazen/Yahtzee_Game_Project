@@ -126,7 +126,6 @@ void YahtzeeGame::nouvellePartie() {
     }
     std::cout << std::endl;
     choisirDifficulte();
-    std::cout << std::endl;
     playHelper();
 }
 
