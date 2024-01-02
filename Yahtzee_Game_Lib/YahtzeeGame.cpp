@@ -81,6 +81,7 @@ void YahtzeeGame::playGame() {
 }
 
 void YahtzeeGame::playHelper() {
+    std::cout << "\n  <<=>> Pour info, il y a une sauvgarde automatique a chaque tour de jeu, Amusez vous bien :) <<=>>   " << std::endl;
     switch (variante) {
     case FACILE:
         jouerFacile();
