@@ -314,10 +314,10 @@ void YahtzeeGame::serialize() const {
             i++;
         }
 
-        std::cout << "\n   <<===>> Partie sauvegardee <<===>>   \n" << std::endl;
+        std::cout << "\n  <<===>> Partie sauvegardee <<===>>   \n" << std::endl;
     }
     else {
-        std::cerr << "\n   <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
+        std::cerr << "\n  <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
     }
 }
 
@@ -339,10 +339,10 @@ void YahtzeeGame::deserialize() {
             joueurs.push_back(joueur);
         }
 
-        std::cout << "\n   <<===>> Partie chargee <<===>>   \n" << std::endl;
+        std::cout << "\n  <<===>> Partie chargee <<===>>   \n" << std::endl;
     }
     else {
-        std::cerr << "\n   <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
+        std::cerr << "\n  <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
     }
 }
 
