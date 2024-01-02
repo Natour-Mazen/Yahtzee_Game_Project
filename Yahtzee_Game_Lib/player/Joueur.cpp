@@ -96,6 +96,7 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
 
 void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
     int choice;
+    bool isNumber;
 
     displayFigureAndScores(diceValues);
 
@@ -110,7 +111,13 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
         std::cout << ">> Choisissez maintenant une figure, choix (1-" << maxFigures << ") : ";
         std::cin >> choice;
 
-        if (choice >= 1 && choice <= maxFigures) {
+        // Vérifie si l'entrée précédente sur le flux était un entier
+        isNumber = std::cin.good();
+
+        if (!isNumber) {
+            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre.  /!\\ \n";
+        }
+        else if (choice >= 1 && choice <= maxFigures) {
             std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
 
             // Vérifier si la figure a déjà été utilisée
@@ -129,10 +136,18 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
             }
         }
         else {
-            std::cout << "  /!\\ Choix invalide. Veuillez choisir une figure valide. /!\\  " << std::endl;
+            std::cout << "   /!\\ Choix invalide. Veuillez choisir une figure valide /!\\  " << std::endl;
         }
+
+        // Efface l'état de l'erreur précédente
+        std::cin.clear();
+
+        // Ignore le reste de la ligne
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     } while (!correctAnswer);
 }
+
 
 void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
     chooseFigureHelper(diceValues, m_figures.size());

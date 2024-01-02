@@ -11,10 +11,30 @@ YahtzeeGame::~YahtzeeGame() {
 
 int YahtzeeGame::saisirChoix(int min, int max) {
     int choix;
+    bool isNumber;
+
     do {
         std::cout << ">> Votre choix (" << min << "-" << max << ") : ";
         std::cin >> choix;
-    } while (choix < min || choix > max);
+
+        // Vérifie si l'entrée précédente sur le flux était un entier
+        isNumber = std::cin.good();
+
+        if (!isNumber) {
+            std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre /!\\   \n";
+        }
+        else if (choix < min || choix > max) {
+            std::cout << "   /!\\ Erreur : Votre choix doit etre entre " << min << " et " << max << " /!\\   \n";
+        }
+
+        // Efface l'état de l'erreur précédente
+        std::cin.clear();
+
+        // Ignore le reste de la ligne
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    } while (!isNumber || choix < min || choix > max);
+
     return choix;
 }
 
@@ -114,7 +134,7 @@ void YahtzeeGame::nouvellePartie() {
         if (std::cin.fail()) {
             std::cin.clear(); // efface l'état d'erreur sur cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore les caractères incorrects
-            std::cout << "/!\\ Vous devez entrer un nombre. Veuillez reessayer /!\\ \n";
+            std::cout << "   /!\\ Vous devez entrer un nombre. Veuillez reessayer /!\\    \n";
             continue;
         }
 
