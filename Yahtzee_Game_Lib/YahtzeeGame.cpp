@@ -1,4 +1,5 @@
 ﻿#include "YahtzeeGame.h"
+#include "IA/IA.h"
 
 
 YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer() {
@@ -47,7 +48,8 @@ void YahtzeeGame::afficherMenuPrincipal() {
     std::cout << T_DOWN << std::string(47, HORIZONTAL_LINE) << T_UP << "\n";
     std::cout << VERTICAL_LINE << " 1. Nouvelle partie                            " << VERTICAL_LINE << "\n";
     std::cout << VERTICAL_LINE << " 2. Charger partie                             " << VERTICAL_LINE << "\n";
-    std::cout << VERTICAL_LINE << " 3. Quitter                                    " << VERTICAL_LINE << "\n";
+    std::cout << VERTICAL_LINE << " 3. IA vs Humain                               " << VERTICAL_LINE << "\n";
+    std::cout << VERTICAL_LINE << " 4. Quitter                                    " << VERTICAL_LINE << "\n";
     std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
 }
 
@@ -61,7 +63,7 @@ void YahtzeeGame::playGame() {
     do {
         joueurs.clear();
         afficherMenuPrincipal();
-        choix = saisirChoix(1, 3);
+        choix = saisirChoix(1, 4);
 
         switch (choix) {
         case 1:
@@ -71,13 +73,16 @@ void YahtzeeGame::playGame() {
             reprendrePartie();
             break;
         case 3:
+            nouvellePartieIaVsHumain();
+            break;      
+        case 4:
             std::cout << "  <<=>> Au revoir ! <<=>>   " << std::endl;
             break;
         default:
             std::cout << "Choix invalide. Veuillez choisir a nouveau." << std::endl;
             break;
         }
-    } while (choix != 3);
+    } while (choix != 4);
 }
 
 void YahtzeeGame::playHelper() {
@@ -139,6 +144,18 @@ void YahtzeeGame::reprendrePartie() {
     std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
     std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
     playHelper();
+}
+
+void YahtzeeGame::nouvellePartieIaVsHumain() {
+    // Créer un joueur humain
+    std::shared_ptr<Joueur> joueurHumain = std::make_shared<Joueur>();
+    joueurs.push_back(joueurHumain);
+
+    // Créer une IA
+    std::shared_ptr<IA> joueurIA = std::make_shared<IA>();
+    joueurs.push_back(joueurIA);
+
+    jouerIAvsHumain();
 }
 
 
@@ -205,9 +222,6 @@ void YahtzeeGame::afficherScoresTousJoueurs() {
     }
     std::cout << std::endl;
 }
-
-
-
 
 
 
@@ -298,6 +312,33 @@ void YahtzeeGame::jouerHardcore() {
     afficherScoresTousJoueurs();
 }
 
+void YahtzeeGame::jouerIAvsHumain() {
+    for (int round = 0; round < 13; ++round) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            IA* iaPlayer = dynamic_cast<IA*>(joueurs[num_player].get());
+            lancer.rollDices();
+            if (iaPlayer != nullptr) {  // Le joueur est une IA
+                std::cout << "\n======== C'est au tour de l\'IA de jouer ========\n" << std::endl;
+                lancer.printDices();
+                iaPlayer->handleYahtzeeBonus(lancer.getDiceValues());
+                iaPlayer->createAllFigures();
+                iaPlayer->chooseFigure(lancer.getDiceValues());
+                iaPlayer->resetFigures();
+            }
+            else {  // Le joueur n'est pas une IA
+                std::cout << "\n======== Joueur Humain a vous de jouer ========\n" << std::endl;
+                lancer.printDices();
+                Joueur* player = joueurs[num_player].get();
+                player->handleYahtzeeBonus(lancer.getDiceValues());
+                player->createAllFigures();
+                player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+                player->resetFigures();
+            }
+        }
+    }
+    afficherScoresTousJoueurs();
+}
 
 
 

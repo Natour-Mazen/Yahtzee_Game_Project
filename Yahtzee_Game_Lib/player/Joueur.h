@@ -17,13 +17,13 @@ public:
     Joueur();
     ~Joueur();
 
-    void createAllFigures();
+    virtual void createAllFigures();
     void createMinorFigures();
     void createMajorFigures();
     void createHardcoreFigures();
 
-    void resetFigures();
-    void handleYahtzeeBonus(const std::vector<int>& diceValues);
+    virtual void resetFigures();
+    virtual void handleYahtzeeBonus(const std::vector<int>& diceValues);
 
     void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
     void chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick);
@@ -52,7 +52,7 @@ protected:
     bool aleardyHardFigureCreated;
     std::vector<int> ordreCreationFiguresHardcore;
 
-    bool isFigureUsed(Figure* figure) const;
+    virtual bool isFigureUsed(Figure* figure) const;
 
     std::shared_ptr<Figure> createNumberFigure(unsigned int id) const;
     std::shared_ptr<Figure> createFigures(unsigned int id) const;

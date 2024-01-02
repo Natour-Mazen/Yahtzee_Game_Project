@@ -156,6 +156,7 @@
     <ClInclude Include="figure\Figure.h" />
     <ClInclude Include="figure\figures\Full.h" />
     <ClInclude Include="figure\figures\GrandeSuite.h" />
+    <ClInclude Include="IA\IA.h" />
     <ClInclude Include="player\Joueur.h" />
     <ClInclude Include="dice\Lancer.h" />
     <ClInclude Include="figure\figures\PetiteSuite.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="YahtzeeGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IA\IA.cpp" />
     <ClCompile Include="player\Joueur.cpp" />
     <ClCompile Include="dice\Lancer.cpp" />
     <ClCompile Include="YahtzeeGame.cpp" />

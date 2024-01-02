@@ -6,6 +6,8 @@
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
+#include <thread>  // pour std::this_thread::sleep_for
+#include <chrono> 
 
 class YahtzeeGame {
 public:
@@ -54,5 +56,9 @@ private:
 
     void serialize() const;
     void deserialize();
+
+
+    void nouvellePartieIaVsHumain();
+    void jouerIAvsHumain();
 };
 

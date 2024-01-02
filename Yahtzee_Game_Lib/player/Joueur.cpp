@@ -196,7 +196,7 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
         }
     }
 
-    std::cout << "   <<=>> Vous avez choisi " << selectedFigure->getName() << " et vous avez obtenu " << scoreForFigure << " points <<=>>" << std::endl;
+    std::cout << "   <<=>> La figure choisie est " << selectedFigure->getName() << " et a rapporte " << scoreForFigure << " points <<=>>" << std::endl;
 }
 
 void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
