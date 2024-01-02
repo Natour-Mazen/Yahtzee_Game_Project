@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
 #include "Figure.h"
 #include "Brelan.h"
 #include "Carre.h"
@@ -15,7 +16,7 @@
 class Joueur {
 public:
     Joueur();
-    ~Joueur();
+    virtual ~Joueur();
 
     virtual void createAllFigures();
     void createMinorFigures();
