@@ -1,10 +1,25 @@
 #pragma once
 #include "Figure.h"
 
-template<short ID>
+/**
+ * @brief Represents the "Brelan" figure in the Yahtzee game.
+ * @tparam ID The unique identifier for the Brelan figure.
+ */
+template <short ID>
 class Brelan : public Figure {
 public:
-    int calculateScore(const std::vector<int>& diceValues) {
+    /**
+     * @brief Calculates the score for the Brelan figure based on the given dice values.
+     *
+     * This method checks if there are at least three dice with the same value,
+     * and if so, it sets the value of the Brelan to that dice value and returns
+     * the calculated score, which is three times the dice value. If no Brelan is
+     * found, the score is 0.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Brelan figure.
+     */
+    int calculateScore(const std::vector<int>& diceValues) override {
         for (unsigned short i = 1; i <= 6; ++i) {
             int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 3) {
@@ -15,21 +30,33 @@ public:
         return 0;
     }
 
-    std::string getName() const {
+    /**
+     * @brief Gets the name of the Brelan figure.
+     * @return The name of the figure.
+     */
+    std::string getName() const override {
         if (m_value == 0) {
             return "Brelan";
         }
         return "Brelan de " + std::to_string(m_value);
     }
 
-    short getId() const {
+    /**
+     * @brief Gets the unique identifier of the Brelan figure.
+     * @return The unique identifier.
+     */
+    short getId() const override {
         return ID;
     }
 
-    void serialize(std::ostream& out) const {
+    /**
+     * @brief Serializes the Brelan figure to an output stream.
+     * @param out The output stream to serialize the data to.
+     */
+    void serialize(std::ostream& out) const override {
         out << "id: " << ID << "\n";
     }
 
 private:
-    short m_value = 0;
+    short m_value = 0;  ///< The value of the Brelan figure.
 };
