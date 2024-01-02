@@ -24,16 +24,16 @@ private:
     std::vector<std::shared_ptr<Joueur>> joueurs;
     Lancer lancer;
 
-
     void afficherMenuDifficulte();
     const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
 
     void nouvellePartie();
+    void nouvellePartieIaVsHumain();
     void playHelper();
-    
+  
+ 
     void afficherMenuPrincipal();
-
     int saisirChoix(int min, int max);
 
     void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick, const bool& isDifficileMode);
@@ -50,15 +50,12 @@ private:
 
     void jouerHardcore();
     void jouerTourHardcore(int num_player);
-    
 
+    void jouerIAvsHumain();
+    
     void afficherScoresTousJoueurs();
 
     void serialize() const;
     void deserialize();
-
-
-    void nouvellePartieIaVsHumain();
-    void jouerIAvsHumain();
 };
 

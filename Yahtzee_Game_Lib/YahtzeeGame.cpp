@@ -1,11 +1,18 @@
 ﻿#include "YahtzeeGame.h"
 #include "IA/IA.h"
 
-
+/**
+ * @brief Constructor for the YahtzeeGame class.
+ * Initializes the random seed based on the current time.
+ */
 YahtzeeGame::YahtzeeGame() : variante(DifficultyLevel::FACILE), joueurs(), lancer() {
     srand(static_cast<unsigned int>(time(nullptr)));
 }
 
+/**
+ * @brief Destructor for the YahtzeeGame class.
+ * Clears the list of players.
+ */
 YahtzeeGame::~YahtzeeGame() {
     joueurs.clear();
 }
@@ -13,7 +20,9 @@ YahtzeeGame::~YahtzeeGame() {
 
 
 
-
+/**
+ * @brief Displays the difficulty selection menu.
+ */
 void YahtzeeGame::afficherMenuDifficulte() {
     const char UPPER_LEFT_CORNER = 218;
     const char HORIZONTAL_LINE = 196;
@@ -32,6 +41,9 @@ void YahtzeeGame::afficherMenuDifficulte() {
     std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
 }
 
+/**
+ * @brief Displays the main menu of the Yahtzee game.
+ */
 void YahtzeeGame::afficherMenuPrincipal() {
     const char UPPER_LEFT_CORNER = 201;
     const char HORIZONTAL_LINE = 205;
@@ -53,11 +65,11 @@ void YahtzeeGame::afficherMenuPrincipal() {
     std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
 }
 
+/*============================================================*/
 
-
-
-
-
+/**
+ * @brief Initiates the Yahtzee game and handles user interactions for menu navigation.
+ */
 void YahtzeeGame::playGame() {
     int choix;
     do {
@@ -85,6 +97,9 @@ void YahtzeeGame::playGame() {
     } while (choix != 4);
 }
 
+/**
+ * @brief Displays information and starts the game based on the selected difficulty level.
+ */
 void YahtzeeGame::playHelper() {
     std::cout << "\n  <<=>> Pour info, il y a une sauvgarde automatique a chaque tour de jeu, Amusez vous bien :) <<=>>   " << std::endl;
     switch (variante) {
@@ -106,6 +121,9 @@ void YahtzeeGame::playHelper() {
     }
 }
 
+/**
+ * @brief Initiates a new game by prompting the user for the number of players and difficulty level.
+ */
 void YahtzeeGame::nouvellePartie() {
     int numberOfPlayers;
     do {
@@ -134,10 +152,16 @@ void YahtzeeGame::nouvellePartie() {
     playHelper();
 }
 
+/**
+ * @brief Saves the current game state to a file.
+ */
 void YahtzeeGame::sauvegarderPartie() {
     serialize();
 }
 
+/**
+ * @brief Resumes a saved game by loading the game state from a file.
+ */
 void YahtzeeGame::reprendrePartie() {
     deserialize();
     std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
@@ -146,6 +170,9 @@ void YahtzeeGame::reprendrePartie() {
     playHelper();
 }
 
+/**
+ * @brief Initiates a new game with a human player and an AI opponent.
+ */
 void YahtzeeGame::nouvellePartieIaVsHumain() {
     // Créer un joueur humain
     std::shared_ptr<Joueur> joueurHumain = std::make_shared<Joueur>();
@@ -159,9 +186,14 @@ void YahtzeeGame::nouvellePartieIaVsHumain() {
 }
 
 
+/*============================================================*/
 
-
-
+/**
+ * @brief Takes user input for a menu choice within a specified range.
+ * @param min The minimum valid menu choice.
+ * @param max The maximum valid menu choice.
+ * @return The user's selected menu choice.
+ */
 int YahtzeeGame::saisirChoix(int min, int max) {
     int choix;
     bool isNumber;
@@ -191,6 +223,9 @@ int YahtzeeGame::saisirChoix(int min, int max) {
     return choix;
 }
 
+/**
+ * @brief Prompts the user to choose a difficulty level for the game.
+ */
 void YahtzeeGame::choisirDifficulte() {
     afficherMenuDifficulte();
     int choix = saisirChoix(1, HARDCORE + 1);
@@ -198,6 +233,11 @@ void YahtzeeGame::choisirDifficulte() {
     std::cout << "  <<=>> Vous avez choisi le mode " << getDifficultyName(variante) << " <<=>>   " << std::endl;
 }
 
+/**
+ * @brief Returns the name of the difficulty level as a string.
+ * @param level The difficulty level enumeration.
+ * @return The difficulty level name.
+ */
 const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
     switch (level) {
     case FACILE:
@@ -213,6 +253,9 @@ const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
     }
 }
 
+/**
+ * @brief Displays the final scores of all players at the end of the game.
+ */
 void YahtzeeGame::afficherScoresTousJoueurs() {
     std::cout << "\n|------------------Fin du Jeu-----------------|\n";
     std::cout << "|                                             |\n";
@@ -223,8 +266,15 @@ void YahtzeeGame::afficherScoresTousJoueurs() {
     std::cout << std::endl;
 }
 
+/*============================================================*/
 
-
+/**
+ * @brief Executes a game round for a player with the specified figure creation function.
+ * @param num_player The index of the current player.
+ * @param createFiguresFunc The function to create figures for the player.
+ * @param NombreMaxOfFigureTopick The maximum number of figures the player can choose (for difficult mode).
+ * @param isDifficileMode Indicates if the game is in difficult mode.
+ */
 void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0,const bool& isDifficileMode = false) {
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
@@ -246,26 +296,49 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
     }
 }
 
+/**
+ * @brief Plays a round for a player with easy difficulty level.
+ * @param num_player The index of the current player.
+ */
 void YahtzeeGame::jouerTourFacile(int num_player) {
     jouerTour(num_player, &Joueur::createAllFigures);
 }
 
+/**
+ * @brief Plays a round for a player with normal difficulty level (minor figures).
+ * @param num_player The index of the current player.
+ */
 void YahtzeeGame::jouerTourNormalMineure(int num_player) {
     jouerTour(num_player, &Joueur::createMinorFigures);
 }
 
+/**
+ * @brief Plays a round for a player with normal difficulty level (major figures).
+ * @param num_player The index of the current player.
+ */
 void YahtzeeGame::jouerTourNormalMajeur(int num_player) {
     jouerTour(num_player, &Joueur::createMajorFigures);
 }
 
+/**
+ * @brief Plays a round for a player with difficult difficulty level.
+ * @param num_player The index of the current player.
+ */
 void YahtzeeGame::jouerTourDifficile(int num_player) {
     jouerTour(num_player, &Joueur::createAllFigures, 1, true);
 }
 
+/**
+ * @brief Plays a round for a player with hardcore difficulty level.
+ * @param num_player The index of the current player.
+ */
 void YahtzeeGame::jouerTourHardcore(int num_player) {
     jouerTour(num_player, &Joueur::createHardcoreFigures, 1, true);
 }
 
+/**
+ * @brief Plays the Yahtzee game with easy difficulty level for all players.
+ */
 void YahtzeeGame::jouerFacile() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -275,6 +348,9 @@ void YahtzeeGame::jouerFacile() {
     afficherScoresTousJoueurs();
 }
 
+/**
+ * @brief Plays the Yahtzee game with normal difficulty level for all players.
+ */
 void YahtzeeGame::jouerNormal() {
     std::cout << "\n   <<===>> La partie mineure commence <<===>>\n" << std::endl;
 
@@ -294,6 +370,9 @@ void YahtzeeGame::jouerNormal() {
     afficherScoresTousJoueurs();
 }
 
+/**
+ * @brief Plays the Yahtzee game with difficult difficulty level for all players.
+ */
 void YahtzeeGame::jouerDifficile() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -303,6 +382,9 @@ void YahtzeeGame::jouerDifficile() {
     afficherScoresTousJoueurs();
 }
 
+/**
+ * @brief Plays the Yahtzee game with hardcore difficulty level for all players.
+ */
 void YahtzeeGame::jouerHardcore() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -312,6 +394,9 @@ void YahtzeeGame::jouerHardcore() {
     afficherScoresTousJoueurs();
 }
 
+/**
+ * @brief Plays the Yahtzee game with a mix of human and AI players.
+ */
 void YahtzeeGame::jouerIAvsHumain() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
@@ -341,8 +426,11 @@ void YahtzeeGame::jouerIAvsHumain() {
 }
 
 
+/*============================================================*/
 
-// Save/Load
+/**
+ * @brief Saves the current game state to a file.
+ */
 void YahtzeeGame::serialize() const {
     std::ofstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {
@@ -362,6 +450,9 @@ void YahtzeeGame::serialize() const {
     }
 }
 
+/**
+ * @brief Loads a saved game state from a file and resumes the game.
+ */
 void YahtzeeGame::deserialize() {
     std::ifstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {
