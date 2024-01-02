@@ -10,6 +10,9 @@ YahtzeeGame::~YahtzeeGame() {
 }
 
 
+
+
+
 void YahtzeeGame::afficherMenuDifficulte() {
     const char UPPER_LEFT_CORNER = 218;
     const char HORIZONTAL_LINE = 196;
