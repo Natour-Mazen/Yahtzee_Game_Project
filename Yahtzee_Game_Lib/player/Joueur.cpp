@@ -2,9 +2,6 @@
 #include <algorithm>
 #include <iomanip>
 
-//============================================//
-//                  PUBLIC                    //
-//============================================//
 
 /** Create a player with a total and minor score of 0 and a game grid empty.
 **/
@@ -20,15 +17,17 @@ Joueur::~Joueur() {
 }
 
 
+/*============================================================*/
+
 /** Remove all the figures that we don't use anymore.
 **/
 void Joueur::resetFigures() {
     m_figures.clear();
 }
+
 /** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
 *   @param diceValues : vector of 5 dices.
 **/
-
 void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
     if (m_firstYahtzee)
     {
@@ -48,9 +47,7 @@ void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
 }
 
 
-
-
-
+/*============================================================*/
 
 /** Look if the figure pass in parameter is in the used figures.
 *   @param figure : the figure that need to be check.
@@ -68,7 +65,6 @@ bool Joueur::isFigureUsed(Figure* figure) const {
 *   @param number : the number on a dice (form 1 to 6)
 *   @return : the figure associate with it's number.
 **/
-
 std::shared_ptr<Figure> Joueur::createNumberFigure(unsigned int number) const {
     switch (number) {
     case 1: return std::make_shared<Number<1>>(number);
@@ -81,6 +77,11 @@ std::shared_ptr<Figure> Joueur::createNumberFigure(unsigned int number) const {
     }
 }
 
+/**
+ * @brief Creates a figure based on the specified identifier.
+ * @param id The identifier of the figure to create.
+ * @return A shared pointer to the created figure, or nullptr if the identifier is invalid.
+ */
 std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
     switch (id) {
     case 1: case 2: case 3: case 4: case 5: case 6:
@@ -107,6 +108,9 @@ std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
     }
 }
 
+/**
+ * @brief Creates all available figures for the player.
+ */
 void Joueur::createAllFigures() {
     for (unsigned int i = 1; i <= 13; ++i) {
         std::shared_ptr<Figure> newFigure = createFigures(i);
@@ -116,6 +120,9 @@ void Joueur::createAllFigures() {
     }
 }
 
+/**
+ * @brief Creates figures related to numbers 1 to 6 for the player.
+ */
 void Joueur::createMinorFigures() {
     for (unsigned int i = 1; i <= 6; ++i) {
         std::shared_ptr<Figure> newFigure = createFigures(i);
@@ -125,6 +132,9 @@ void Joueur::createMinorFigures() {
     }
 }
 
+/**
+ * @brief Creates figures related to combinations from Brelan to Chance for the player.
+ */
 void Joueur::createMajorFigures() {
     for (unsigned int i = 7; i <= 13; ++i) {
         std::shared_ptr<Figure> newFigure = createFigures(i);
@@ -134,6 +144,9 @@ void Joueur::createMajorFigures() {
     }
 }
 
+/**
+ * @brief Creates figures in a randomized order for the player in hardcore mode.
+ */
 void Joueur::createHardcoreFigures() {
     if (!aleardyHardFigureCreated) {
         ordreCreationFiguresHardcore = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
@@ -149,8 +162,7 @@ void Joueur::createHardcoreFigures() {
     }
 }
 
-
-
+/*============================================================*/
 
 /** Display the differents figures possible for a set of dice.
 *   @param diveValues : vector of 5 dices.
@@ -199,6 +211,11 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
     std::cout << "   <<=>> La figure choisie est " << selectedFigure->getName() << " et a rapporte " << scoreForFigure << " points <<=>>" << std::endl;
 }
 
+/**
+ * @brief Helper function for the player to choose a figure.
+ * @param diceValues The values of the rolled dice.
+ * @param maxFigures The maximum number of figures the player can choose from.
+ */
 void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
     int choice;
     bool isNumber;
@@ -216,7 +233,7 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
         std::cout << ">> Choisissez maintenant une figure, choix (1-" << maxFigures << ") : ";
         std::cin >> choice;
 
-        // Vérifie si l'entrée précédente sur le flux était un entier
+        // Check if the previous input to the stream was an integer
         isNumber = std::cin.good();
 
         if (!isNumber) {
@@ -225,7 +242,7 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
         else if (choice >= 1 && choice <= maxFigures) {
             std::shared_ptr<Figure> selectedFigure = m_figures[choice - 1];
 
-            // Vérifier si la figure a déjà été utilisée
+            // Check if the figure has already been used
             if (isFigureUsed(selectedFigure.get())) {
                 std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
             }
@@ -244,30 +261,35 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
             std::cout << "   /!\\ Choix invalide. Veuillez choisir une figure valide /!\\  " << std::endl;
         }
 
-        // Efface l'état de l'erreur précédente
+        // Clear the error state of the previous error
         std::cin.clear();
 
-        // Ignore le reste de la ligne
+        // Ignore the rest of the line
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     } while (!correctAnswer);
 }
 
+/**
+ * @brief Allows the player to choose a figure in easy mode and other additional modes.
+ * @param diceValues The values of the rolled dice.
+ */
 void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
     chooseFigureHelper(diceValues, m_figures.size());
 }
 
+/**
+ * @brief Allows the player to choose a figure in difficult mode and other additional modes.
+ * @param diceValues The values of the rolled dice.
+ * @param NombreMaxOfFigureTopick The maximum number of figures the player can choose.
+ */
 void Joueur::chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick) {
     std::cout << "   <<=>> Vous ne pourrez choisir que la/les " << NombreMaxOfFigureTopick << "er(es) figure(s), cela fait parti du mode de jeu choisit <<=>>   " << std::endl;
     chooseFigureHelper(diceValues, NombreMaxOfFigureTopick);
 }
 
 
-
-
-
-
-
+/*============================================================*/
 
 /** Give the total score of the game in progress.
 *   @return : the total score.
@@ -282,12 +304,12 @@ bool Joueur::isFiguresEmpty() const {
 }
 
 
+/*============================================================*/
 
-
-
-
-
-// TODO : METTRE UN COM
+/**
+ * @brief Serialize the player's data to an output stream.
+ * @param out The output stream to serialize the data to.
+ */
 void Joueur::serialize(std::ostream& out) const {
     out << "m_firstYahtzee: " << m_firstYahtzee << "\n";
     out << "m_yahtzeeBonus: " << m_yahtzeeBonus << "\n";
@@ -300,6 +322,10 @@ void Joueur::serialize(std::ostream& out) const {
     }
 }
 
+/**
+ * @brief Deserialize the player's data from an input stream.
+ * @param in The input stream to read the data from.
+ */
 void Joueur::deserialize(std::istream& in) {
     std::string ligne;
 

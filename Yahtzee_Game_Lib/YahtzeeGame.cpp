@@ -17,8 +17,7 @@ YahtzeeGame::~YahtzeeGame() {
     joueurs.clear();
 }
 
-
-
+/*============================================================*/
 
 /**
  * @brief Displays the difficulty selection menu.

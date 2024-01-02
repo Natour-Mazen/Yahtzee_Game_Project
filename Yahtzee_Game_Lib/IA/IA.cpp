@@ -2,32 +2,39 @@
 
 IA::IA() : Joueur() {}
 
+/**
+ * @brief Makes a strategic choice for a figure based on the current dice values.
+ * @param diceValues The values obtained from the rolled dice.
+ */
 void IA::chooseFigure(const std::vector<int>& diceValues) {
+    // Display available figures and their scores
     displayFigureAndScores(diceValues);
 
+    // Variables to track the maximum expected score and the best figure choice
     double maxExpectedScore = -1.0;
     std::shared_ptr<Figure> bestFigure = nullptr;
 
-    // Parcourir toutes les figures disponibles
+    // Iterate through all available figures
     for (auto& figure : m_figures) {
-        // Vérifier si la figure a déjà été utilisée
+        // Check if the figure has already been used
         if (isFigureUsed(figure.get())) continue;
 
-        // Calculer le score attendu pour cette figure
+        // Calculate the expected score for this figure
         double expectedScore = figure->calculateScore(diceValues);
 
-        // Si le score attendu est plus élevé que le score maximal actuel, mettre à jour le score maximal et la meilleure figure
+        // If the expected score is higher than the current maximum score, update the maximum score and the best figure choice
         if (expectedScore > maxExpectedScore) {
             maxExpectedScore = expectedScore;
             bestFigure = figure;
         }
     }
 
-    // Mettre à jour les scores et ajouter la meilleure figure à la liste des figures utilisées
+    // Update the scores and add the best figure to the list of used figures
     if (bestFigure != nullptr) {
         int score = bestFigure->calculateScore(diceValues);
         updateScores(score, bestFigure);
         m_figuresUsed.push_back(bestFigure);
     }
 }
+
 
