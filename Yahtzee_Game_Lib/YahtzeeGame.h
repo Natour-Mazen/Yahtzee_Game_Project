@@ -51,5 +51,8 @@ private:
     
 
     void afficherScoresTousJoueurs();
+
+    void serialize() const;
+    void deserialize();
 };
 
