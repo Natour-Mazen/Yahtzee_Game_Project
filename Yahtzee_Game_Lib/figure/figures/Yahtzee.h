@@ -1,10 +1,23 @@
 #pragma once
 #include "Figure.h"
 
-template<short ID>
+/**
+ * @brief Represents the "Yahtzee" figure in the Yahtzee game.
+ * @tparam ID The unique identifier for the Yahtzee figure.
+ */
+template <short ID>
 class Yahtzee : public Figure {
 public:
-    int calculateScore(const std::vector<int>& diceValues) {
+    /**
+     * @brief Calculates the score for the Yahtzee figure based on the given dice values.
+     *
+     * This method calculates the score for a Yahtzee figure, where the score is 50 if at least five dice
+     * have the same value, and 0 otherwise.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Yahtzee figure.
+     */
+    int calculateScore(const std::vector<int>& diceValues)  {
         for (unsigned int i = 1; i <= 6; ++i) {
             int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
             if (count >= 5) {
@@ -14,15 +27,27 @@ public:
         return 0;
     }
 
-    std::string getName() const {
+    /**
+     * @brief Gets the name of the Yahtzee figure.
+     * @return The name of the figure.
+     */
+    std::string getName() const  {
         return "Yahtzee";
     }
 
-    short getId() const {
+    /**
+     * @brief Gets the unique identifier of the Yahtzee figure.
+     * @return The unique identifier.
+     */
+    short getId() const  {
         return ID;
     }
 
-    void serialize(std::ostream& out) const {
+    /**
+     * @brief Serializes the Yahtzee figure to an output stream.
+     * @param out The output stream to serialize the data to.
+     */
+    void serialize(std::ostream& out) const  {
         out << "id: " << ID << "\n";
     }
 };
