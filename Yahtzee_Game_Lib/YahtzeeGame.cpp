@@ -314,7 +314,6 @@ void YahtzeeGame::jouerHardcore() {
 
 void YahtzeeGame::jouerIAvsHumain() {
     for (int round = 0; round < 13; ++round) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(800));
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
             IA* iaPlayer = dynamic_cast<IA*>(joueurs[num_player].get());
             lancer.rollDices();
@@ -335,6 +334,7 @@ void YahtzeeGame::jouerIAvsHumain() {
                 player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
                 player->resetFigures();
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         }
     }
     afficherScoresTousJoueurs();
