@@ -11,7 +11,7 @@ void IA::chooseFigure(const std::vector<int>& diceValues) {
     displayFigureAndScores(diceValues);
 
     // Variables to track the maximum expected score and the best figure choice
-    double maxExpectedScore = -1.0;
+    int maxExpectedScore = -1.0;
     std::shared_ptr<Figure> bestFigure = nullptr;
 
     // Iterate through all available figures
@@ -20,7 +20,7 @@ void IA::chooseFigure(const std::vector<int>& diceValues) {
         if (isFigureUsed(figure.get())) continue;
 
         // Calculate the expected score for this figure
-        double expectedScore = figure->calculateScore(diceValues);
+        int expectedScore = figure->calculateScore(diceValues);
 
         // If the expected score is higher than the current maximum score, update the maximum score and the best figure choice
         if (expectedScore >= maxExpectedScore) {
