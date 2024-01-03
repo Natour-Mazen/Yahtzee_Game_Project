@@ -408,6 +408,7 @@ void YahtzeeGame::jouerIAvsHumain() {
                 iaPlayer->createAllFigures();
                 iaPlayer->chooseFigure(lancer.getDiceValues());
                 iaPlayer->resetFigures();
+                std::this_thread::sleep_for(std::chrono::milliseconds(3000));
             }
             else {  // Le joueur n'est pas une IA
                 std::cout << "\n======== Joueur Humain a vous de jouer ========\n" << std::endl;
@@ -418,7 +419,7 @@ void YahtzeeGame::jouerIAvsHumain() {
                 player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
                 player->resetFigures();
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+       
         }
     }
     afficherScoresTousJoueurs();
