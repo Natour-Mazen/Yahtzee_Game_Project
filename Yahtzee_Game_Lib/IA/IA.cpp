@@ -23,7 +23,7 @@ void IA::chooseFigure(const std::vector<int>& diceValues) {
         double expectedScore = figure->calculateScore(diceValues);
 
         // If the expected score is higher than the current maximum score, update the maximum score and the best figure choice
-        if (expectedScore > maxExpectedScore) {
+        if (expectedScore >= maxExpectedScore) {
             maxExpectedScore = expectedScore;
             bestFigure = figure;
         }
