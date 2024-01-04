@@ -7,7 +7,7 @@
 class Figure
 {
 public:
-    virtual ~Figure() {}
+    virtual ~Figure() = default;
 
     /** Calculate the score for this figure with the current dices.
     *   @param diceValues : dices to calculate the score.
