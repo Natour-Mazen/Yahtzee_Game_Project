@@ -173,8 +173,9 @@ void YahtzeeGame::reprendrePartie() {
  * @brief Initiates a new game with a human player and an AI opponent.
  */
 void YahtzeeGame::nouvellePartieIaVsHumain() {
-    std::cout << "\n                       <<=>> Vous avez choisi le mode 1vs1 (IA vs Humain) <<=>>         " << std::endl;
-    std::cout << "  <<=>> Dans ce mode de jeu, il n\'y a pas de sauvegarde ni la possibilite de relancer les des  <<=>>   \n" << std::endl;
+    std::cout << "\n                        <<=>> Vous avez choisi le mode 1vs1 (IA vs Humain) <<=>>         " << std::endl;
+    std::cout << "  <<=>> Dans ce mode de jeu, il n\'y a pas de sauvegarde ni la possibilite de relancer les des <<=>> " << std::endl;
+    std::cout << "                                   <<=>> La diffculte est Facile <<=>>         \n" << std::endl;
 
     // Créer un joueur humain
     std::shared_ptr<Joueur> joueurHumain = std::make_shared<Joueur>();
