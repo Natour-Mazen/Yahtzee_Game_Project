@@ -9,6 +9,10 @@ class Figure
 public:
     virtual ~Figure() = default;
 
+    /** Calculate the score for this figure with the current dices and keep the score.
+    *   @param diceValues : dices to calculate the score.
+    *   @return : the score.
+    **/
     int calculateScore(const std::vector<int>& diceValues) {
         m_score = justCalculateScore(diceValues);
         return m_score;
