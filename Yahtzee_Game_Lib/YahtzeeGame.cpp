@@ -257,15 +257,45 @@ const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
 }
 
 /**
- * @brief Displays the final scores of all players at the end of the game.
+ * @brief Displays the scores of all players at the end of the game.
+ *        Asks the user if they want to display the scorecards of each player.
  */
-void YahtzeeGame::afficherScoresTousJoueurs() {
+void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() {
     std::cout << "\n|------------------Fin du Jeu-----------------|\n";
     std::cout << "|                                             |\n";
     std::cout << "|------Voici le scores de chaque joueurs------|\n";
     for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
         std::cout << "\t -> Score total du joueur " << num_player + 1 << " : " << joueurs[num_player]->getTotalScore() << std::endl;
     }
+
+    std::cout << std::endl;
+
+    // Ask the user if they want to display the scorecards
+    std::cout << ">> Voulez-vous afficher les feuilles de marque de chaque joueur ? (O/N) ";
+    char reponse;
+    std::cin >> reponse;
+
+    reponse = toupper(reponse);
+
+	// Check the user's input
+    while (std::cin.fail() || (reponse != 'O' && reponse != 'N')) {
+        std::cin.clear();  
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  
+        std::cout << "   <<=>> Entree non valide. Veuillez entrer 'O' pour Oui ou 'N' pour Non. <<=>>   \n";
+        std::cin >> reponse;
+        reponse = toupper(reponse);
+    }
+
+    std::cout << std::endl;
+
+    // If the user answered 'O', display the scorecards
+    if (reponse == 'O') {
+        for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
+            joueurs[num_player]->displayUsedFiguresAndScores(num_player);
+        }
+    }
+
+    std::cout << "*****************************************************" << std::endl;
     std::cout << std::endl;
 }
 
@@ -369,11 +399,10 @@ void YahtzeeGame::jouerTourIAvsHumain(Joueur* player, bool isIA) {
 void YahtzeeGame::jouerFacile() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
-            jouerTourFacile(num_player);  
+            jouerTourFacile(num_player);
         }
     }
-    joueurs[0]->displayUsedFiguresAndScores(0);
-    afficherScoresTousJoueurs();
+    afficherScoresEtFuilleMarqueTousJoueurs();
 }
 
 /**
@@ -395,7 +424,7 @@ void YahtzeeGame::jouerNormal() {
             jouerTourNormalMajeur(num_player);          
         }
     }
-    afficherScoresTousJoueurs();
+    afficherScoresEtFuilleMarqueTousJoueurs();
 }
 
 /**
@@ -407,7 +436,7 @@ void YahtzeeGame::jouerDifficile() {
             jouerTourDifficile(num_player);
         }
     }
-    afficherScoresTousJoueurs();
+    afficherScoresEtFuilleMarqueTousJoueurs();
 }
 
 /**
@@ -419,7 +448,7 @@ void YahtzeeGame::jouerHardcore() {
             jouerTourHardcore(num_player);
         }
     }
-    afficherScoresTousJoueurs();
+    afficherScoresEtFuilleMarqueTousJoueurs();
 }
 
 /**
@@ -440,7 +469,7 @@ void YahtzeeGame::jouerIAvsHumain() {
             }
         }
     }
-    afficherScoresTousJoueurs();
+    afficherScoresEtFuilleMarqueTousJoueurs();
 }
 
 

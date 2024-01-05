@@ -54,7 +54,7 @@ private:
     void jouerTourIAvsHumain(Joueur* player, bool isIA);
     void jouerIAvsHumain();
     
-    void afficherScoresTousJoueurs();
+    void afficherScoresEtFuilleMarqueTousJoueurs();
 
     void serialize() const;
     void deserialize();
