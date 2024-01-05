@@ -34,10 +34,17 @@ public:
         return m_score;
     }
 
-    /** Save the figure in a out stream.
-    **/
+    /**
+	 * Save the figure in an output stream.
+	 * This is a pure virtual function that needs to be implemented in derived classes.
+	 **/
     virtual void serialize(std::ostream& out) const = 0;
 
+    /**
+	 * Deserialize the score from an input stream.
+	 * The function reads a line from the input stream, extracts the score value after the colon,
+	 * and assigns it to the member variable 'm_score'.
+	 **/
     void deserializeScore(std::istream& in) {
         std::string ligne;
 
