@@ -1,5 +1,5 @@
 ﻿#include "YahtzeeGame.h"
-#include "IA/IA.h"
+#include "player/IA/IA.h"
 
 /**
  * @brief Constructor for the YahtzeeGame class.

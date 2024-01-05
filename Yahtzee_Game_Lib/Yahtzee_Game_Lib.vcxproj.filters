@@ -54,7 +54,7 @@
     <ClInclude Include="enums\difficulty.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="IA\IA.h">
+    <ClInclude Include="player\IA\IA.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,7 +68,7 @@
     <ClCompile Include="YahtzeeGame.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="IA\IA.cpp">
+    <ClCompile Include="player\IA\IA.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

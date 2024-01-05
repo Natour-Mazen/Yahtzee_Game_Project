@@ -107,6 +107,7 @@
     <ClCompile Include="figure\figures\PetiteSuiteTest.cpp" />
     <ClCompile Include="figure\figures\YahtzeeTest.cpp" />
     <ClCompile Include="EntryPointTests.cpp" />
+    <ClCompile Include="IA\IATest.cpp" />
     <ClCompile Include="player\JoueurTest.cpp" />
   </ItemGroup>
   <ItemGroup>
