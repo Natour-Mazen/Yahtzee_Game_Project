@@ -17,24 +17,24 @@ public:
      * @param diceValues The values of the dice.
      * @return The calculated score for the Petite Suite figure.
      */
-    int calculateScore(const std::vector<int>& diceValues)  {
+    int calculateScore(const std::vector<int>& diceValues) {
         std::vector<int> sortedValues(diceValues);
         std::sort(sortedValues.begin(), sortedValues.end());
 
         for (std::size_t y = 0; y < 2; ++y) {
-            bool valid = true;
-            for (std::size_t i = y; i < 3 + y; ++i) {
-                if (sortedValues[i] != sortedValues[i + 1] - 1) {
-                    valid = false;
-                    break;
+            int expected = sortedValues[y];
+            for (std::size_t i = y; i < diceValues.size(); ++i) {
+                if (sortedValues[i] == expected) {
+                    expected++;
+                    if (expected - sortedValues[y] == 4) {
+                        return 30;
+                    }
                 }
-            }
-            if (valid) {
-                return 30;
             }
         }
         return 0;
     }
+
 
     /**
      * @brief Gets the name of the Petite Suite figure.
