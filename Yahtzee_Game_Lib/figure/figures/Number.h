@@ -36,6 +36,7 @@ public:
      */
     void serialize(std::ostream& out) const  {
         out << "id: " << ID << "\n";
+        out << "score: " << m_score << "\n";
     }
 
 protected:

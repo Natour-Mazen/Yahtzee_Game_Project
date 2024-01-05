@@ -38,6 +38,13 @@ public:
     **/
     virtual void serialize(std::ostream& out) const = 0;
 
+    void deserializeScore(std::istream& in) {
+        std::string ligne;
+
+        getline(in, ligne);
+        m_score = std::stoi(ligne.substr(ligne.find(":") + 1));
+    }
+
 protected:
     int m_score = 0;
 

@@ -33,6 +33,7 @@ public:
      */
     void serialize(std::ostream& out) const override {
         out << "id: " << ID << "\n";
+        out << "score: " << m_score << "\n";
     }
 
 protected:

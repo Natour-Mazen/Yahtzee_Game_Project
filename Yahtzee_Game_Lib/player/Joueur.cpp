@@ -393,6 +393,7 @@ void Joueur::deserialize(std::istream& in) {
         int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
 
         std::shared_ptr<Figure> figure = createFigures(figureId);
+        figure->deserializeScore(in);
         if (figure) {
             m_figuresUsed.push_back(figure);
         }
