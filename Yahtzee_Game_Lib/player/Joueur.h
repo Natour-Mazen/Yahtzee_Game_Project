@@ -42,9 +42,6 @@ public:
     void deserialize(std::istream& in);
 
 protected:
-    static const short ID_YAHTZEE_FIRST = 12;
-    static const short ID_YAHTZEE_BONUS = 13;
-
     std::vector<std::shared_ptr<Figure>> m_figures;
     std::vector<std::shared_ptr<Figure>> m_figuresUsed;
    
