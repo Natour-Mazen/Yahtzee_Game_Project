@@ -372,6 +372,7 @@ void YahtzeeGame::jouerFacile() {
             jouerTourFacile(num_player);  
         }
     }
+    joueurs[0]->displayUsedFiguresAndScores(0);
     afficherScoresTousJoueurs();
 }
 

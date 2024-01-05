@@ -26,6 +26,8 @@ public:
     virtual void resetFigures();
     virtual void handleYahtzeeBonus();
 
+    void displayUsedFiguresAndScores(const int& numplayer) const;
+
     void chooseFigureFacileAndPlusModes();
     void chooseFigureDifficileAndPlusModes(const int& NombreMaxOfFigureTopick);
 

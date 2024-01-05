@@ -164,7 +164,6 @@ void Joueur::createHardcoreFigures() {
 /*============================================================*/
 
 /** Display the differents figures possible for a set of dice.
-*   @param diveValues : vector of 5 dices.
 **/
 void Joueur::displayFigureAndScores() const {
     std::cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
@@ -183,6 +182,36 @@ void Joueur::displayFigureAndScores() const {
     std::cout << "|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n";
     std::cout << std::endl;
 }
+
+/** Display the figures used and their scores.
+**/
+void Joueur::displayUsedFiguresAndScores(const int& numplayer) const {
+    // Create a copy of the m_figuresUsed vector
+    std::vector<std::shared_ptr<Figure>> figuresCopy = m_figuresUsed;
+
+    // Sort the copy in ascending order of their IDs
+    std::sort(figuresCopy.begin(), figuresCopy.end(), [](const std::shared_ptr<Figure>& a, const std::shared_ptr<Figure>& b){
+        return a->getId() < b->getId();
+        });
+
+    std::cout << "================================================\n";
+    std::cout << "||        FEUILLE DE MARQUE DU JOUEUR "<< numplayer + 1 <<"       ||\n";
+    std::cout << "================================================\n";
+
+    for (size_t i = 0; i < figuresCopy.size(); ++i) {
+        std::cout << "|| " << std::setw(2) << std::right << std::setw(23) << std::left << figuresCopy[i]->getName() << ": ";
+        std::cout << std::setw(9) << std::right << figuresCopy[i]->getScore() << " points";
+        std::cout << std::setw(5) << "||\n";
+    }
+
+    std::cout << "================================================\n";
+    std::cout << "|| Total Score : " << std::setw(20) << std::right << m_totalScore << " points";
+    std::cout << std::setw(5) << "  ||\n";
+    std::cout << "================================================\n";
+    std::cout << std::endl;
+}
+
+
 
 /** Update the total score base on the points that the selected figure give us.
 *   @param scoreForFigure : is the score for the selected figure.
@@ -269,7 +298,6 @@ void Joueur::chooseFigureHelper(const int& maxFigures) {
 
 /**
  * @brief Allows the player to choose a figure in easy mode and other additional modes.
- * @param diceValues The values of the rolled dice.
  */
 void Joueur::chooseFigureFacileAndPlusModes() {
     chooseFigureHelper(static_cast<int>(m_figures.size()));
@@ -277,7 +305,6 @@ void Joueur::chooseFigureFacileAndPlusModes() {
 
 /**
  * @brief Allows the player to choose a figure in difficult mode and other additional modes.
- * @param diceValues The values of the rolled dice.
  * @param NombreMaxOfFigureTopick The maximum number of figures the player can choose.
  */
 void Joueur::chooseFigureDifficileAndPlusModes( const int& NombreMaxOfFigureTopick) {
