@@ -13,19 +13,23 @@ TEST_F(FullTest, CalculateScore) {
 
     // Test when there is a Full of 3 and 2.
     std::vector<int> diceValues1 = { 2, 2, 3, 3, 3 };
-    EXPECT_EQ(25, m_full.calculateScore(diceValues1));
+    m_full.calculateScore(diceValues1);
+    EXPECT_EQ(25, m_full.getScore());
 
     // Test when there is a Full of 6 and 2.
     std::vector<int> diceValues2 = { 6, 2, 6, 6, 2 };
-    EXPECT_EQ(25, m_full.calculateScore(diceValues2));
+    m_full.calculateScore(diceValues2);
+    EXPECT_EQ(25, m_full.getScore());
 
     // Test when there is a Full of 4 and 2.
     std::vector<int> diceValues3 = { 4, 4, 4, 2, 2 };
-    EXPECT_EQ(25, m_full.calculateScore(diceValues3));
+    m_full.calculateScore(diceValues3);
+    EXPECT_EQ(25, m_full.getScore());
 
     // Test when there is no Full.
     std::vector<int> diceValues4 = { 2, 2, 3, 3, 5 };
-    EXPECT_EQ(0, m_full.calculateScore(diceValues4));
+    m_full.calculateScore(diceValues4);
+    EXPECT_EQ(0, m_full.getScore());
 }
 
 /** Test case for Full::getName. **/

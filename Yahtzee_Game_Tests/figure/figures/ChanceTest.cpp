@@ -13,11 +13,13 @@ TEST_F(ChanceTest, CalculateScore) {
 
     // Test when there is a Chance.
     std::vector<int> diceValues1 = { 1, 2, 3, 4, 5 };
-    EXPECT_EQ(15, m_chance.calculateScore(diceValues1));
+    m_chance.calculateScore(diceValues1);
+    EXPECT_EQ(15, m_chance.getScore());
 
     // Test when there is a Chance.
     std::vector<int> diceValues2 = { 6, 2, 6, 6, 6 };
-    EXPECT_EQ(26, m_chance.calculateScore(diceValues2));
+    m_chance.calculateScore(diceValues2);
+    EXPECT_EQ(26, m_chance.getScore());
 }
 
 /** Test case for Chance::getName. **/

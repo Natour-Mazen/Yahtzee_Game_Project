@@ -13,27 +13,33 @@ TEST_F(PetiteSuiteTest, CalculateScore) {
 
     // Test when there is a PetiteSuite.
     std::vector<int> diceValues1 = { 1, 2, 3, 4, 6 };
-    EXPECT_EQ(30, m_petiteSuite.calculateScore(diceValues1));
+    m_petiteSuite.calculateScore(diceValues1);
+    EXPECT_EQ(30, m_petiteSuite.getScore());
 
     // Test when there is a PetiteSuite.
     std::vector<int> diceValues2 = { 6, 5, 3, 4, 1 };
-    EXPECT_EQ(30, m_petiteSuite.calculateScore(diceValues2));
+    m_petiteSuite.calculateScore(diceValues2);
+    EXPECT_EQ(30, m_petiteSuite.getScore());
 
     // Test when there is a PetiteSuite.
     std::vector<int> diceValues3 = { 4, 2, 3, 5, 1 };
-    EXPECT_EQ(30, m_petiteSuite.calculateScore(diceValues3));
+    m_petiteSuite.calculateScore(diceValues3);
+    EXPECT_EQ(30, m_petiteSuite.getScore());
 
     // Test when there is no PetiteSuite.
     std::vector<int> diceValues4 = { 2, 2, 3, 4, 6 };
-    EXPECT_EQ(0, m_petiteSuite.calculateScore(diceValues4));
+    m_petiteSuite.calculateScore(diceValues4);
+    EXPECT_EQ(0, m_petiteSuite.getScore());
 
     // Test when there is a PetiteSuite.
     std::vector<int> diceValues5 = { 1, 3, 2, 3, 4 };
-    EXPECT_EQ(30, m_petiteSuite.calculateScore(diceValues5));
+    m_petiteSuite.calculateScore(diceValues5);
+    EXPECT_EQ(30, m_petiteSuite.getScore());
 
     // Test when there is no PetiteSuite.
     std::vector<int> diceValues6 = { 1, 3, 3, 3, 4 };
-    EXPECT_EQ(0, m_petiteSuite.calculateScore(diceValues6));
+    m_petiteSuite.calculateScore(diceValues6);
+    EXPECT_EQ(0, m_petiteSuite.getScore());
 }
 
 /** Test case for PetiteSuite::getName. **/

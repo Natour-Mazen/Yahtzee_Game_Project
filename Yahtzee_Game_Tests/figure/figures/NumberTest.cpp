@@ -15,15 +15,18 @@ TEST_F(NumberTest, CalculateScore_for_1) {
 
     // Test when there is a Number of 1.
     std::vector<int> diceValues1 = { 1, 1, 3, 5, 3 };
-    EXPECT_EQ(2, m_number1.calculateScore(diceValues1));
+    m_number1.calculateScore(diceValues1);
+    EXPECT_EQ(2, m_number1.getScore());
 
     // Test when there is a Number of 1.
     std::vector<int> diceValues2 = { 1, 2, 1, 1, 1 };
-    EXPECT_EQ(4, m_number1.calculateScore(diceValues2));
+    m_number1.calculateScore(diceValues2);
+    EXPECT_EQ(4, m_number1.getScore());
 
     // Test when there is no Number of 1.
     std::vector<int> diceValues3 = { 2, 2, 3, 4, 5 };
-    EXPECT_EQ(0, m_number1.calculateScore(diceValues3));
+    m_number1.calculateScore(diceValues3);
+    EXPECT_EQ(0, m_number1.getScore());
 }
 
 /** Test case for Number::calculateScore with m_number = 2. **/
@@ -31,15 +34,18 @@ TEST_F(NumberTest, CalculateScore_for_2) {
 
     // Test when there is a Number of 2.
     std::vector<int> diceValues1 = { 1, 3, 3, 2, 6 };
-    EXPECT_EQ(2, m_number2.calculateScore(diceValues1));
+    m_number2.calculateScore(diceValues1);
+    EXPECT_EQ(2, m_number2.getScore());
 
     // Test when there is a Number of 2.
     std::vector<int> diceValues2 = { 1, 2, 1, 2, 1 };
-    EXPECT_EQ(4, m_number2.calculateScore(diceValues2));
+    m_number2.calculateScore(diceValues2);
+    EXPECT_EQ(4, m_number2.getScore());
 
     // Test when there is no Number of 2.
     std::vector<int> diceValues3 = { 6, 6, 3, 5, 1 };
-    EXPECT_EQ(0, m_number2.calculateScore(diceValues3));
+    m_number2.calculateScore(diceValues3);
+    EXPECT_EQ(0, m_number2.getScore());
 }
 
 /** Test case for Number::calculateScore with m_number = 6. **/
@@ -47,15 +53,18 @@ TEST_F(NumberTest, CalculateScore_for_6) {
 
     // Test when there is a Number of 6.
     std::vector<int> diceValues1 = { 6, 6, 6, 5, 4 };
-    EXPECT_EQ(18, m_number6.calculateScore(diceValues1));
+    m_number6.calculateScore(diceValues1);
+    EXPECT_EQ(18, m_number6.getScore());
 
     // Test when there is a Number of 6.
     std::vector<int> diceValues2 = { 6, 6, 6, 6, 6 };
-    EXPECT_EQ(30, m_number6.calculateScore(diceValues2));
+    m_number6.calculateScore(diceValues2);
+    EXPECT_EQ(30, m_number6.getScore());
 
     // Test when there is no Number of 6.
     std::vector<int> diceValues3 = { 1, 2, 3, 4, 5 };
-    EXPECT_EQ(0, m_number6.calculateScore(diceValues3));
+    m_number6.calculateScore(diceValues3);
+    EXPECT_EQ(0, m_number6.getScore());
 }
 
 /** Test case for Number::getName. **/

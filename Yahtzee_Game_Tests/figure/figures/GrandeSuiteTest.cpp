@@ -13,19 +13,23 @@ TEST_F(GrandeSuiteTest, CalculateScore) {
 
     // Test when there is a GrandeSuite.
     std::vector<int> diceValues1 = { 1, 2, 3, 4, 5 };
-    EXPECT_EQ(40, m_grandeSuite.calculateScore(diceValues1));
+    m_grandeSuite.calculateScore(diceValues1);
+    EXPECT_EQ(40, m_grandeSuite.getScore());
 
     // Test when there is a GrandeSuite.
     std::vector<int> diceValues2 = { 6, 5, 3, 4, 2 };
-    EXPECT_EQ(40, m_grandeSuite.calculateScore(diceValues2));
+    m_grandeSuite.calculateScore(diceValues2);
+    EXPECT_EQ(40, m_grandeSuite.getScore());
 
     // Test when there is a GrandeSuite.
     std::vector<int> diceValues3 = { 4, 2, 3, 5, 1 };
-    EXPECT_EQ(40, m_grandeSuite.calculateScore(diceValues3));
+    m_grandeSuite.calculateScore(diceValues3);
+    EXPECT_EQ(40, m_grandeSuite.getScore());
 
     // Test when there is no GrandeSuite.
     std::vector<int> diceValues4 = { 1, 2, 3, 4, 6 };
-    EXPECT_EQ(0, m_grandeSuite.calculateScore(diceValues4));
+    m_grandeSuite.calculateScore(diceValues4);
+    EXPECT_EQ(0, m_grandeSuite.getScore());
 }
 
 /** Test case for GrandeSuite::getName. **/

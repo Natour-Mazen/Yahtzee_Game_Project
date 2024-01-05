@@ -13,19 +13,23 @@ TEST_F(CarreTest, CalculateScore) {
 
     // Test when there is a Carre of 3.
     std::vector<int> diceValues1 = { 1, 3, 3, 3, 3 };
-    EXPECT_EQ(12, m_carre.calculateScore(diceValues1));
+    m_carre.calculateScore(diceValues1);
+    EXPECT_EQ(12, m_carre.getScore());
 
     // Test when there is a Carre of 6.
     std::vector<int> diceValues2 = { 6, 2, 6, 6, 6 };
-    EXPECT_EQ(24, m_carre.calculateScore(diceValues2));
+    m_carre.calculateScore(diceValues2);
+    EXPECT_EQ(24, m_carre.getScore());
 
     // Test when there is a Carre of 4.
     std::vector<int> diceValues3 = { 4, 4, 4, 4, 4 };
-    EXPECT_EQ(16, m_carre.calculateScore(diceValues3));
+    m_carre.calculateScore(diceValues3);
+    EXPECT_EQ(16, m_carre.getScore());
 
     // Test when there is no Carre.
     std::vector<int> diceValues4 = { 1, 2, 3, 4, 5 };
-    EXPECT_EQ(0, m_carre.calculateScore(diceValues4));
+    m_carre.calculateScore(diceValues4);
+    EXPECT_EQ(0, m_carre.getScore());
 }
 
 /** Test case for Carre::getName. **/
