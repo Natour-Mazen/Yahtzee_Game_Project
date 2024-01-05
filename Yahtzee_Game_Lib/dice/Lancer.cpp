@@ -33,6 +33,15 @@ void Lancer::printDices() {
     std::cout << " <<=>>" << std::endl;
 }
 
+/**
+ * @brief This function asks the player if they want to reroll the dices.
+ *
+ * This function prompts the player to enter 1 for yes or 0 for no.
+ * If the player enters an invalid input (not a single value of 0 or 1), the function prints an error message and asks for the input again.
+ * The function continues to ask for the input until a valid input is entered.
+ *
+ * @return A boolean value indicating whether the player wants to reroll the dices. Returns true if the player enters 1, and false if the player enters 0.
+ */
 bool Lancer::askReroll() {
     int choix;
     std::cout << ">> Relancer les Des ? (1 pour oui, 0 pour non): ";
@@ -47,7 +56,15 @@ bool Lancer::askReroll() {
     return choix == 1;
 }
 
-
+/**
+ * @brief This function gets the indices of the dices to reroll.
+ *
+ * This function asks the user to enter the indices of the dices they want to reroll. The indices should be separated by a space and should be between 1 and 5.
+ * If the user enters an invalid input (not composed of digits and spaces only, more than 5 numbers, or an invalid index), the function prints an error message and asks for the input again.
+ * The function continues to ask for the input until a valid input is entered.
+ *
+ * @return A vector of indices of the dices to reroll.
+ */
 std::vector<int> Lancer::getDiceIndicesToReroll() {
     std::vector<int> indices;
     std::string ligne;
@@ -97,7 +114,14 @@ std::vector<int> Lancer::getDiceIndicesToReroll() {
     return indices;
 }
 
-
+/**
+ * @brief This function rerolls the dices.
+ *
+ * This function checks if there are exactly 5 dices in the vector. If not, it prints an error message and returns.
+ * If there are 5 dices, it allows the player to choose which dices to reroll. The player can reroll the dices up to 2 times.
+ * After each reroll, the function prints the new dice values.
+ * If the player does not want to reroll, the function breaks the loop and ends.
+ */
 void Lancer::reRollDices() {
     // Look if we have 5 dices in the vector.
     if (m_diceValues.size() != 5) {
