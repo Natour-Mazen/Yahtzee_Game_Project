@@ -9,27 +9,6 @@ template <short ID>
 class GrandeSuite : public Figure {
 public:
     /**
-     * @brief Calculates the score for the Grande Suite figure based on the given dice values.
-     *
-     * This method calculates the score for a Grande Suite figure, where the score is 40 if the dice values
-     * form a sequence of five consecutive numbers, and 0 otherwise.
-     *
-     * @param diceValues The values of the dice.
-     * @return The calculated score for the Grande Suite figure.
-     */
-    int calculateScore(const std::vector<int>& diceValues)  {
-        std::vector<int> sortedValues(diceValues);
-        std::sort(sortedValues.begin(), sortedValues.end());
-
-        for (std::size_t i = 0; i < sortedValues.size() - 1; ++i) {
-            if (sortedValues[i + 1] - sortedValues[i] != 1) {
-                return 0;
-            }
-        }
-        return 40;
-    }
-
-    /**
      * @brief Gets the name of the Grande Suite figure.
      * @return The name of the figure.
      */
@@ -51,5 +30,27 @@ public:
      */
     void serialize(std::ostream& out) const  {
         out << "id: " << ID << "\n";
+    }
+
+protected:
+    /**
+     * @brief Calculates the score for the Grande Suite figure based on the given dice values.
+     *
+     * This method calculates the score for a Grande Suite figure, where the score is 40 if the dice values
+     * form a sequence of five consecutive numbers, and 0 otherwise.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Grande Suite figure.
+     */
+    int justCalculateScore(const std::vector<int>& diceValues) {
+        std::vector<int> sortedValues(diceValues);
+        std::sort(sortedValues.begin(), sortedValues.end());
+
+        for (std::size_t i = 0; i < sortedValues.size() - 1; ++i) {
+            if (sortedValues[i + 1] - sortedValues[i] != 1) {
+                return 0;
+            }
+        }
+        return 40;
     }
 };

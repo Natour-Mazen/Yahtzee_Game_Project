@@ -15,25 +15,6 @@ public:
     Number(unsigned int number) : m_number(number) {}
 
     /**
-     * @brief Calculates the score for the Number figure based on the given dice values.
-     *
-     * This method calculates the score for a Number figure, where the score is the sum of the dice values
-     * that match the specified number.
-     *
-     * @param diceValues The values of the dice.
-     * @return The calculated score for the Number figure.
-     */
-    int calculateScore(const std::vector<int>& diceValues)  {
-        int score = 0;
-        for (int value : diceValues) {
-            if (value == m_number) {
-                score += value;
-            }
-        }
-        return score;
-    }
-
-    /**
      * @brief Gets the name of the Number figure.
      * @return The name of the figure.
      */
@@ -55,6 +36,26 @@ public:
      */
     void serialize(std::ostream& out) const  {
         out << "id: " << ID << "\n";
+    }
+
+protected:
+    /**
+     * @brief Calculates the score for the Number figure based on the given dice values.
+     *
+     * This method calculates the score for a Number figure, where the score is the sum of the dice values
+     * that match the specified number.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Number figure.
+     */
+    int justCalculateScore(const std::vector<int>& diceValues) {
+        int score = 0;
+        for (int value : diceValues) {
+            if (value == m_number) {
+                score += value;
+            }
+        }
+        return score;
     }
 
 private:

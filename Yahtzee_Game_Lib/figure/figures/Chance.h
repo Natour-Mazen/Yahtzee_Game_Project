@@ -9,22 +9,6 @@ template <short ID>
 class Chance : public Figure {
 public:
     /**
-     * @brief Calculates the score for the Chance figure based on the given dice values.
-     *
-     * This method calculates the score by summing up all the values of the dice.
-     *
-     * @param diceValues The values of the dice.
-     * @return The calculated score for the Chance figure.
-     */
-    int calculateScore(const std::vector<int>& diceValues)  {
-        int sum = 0;
-        for (int value : diceValues) {
-            sum += value;
-        }
-        return sum;
-    }
-
-    /**
      * @brief Gets the name of the Chance figure.
      * @return The name of the figure.
      */
@@ -46,5 +30,22 @@ public:
      */
     void serialize(std::ostream& out) const  {
         out << "id: " << ID << "\n";
+    }
+
+protected:
+    /**
+     * @brief Calculates the score for the Chance figure based on the given dice values.
+     *
+     * This method calculates the score by summing up all the values of the dice.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Chance figure.
+     */
+    int justCalculateScore(const std::vector<int>& diceValues) {
+        int sum = 0;
+        for (int value : diceValues) {
+            sum += value;
+        }
+        return sum;
     }
 };

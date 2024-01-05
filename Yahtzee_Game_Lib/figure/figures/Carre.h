@@ -9,28 +9,6 @@ template <short ID>
 class Carre : public Figure {
 public:
     /**
-     * @brief Calculates the score for the Carre figure based on the given dice values.
-     *
-     * This method checks if there are at least four dice with the same value,
-     * and if so, it sets the value of the Carre to that dice value and returns
-     * the calculated score, which is four times the dice value. If no Carre is
-     * found, the score is 0.
-     *
-     * @param diceValues The values of the dice.
-     * @return The calculated score for the Carre figure.
-     */
-    int calculateScore(const std::vector<int>& diceValues) override {
-        for (unsigned short i = 1; i <= 6; ++i) {
-            int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
-            if (count >= 4) {
-                m_value = i;  // Set the value of the Carre to the dice value found
-                return 4 * i;  // Return the calculated score (four times the dice value)
-            }
-        }
-        return 0;  // Return 0 if no Carre is found
-    }
-
-    /**
      * @brief Gets the name of the Carre figure.
      * @return The name of the figure.
      */
@@ -55,6 +33,29 @@ public:
      */
     void serialize(std::ostream& out) const override {
         out << "id: " << ID << "\n";
+    }
+
+protected:
+    /**
+     * @brief Calculates the score for the Carre figure based on the given dice values.
+     *
+     * This method checks if there are at least four dice with the same value,
+     * and if so, it sets the value of the Carre to that dice value and returns
+     * the calculated score, which is four times the dice value. If no Carre is
+     * found, the score is 0.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Carre figure.
+     */
+    int justCalculateScore(const std::vector<int>& diceValues) override {
+        for (unsigned short i = 1; i <= 6; ++i) {
+            int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
+            if (count >= 4) {
+                m_value = i;  // Set the value of the Carre to the dice value found
+                return 4 * i;  // Return the calculated score (four times the dice value)
+            }
+        }
+        return 0;  // Return 0 if no Carre is found
     }
 
 private:

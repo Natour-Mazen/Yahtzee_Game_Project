@@ -9,11 +9,10 @@ class Figure
 public:
     virtual ~Figure() = default;
 
-    /** Calculate the score for this figure with the current dices.
-    *   @param diceValues : dices to calculate the score.
-    *   @return : the score.
-    **/
-    virtual int calculateScore(const std::vector<int>& diceValues) = 0;
+    int calculateScore(const std::vector<int>& diceValues) {
+        m_score = justCalculateScore(diceValues);
+        return m_score;
+    }
 
     /** Give the description of the Brelan.
     *   @return : the string of the description.
@@ -25,8 +24,24 @@ public:
     **/
     virtual short getId() const = 0;
 
-    /** TODO
+    /** Give the score of this class.
+    *   @return : the score.
+    **/
+    int getScore() const {
+        return m_score;
+    }
+
+    /** Save the figure in a out stream.
     **/
     virtual void serialize(std::ostream& out) const = 0;
+
+protected:
+    int m_score = 0;
+
+    /** Calculate the score for this figure with the current dices.
+    *   @param diceValues : dices to calculate the score.
+    *   @return : the score.
+    **/
+    virtual int justCalculateScore(const std::vector<int>& diceValues) = 0;
 };
 

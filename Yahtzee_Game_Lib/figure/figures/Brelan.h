@@ -9,28 +9,6 @@ template <short ID>
 class Brelan : public Figure {
 public:
     /**
-     * @brief Calculates the score for the Brelan figure based on the given dice values.
-     *
-     * This method checks if there are at least three dice with the same value,
-     * and if so, it sets the value of the Brelan to that dice value and returns
-     * the calculated score, which is three times the dice value. If no Brelan is
-     * found, the score is 0.
-     *
-     * @param diceValues The values of the dice.
-     * @return The calculated score for the Brelan figure.
-     */
-    int calculateScore(const std::vector<int>& diceValues) override {
-        for (unsigned short i = 1; i <= 6; ++i) {
-            int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
-            if (count >= 3) {
-                m_value = i;
-                return 3 * i;
-            }
-        }
-        return 0;
-    }
-
-    /**
      * @brief Gets the name of the Brelan figure.
      * @return The name of the figure.
      */
@@ -55,6 +33,29 @@ public:
      */
     void serialize(std::ostream& out) const override {
         out << "id: " << ID << "\n";
+    }
+
+protected:
+    /**
+     * @brief Calculates the score for the Brelan figure based on the given dice values.
+     *
+     * This method checks if there are at least three dice with the same value,
+     * and if so, it sets the value of the Brelan to that dice value and returns
+     * the calculated score, which is three times the dice value. If no Brelan is
+     * found, the score is 0.
+     *
+     * @param diceValues The values of the dice.
+     * @return The calculated score for the Brelan figure.
+     */
+    int justCalculateScore(const std::vector<int>& diceValues) override {
+        for (unsigned short i = 1; i <= 6; ++i) {
+            int count = static_cast<int>(std::count(diceValues.begin(), diceValues.end(), i));
+            if (count >= 3) {
+                m_value = i;
+                return 3 * i;
+            }
+        }
+        return 0;
     }
 
 private:
