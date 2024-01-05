@@ -275,7 +275,7 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
  * @param diceValues The values of the rolled dice.
  */
 void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
-    chooseFigureHelper(diceValues, m_figures.size());
+    chooseFigureHelper(diceValues, static_cast<int>(m_figures.size()));
 }
 
 /**
