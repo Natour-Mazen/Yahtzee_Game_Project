@@ -288,12 +288,12 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
         lancer.printDices();
         lancer.reRollDices();
         player->calculateFiguresScore(lancer.getDiceValues());
-        player->handleYahtzeeBonus(lancer.getDiceValues());
+        player->handleYahtzeeBonus();
         if (isDifficileMode) {
-            player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
+            player->chooseFigureDifficileAndPlusModes(NombreMaxOfFigureTopick);
         }
         else {
-            player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+            player->chooseFigureFacileAndPlusModes();
         }
         player->resetFigures();
         sauvegarderPartie();
@@ -411,8 +411,8 @@ void YahtzeeGame::jouerIAvsHumain() {
                 lancer.printDices();
                 iaPlayer->createAllFigures();
                 iaPlayer->calculateFiguresScore(lancer.getDiceValues());
-                iaPlayer->handleYahtzeeBonus(lancer.getDiceValues());
-                iaPlayer->chooseFigure(lancer.getDiceValues());
+                iaPlayer->handleYahtzeeBonus();
+                iaPlayer->chooseFigure();
                 iaPlayer->resetFigures();
                 std::this_thread::sleep_for(std::chrono::milliseconds(3000));
             }
@@ -422,8 +422,8 @@ void YahtzeeGame::jouerIAvsHumain() {
                 Joueur* player = joueurs[num_player].get();
                 player->createAllFigures();
                 player->calculateFiguresScore(lancer.getDiceValues());
-                player->handleYahtzeeBonus(lancer.getDiceValues());
-                player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
+                player->handleYahtzeeBonus();
+                player->chooseFigureFacileAndPlusModes();
                 player->resetFigures();
             }
        

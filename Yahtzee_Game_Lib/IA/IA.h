@@ -5,7 +5,7 @@
 class IA : public Joueur {
 public:
     IA();
-    void chooseFigure(const std::vector<int>& diceValues);
+    void chooseFigure();
 };
 
 

@@ -4,11 +4,10 @@ IA::IA() : Joueur() {}
 
 /**
  * @brief Makes a strategic choice for a figure based on the current dice values.
- * @param diceValues The values obtained from the rolled dice.
  */
-void IA::chooseFigure(const std::vector<int>& diceValues) {
+void IA::chooseFigure() {
     // Display available figures and their scores
-    displayFigureAndScores(diceValues);
+    displayFigureAndScores();
 
     // Variables to track the maximum expected score and the best figure choice
     int maxExpectedScore = -1;

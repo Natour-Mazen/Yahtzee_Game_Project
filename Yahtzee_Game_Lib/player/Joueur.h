@@ -24,10 +24,10 @@ public:
     void createHardcoreFigures();
 
     virtual void resetFigures();
-    virtual void handleYahtzeeBonus(const std::vector<int>& diceValues);
+    virtual void handleYahtzeeBonus();
 
-    void chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues);
-    void chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick);
+    void chooseFigureFacileAndPlusModes();
+    void chooseFigureDifficileAndPlusModes(const int& NombreMaxOfFigureTopick);
 
 
     int getTotalScore() const;
@@ -62,6 +62,6 @@ protected:
 
 
     void updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFigure);
-    void displayFigureAndScores(const std::vector<int>& diceValues) const;
-    void chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures);
+    void displayFigureAndScores() const;
+    void chooseFigureHelper(const int& maxFigures);
 };

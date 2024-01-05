@@ -26,9 +26,8 @@ void Joueur::resetFigures() {
 }
 
 /** For all the figures, look if it's the second Yahtzee and if it's the case then it add 100 points to the player.
-*   @param diceValues : vector of 5 dices.
 **/
-void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
+void Joueur::handleYahtzeeBonus() {
     if (m_firstYahtzee)
     {
         for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
@@ -167,7 +166,7 @@ void Joueur::createHardcoreFigures() {
 /** Display the differents figures possible for a set of dice.
 *   @param diveValues : vector of 5 dices.
 **/
-void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
+void Joueur::displayFigureAndScores() const {
     std::cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n";
     std::cout << "|                   YAHTZEE                   |\n";
     std::cout << "|---------------------------------------------|\n";
@@ -212,14 +211,13 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
 
 /**
  * @brief Helper function for the player to choose a figure.
- * @param diceValues The values of the rolled dice.
  * @param maxFigures The maximum number of figures the player can choose from.
  */
-void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& maxFigures) {
+void Joueur::chooseFigureHelper(const int& maxFigures) {
     int choice;
     bool isNumber;
 
-    displayFigureAndScores(diceValues);
+    displayFigureAndScores();
 
     bool correctAnswer = false;
 
@@ -273,8 +271,8 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
  * @brief Allows the player to choose a figure in easy mode and other additional modes.
  * @param diceValues The values of the rolled dice.
  */
-void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) {
-    chooseFigureHelper(diceValues, static_cast<int>(m_figures.size()));
+void Joueur::chooseFigureFacileAndPlusModes() {
+    chooseFigureHelper(static_cast<int>(m_figures.size()));
 }
 
 /**
@@ -282,9 +280,9 @@ void Joueur::chooseFigureFacileAndPlusModes(const std::vector<int>& diceValues) 
  * @param diceValues The values of the rolled dice.
  * @param NombreMaxOfFigureTopick The maximum number of figures the player can choose.
  */
-void Joueur::chooseFigureDifficileAndPlusModes(const std::vector<int>& diceValues, const int& NombreMaxOfFigureTopick) {
+void Joueur::chooseFigureDifficileAndPlusModes( const int& NombreMaxOfFigureTopick) {
     std::cout << "   <<=>> Vous ne pourrez choisir que la/les " << NombreMaxOfFigureTopick << "er(es) figure(s), cela fait parti du mode de jeu choisit <<=>>   " << std::endl;
-    chooseFigureHelper(diceValues, NombreMaxOfFigureTopick);
+    chooseFigureHelper(NombreMaxOfFigureTopick);
 }
 
 
@@ -304,8 +302,7 @@ bool Joueur::isFiguresEmpty() const {
 
 void Joueur::calculateFiguresScore(const std::vector<int>& diceValues) const
 {
-    for(auto figure : m_figures)
-    {
+    for(auto figure : m_figures){
         figure->calculateScore(diceValues);
     }
 }
