@@ -70,9 +70,9 @@ TEST_F(NumberTest, CalculateScore_for_6) {
 /** Test case for Number::getName. **/
 TEST_F(NumberTest, GetName) {
 
-    EXPECT_EQ("Number 1", m_number1.getName());
-    EXPECT_EQ("Number 2", m_number2.getName());
-    EXPECT_EQ("Number 6", m_number6.getName());
+    EXPECT_EQ("Somme des 1", m_number1.getName());
+    EXPECT_EQ("Somme des 2", m_number2.getName());
+    EXPECT_EQ("Somme des 6", m_number6.getName());
 }
 
 /** Test case for Number::getId. **/
