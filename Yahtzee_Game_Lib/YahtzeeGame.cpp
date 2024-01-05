@@ -23,14 +23,14 @@ YahtzeeGame::~YahtzeeGame() {
  * @brief Displays the difficulty selection menu.
  */
 void YahtzeeGame::afficherMenuDifficulte() {
-    const unsigned char UPPER_LEFT_CORNER = 218;
-    const unsigned char HORIZONTAL_LINE = 196;
-    const unsigned char UPPER_RIGHT_CORNER = 191;
     const unsigned char VERTICAL_LINE = 179;
-    const unsigned char T_DOWN = 195;
     const unsigned char T_UP = 180;
+    const unsigned char UPPER_RIGHT_CORNER = 191;
     const unsigned char LOWER_LEFT_CORNER = 192;
+    const unsigned char T_DOWN = 195;
+    const unsigned char HORIZONTAL_LINE = 196;
     const unsigned char LOWER_RIGHT_CORNER = 217;
+    const unsigned char UPPER_LEFT_CORNER = 218;
     std::cout << UPPER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << UPPER_RIGHT_CORNER << "\n";
     std::cout << VERTICAL_LINE << " Choisissez le niveau de difficulte :          " << VERTICAL_LINE << "\n";
     std::cout << T_DOWN << std::string(47, HORIZONTAL_LINE) << T_UP << "\n";
@@ -47,12 +47,11 @@ void YahtzeeGame::afficherMenuPrincipal() {
     const unsigned char T_UP = 185;
     const unsigned char VERTICAL_LINE = 186;
     const unsigned char UPPER_RIGHT_CORNER = 187;
+    const unsigned char LOWER_RIGHT_CORNER = 188;
+    const unsigned char LOWER_LEFT_CORNER = 200;
     const unsigned char UPPER_LEFT_CORNER = 201;
     const unsigned char T_DOWN = 204;
     const unsigned char HORIZONTAL_LINE = 205;
-    
-    const unsigned char LOWER_LEFT_CORNER = 200;
-    const unsigned char LOWER_RIGHT_CORNER = 188;
     std::cout << UPPER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << UPPER_RIGHT_CORNER << "\n";
     std::cout << VERTICAL_LINE << " Bienvenue dans le jeu Yahtzee!                " << VERTICAL_LINE << "\n";
     std::cout << T_DOWN << std::string(47, HORIZONTAL_LINE) << T_UP << "\n";
