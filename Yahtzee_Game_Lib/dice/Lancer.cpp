@@ -34,6 +34,36 @@ void Lancer::printDices() {
 }
 
 /**
+ * @brief This function rerolls the dices.
+ *
+ * This function checks if there are exactly 5 dices in the vector. If not, it prints an error message and returns.
+ * If there are 5 dices, it allows the player to choose which dices to reroll. The player can reroll the dices up to 2 times.
+ * After each reroll, the function prints the new dice values.
+ * If the player does not want to reroll, the function breaks the loop and ends.
+ */
+void Lancer::reRollDices() {
+    // Look if we have 5 dices in the vector.
+    if (m_diceValues.size() != 5) {
+        std::cerr << "  /!\\ Erreur: la taille du vecteur diceValues n'est pas correcte /!\\ " << std::endl;
+        return;
+    }
+
+    // Choice of dice to reroll (2 rerolls maximum).
+    for (int lancer = 1; lancer <= 2; ++lancer) {
+        if (askReroll()) {
+            std::vector<int> indices = getDiceIndicesToReroll();
+            for (int indice : indices) {
+                m_diceValues[indice] = rand() % 6 + 1;
+            }
+            printDices();
+        }
+        else {
+            break; // Exit the loop if the player does not want to reroll the dices.
+        }
+    }
+}
+
+/**
  * @brief This function asks the player if they want to reroll the dices.
  *
  * This function prompts the player to enter 1 for yes or 0 for no.
@@ -112,34 +142,4 @@ std::vector<int> Lancer::getDiceIndicesToReroll() {
     }
 
     return indices;
-}
-
-/**
- * @brief This function rerolls the dices.
- *
- * This function checks if there are exactly 5 dices in the vector. If not, it prints an error message and returns.
- * If there are 5 dices, it allows the player to choose which dices to reroll. The player can reroll the dices up to 2 times.
- * After each reroll, the function prints the new dice values.
- * If the player does not want to reroll, the function breaks the loop and ends.
- */
-void Lancer::reRollDices() {
-    // Look if we have 5 dices in the vector.
-    if (m_diceValues.size() != 5) {
-        std::cerr << "  /!\\ Erreur: la taille du vecteur diceValues n'est pas correcte /!\\ " << std::endl;
-        return;
-    }
-
-    // Choice of dice to reroll (2 rerolls maximum).
-    for (int lancer = 1; lancer <= 2; ++lancer) {
-        if (askReroll()) {
-            std::vector<int> indices = getDiceIndicesToReroll();
-            for (int indice : indices) {
-                m_diceValues[indice] = rand() % 6 + 1;
-            }
-            printDices();
-        }
-        else {
-            break; // Exit the loop if the player does not want to reroll the dices.
-        }
-    }
 }
