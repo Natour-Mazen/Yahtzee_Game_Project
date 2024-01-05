@@ -19,7 +19,7 @@ public:
      * @return The name of the figure.
      */
     std::string getName() const  {
-        return "Number " + std::to_string(m_number);
+        return "Somme des " + std::to_string(m_number);
     }
 
     /**
