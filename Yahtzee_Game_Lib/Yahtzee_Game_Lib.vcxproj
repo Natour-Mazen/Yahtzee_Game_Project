@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="enums\difficulty.h" />
+    <ClInclude Include="enums\figureId.h" />
     <ClInclude Include="figure\figures\Brelan.h" />
     <ClInclude Include="figure\figures\Carre.h" />
     <ClInclude Include="figure\figures\Chance.h" />

@@ -57,6 +57,9 @@
     <ClInclude Include="player\IA\IA.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="enums\figureId.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dice\Lancer.cpp">

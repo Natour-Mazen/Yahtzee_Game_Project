@@ -1,6 +1,7 @@
 #include "Joueur.h"
 #include <algorithm>
 #include <iomanip>
+#include "../enums/figureId.h"
 
 
 /** Create a player with a total and minor score of 0 and a game grid empty.
@@ -32,7 +33,7 @@ void Joueur::handleYahtzeeBonus() {
     {
         for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
             Figure* figure = it->get();
-            if (figure->getId() == ID_YAHTZEE_BONUS) {
+            if (figure->getId() == YAHTZEEBONUS_ID) {
                 if (!m_yahtzeeBonus && figure->getScore() > 0) {
                     std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
                     m_totalScore += 100;
@@ -66,12 +67,12 @@ bool Joueur::isFigureUsed(Figure* figure) const {
 **/
 std::shared_ptr<Figure> Joueur::createNumberFigure(unsigned int number) const {
     switch (number) {
-    case 1: return std::make_shared<Number<1>>(number);
-    case 2: return std::make_shared<Number<2>>(number);
-    case 3: return std::make_shared<Number<3>>(number);
-    case 4: return std::make_shared<Number<4>>(number);
-    case 5: return std::make_shared<Number<5>>(number);
-    case 6: return std::make_shared<Number<6>>(number);
+    case 1: return std::make_shared<Number<ONE_ID>>(number);
+    case 2: return std::make_shared<Number<TWO_ID>>(number);
+    case 3: return std::make_shared<Number<THREE_ID>>(number);
+    case 4: return std::make_shared<Number<FOUR_ID>>(number);
+    case 5: return std::make_shared<Number<FIVE_ID>>(number);
+    case 6: return std::make_shared<Number<SIX_ID>>(number);
     default: return nullptr;
     }
 }
@@ -86,20 +87,20 @@ std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
     case 1: case 2: case 3: case 4: case 5: case 6:
         return createNumberFigure(id);
     case 7:
-        return std::make_shared<Brelan<7>>();
+        return std::make_shared<Brelan<BRELAN_ID>>();
     case 8:
-        return std::make_shared<Carre<8>>();
+        return std::make_shared<Carre<CARRE_ID>>();
     case 9:
-        return std::make_shared<Full<9>>();
+        return std::make_shared<Full<FULL_ID>>();
     case 10:
-        return std::make_shared<PetiteSuite<10>>();
+        return std::make_shared<PetiteSuite<PETITESUITE_ID>>();
     case 11:
-        return std::make_shared<GrandeSuite<11>>();
+        return std::make_shared<GrandeSuite<GRANDESUITE_ID>>();
     case 12:
         if (m_firstYahtzee) {
-            return std::make_shared<Yahtzee<ID_YAHTZEE_BONUS>>();
+            return std::make_shared<Yahtzee<YAHTZEEBONUS_ID>>();
         }
-        return std::make_shared<Yahtzee<ID_YAHTZEE_FIRST>>();
+        return std::make_shared<Yahtzee<YAHTZEEFIRST_ID>>();
     case 13: case 14: // The 14 for the load sys
         return std::make_shared<Chance<14>>();
     default:
@@ -222,13 +223,13 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
     const short figureId = figure->getId();
 
 
-    if (figureId == ID_YAHTZEE_FIRST && scoreForFigure > 0) {
+    if (figureId == YAHTZEEFIRST_ID && scoreForFigure > 0) {
         m_firstYahtzee = true;
     }
 
     m_totalScore += scoreForFigure;
 
-    if (figureId >= 1 && figureId <= 6) {
+    if (figureId == ONE_ID || figureId == TWO_ID || figureId == THREE_ID || figureId == FOUR_ID || figureId == FIVE_ID || figureId == SIX_ID) {
         m_minorScore += scoreForFigure;
         if (m_minorScore >= 63) {
             m_totalScore += 35;
