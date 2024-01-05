@@ -1,5 +1,7 @@
 #include "Lancer.h"
 
+#include <algorithm>
+
 //============================================//
 //                  PUBLIC                    //
 //============================================//
@@ -45,29 +47,56 @@ bool Lancer::askReroll() {
     return choix == 1;
 }
 
+
 std::vector<int> Lancer::getDiceIndicesToReroll() {
     std::vector<int> indices;
-
-    // Selection of dice to reroll.
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Flushing the input buffer.
-    std::cout << ">> Indices des Des a relancer (separes par un espace et de 1 a 5): ";
     std::string ligne;
-    std::getline(std::cin, ligne);
 
-    std::istringstream iss(ligne);
-    int indice;
-    while (iss >> indice) {
-        // If the index is valid.
-        if (indice >= 1 && indice <= 5) {
-            indices.push_back(indice - 1);
+    while (true) {
+        indices.clear();  // Clear the indices from the previous iteration
+
+        // Selection of dice to reroll.
+        if (std::cin.rdbuf()->in_avail())  // Check if the input buffer is not empty
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Flushing the input buffer.
+        std::cout << ">> Indices des Des a relancer (separes par un espace et de 1 a 5): ";
+        std::getline(std::cin, ligne);
+
+        // Check if the input is composed of digits and spaces only
+        if (!std::all_of(ligne.begin(), ligne.end(), [](const char c) { return std::isdigit(c) || std::isspace(c); })) {
+            std::cout << "   /!\\ Erreur: L'entree doit etre composee de chiffres et d'espaces uniquement. /!\\   " << std::endl;
+            continue;
         }
-        else {
-            std::cerr << "   /!\\ Erreur: Indice invalide pour : " << indice << " /!\\   " << std::endl;
+
+        std::istringstream iss(ligne);
+        int indice;
+
+        // Check if there are more than 5 numbers
+        if (std::count(ligne.begin(), ligne.end(), ' ') > 4) {
+            std::cout << "   /!\\ Erreur: Plus de 5 nombres entres. /!\\   " << std::endl;
+            continue;
+        }
+
+        bool allIndicesValid = true;  // Assume all indices are valid until proven otherwise
+        while (iss >> indice) {
+            // If the index is valid.
+            if (indice >= 1 && indice <= 5) {
+                indices.push_back(indice - 1);
+            }
+            else {
+                std::cout << "   /!\\ Erreur: Indice invalide pour : " << indice << " /!\\   " << std::endl;
+                allIndicesValid = false;  // Set allIndicesValid to false if an invalid index is found
+                break;
+            }
+        }
+
+        if (allIndicesValid) {
+            break;
         }
     }
 
     return indices;
 }
+
 
 void Lancer::reRollDices() {
     // Look if we have 5 dices in the vector.
