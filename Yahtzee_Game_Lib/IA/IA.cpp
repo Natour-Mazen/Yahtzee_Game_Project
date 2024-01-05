@@ -20,7 +20,7 @@ void IA::chooseFigure(const std::vector<int>& diceValues) {
         if (isFigureUsed(figure.get())) continue;
 
         // Calculate the expected score for this figure
-        int expectedScore = figure->calculateScore(diceValues);
+        int expectedScore = figure->getScore();
 
         // If the expected score is higher than the current maximum score, update the maximum score and the best figure choice
         if (expectedScore >= maxExpectedScore) {
@@ -31,7 +31,7 @@ void IA::chooseFigure(const std::vector<int>& diceValues) {
 
     // Update the scores and add the best figure to the list of used figures
     if (bestFigure != nullptr) {
-        int score = bestFigure->calculateScore(diceValues);
+        int score = bestFigure->getScore();
         updateScores(score, bestFigure);
         m_figuresUsed.push_back(bestFigure);
     }

@@ -287,6 +287,7 @@ void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)()
         lancer.rollDices();
         lancer.printDices();
         lancer.reRollDices();
+        player->calculateFiguresScore(lancer.getDiceValues());
         player->handleYahtzeeBonus(lancer.getDiceValues());
         if (isDifficileMode) {
             player->chooseFigureDifficileAndPlusModes(lancer.getDiceValues(), NombreMaxOfFigureTopick);
@@ -408,8 +409,9 @@ void YahtzeeGame::jouerIAvsHumain() {
             if (iaPlayer != nullptr) {  // Le joueur est une IA
                 std::cout << "\n======== C'est au tour de l\'IA de jouer ========\n" << std::endl;
                 lancer.printDices();
-                iaPlayer->handleYahtzeeBonus(lancer.getDiceValues());
                 iaPlayer->createAllFigures();
+                iaPlayer->calculateFiguresScore(lancer.getDiceValues());
+                iaPlayer->handleYahtzeeBonus(lancer.getDiceValues());
                 iaPlayer->chooseFigure(lancer.getDiceValues());
                 iaPlayer->resetFigures();
                 std::this_thread::sleep_for(std::chrono::milliseconds(3000));
@@ -418,8 +420,9 @@ void YahtzeeGame::jouerIAvsHumain() {
                 std::cout << "\n======== Joueur Humain a vous de jouer ========\n" << std::endl;
                 lancer.printDices();
                 Joueur* player = joueurs[num_player].get();
-                player->handleYahtzeeBonus(lancer.getDiceValues());
                 player->createAllFigures();
+                player->calculateFiguresScore(lancer.getDiceValues());
+                player->handleYahtzeeBonus(lancer.getDiceValues());
                 player->chooseFigureFacileAndPlusModes(lancer.getDiceValues());
                 player->resetFigures();
             }

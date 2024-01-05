@@ -34,7 +34,7 @@ void Joueur::handleYahtzeeBonus(const std::vector<int>& diceValues) {
         for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
             Figure* figure = it->get();
             if (figure->getId() == ID_YAHTZEE_BONUS) {
-                if (!m_yahtzeeBonus && figure->calculateScore(diceValues) > 0) {
+                if (!m_yahtzeeBonus && figure->getScore() > 0) {
                     std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
                     m_totalScore += 100;
                     m_yahtzeeBonus = true;
@@ -173,9 +173,8 @@ void Joueur::displayFigureAndScores(const std::vector<int>& diceValues) const {
     std::cout << "|---------------------------------------------|\n";
 
     for (size_t i = 0; i < m_figures.size(); ++i) {
-        int figurescore = m_figures[i]->calculateScore(diceValues);
         std::cout << "| " << std::setw(2) << std::right << i + 1 << " - " << std::setw(19) << std::left << m_figures[i]->getName() << ": ";
-        std::cout << std::setw(8) << std::right << figurescore << " points";
+        std::cout << std::setw(8) << std::right << m_figures[i]->getScore() << " points";
         std::cout << std::setw(5) << "|\n";
     }
 
@@ -247,7 +246,7 @@ void Joueur::chooseFigureHelper(const std::vector<int>& diceValues, const int& m
                 std::cout << "Vous avez déjà choisi cette figure. Veuillez choisir une figure différente." << std::endl;
             }
             else {
-                int scoreForFigure = selectedFigure->calculateScore(diceValues);
+                int scoreForFigure = selectedFigure->getScore();
 
                 updateScores(scoreForFigure, selectedFigure);
 
@@ -301,6 +300,14 @@ int Joueur::getTotalScore() const
 
 bool Joueur::isFiguresEmpty() const {
     return m_figures.size() == 0;
+}
+
+void Joueur::calculateFiguresScore(const std::vector<int>& diceValues) const
+{
+    for(auto figure : m_figures)
+    {
+        figure->calculateScore(diceValues);
+    }
 }
 
 

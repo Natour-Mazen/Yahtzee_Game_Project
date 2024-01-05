@@ -13,9 +13,8 @@ public:
     *   @param diceValues : dices to calculate the score.
     *   @return : the score.
     **/
-    int calculateScore(const std::vector<int>& diceValues) {
+    void calculateScore(const std::vector<int>& diceValues) {
         m_score = justCalculateScore(diceValues);
-        return m_score;
     }
 
     /** Give the description of the Brelan.

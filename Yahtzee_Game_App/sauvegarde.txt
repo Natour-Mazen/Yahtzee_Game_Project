@@ -3,7 +3,9 @@ Combien de joueurs :1
 Joueur numero: 0
 m_firstYahtzee: 0
 m_yahtzeeBonus: 0
-m_minorScore: 0
-m_totalScore: 17
-m_figuresUsed size: 1
+m_minorScore: 12
+m_totalScore: 68
+m_figuresUsed size: 3
+id: 10
 id: 14
+id: 6
