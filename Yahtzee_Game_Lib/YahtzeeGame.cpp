@@ -263,7 +263,7 @@ const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
 void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() {
     std::cout << "\n|------------------Fin du Jeu-----------------|\n";
     std::cout << "|                                             |\n";
-    std::cout << "|------Voici le scores de chaque joueurs------|\n";
+    std::cout << "|------Voici les scores de chaque joueur------|\n";
     for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
         std::cout << "\t -> Score total du joueur " << num_player + 1 << " : " << joueurs[num_player]->getTotalScore() << std::endl;
     }
@@ -282,6 +282,7 @@ void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() {
         std::cin.clear();  
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  
         std::cout << "   <<=>> Entree non valide. Veuillez entrer 'O' pour Oui ou 'N' pour Non. <<=>>   \n";
+        std::cout << ">> Voulez-vous afficher les feuilles de marque de chaque joueur ? (O/N) ";
         std::cin >> reponse;
         reponse = toupper(reponse);
     }
