@@ -340,6 +340,29 @@ void YahtzeeGame::jouerTourHardcore(int num_player) {
     jouerTour(num_player, &Joueur::createHardcoreFigures, 1, true);
 }
 
+
+/**
+ * @brief This function represents a single turn in a Yahtzee game between an AI and a human player.
+ *
+ * @param player Pointer to the player (either AI or human) who is currently playing.
+ * @param isIA Boolean flag indicating whether the current player is an AI.
+ */
+void YahtzeeGame::jouerTourIAvsHumain(Joueur* player, bool isIA) {
+    lancer.rollDices();
+    lancer.printDices();
+    player->createAllFigures();
+    player->calculateFiguresScore(lancer.getDiceValues());
+    if (isIA) {
+        dynamic_cast<IA*>(player)->chooseFigure();
+    }
+    else {
+        player->chooseFigureFacileAndPlusModes();
+    }
+    player->handleYahtzeeBonus();
+    player->resetFigures();
+}
+
+
 /**
  * @brief Plays the Yahtzee game with easy difficulty level for all players.
  */
@@ -405,28 +428,15 @@ void YahtzeeGame::jouerIAvsHumain() {
     for (int round = 0; round < 13; ++round) {
         for (int num_player = 0; num_player < joueurs.size(); ++num_player) {
             IA* iaPlayer = dynamic_cast<IA*>(joueurs[num_player].get());
-            lancer.rollDices();
             if (iaPlayer != nullptr) {  // Le joueur est une IA
                 std::cout << "\n======== C'est au tour de l\'IA de jouer ========\n" << std::endl;
-                lancer.printDices();
-                iaPlayer->createAllFigures();
-                iaPlayer->calculateFiguresScore(lancer.getDiceValues());
-                iaPlayer->handleYahtzeeBonus();
-                iaPlayer->chooseFigure();
-                iaPlayer->resetFigures();
+                jouerTourIAvsHumain(iaPlayer, true);
                 std::this_thread::sleep_for(std::chrono::milliseconds(3000));
             }
             else {  // Le joueur n'est pas une IA
                 std::cout << "\n======== Joueur Humain a vous de jouer ========\n" << std::endl;
-                lancer.printDices();
-                Joueur* player = joueurs[num_player].get();
-                player->createAllFigures();
-                player->calculateFiguresScore(lancer.getDiceValues());
-                player->handleYahtzeeBonus();
-                player->chooseFigureFacileAndPlusModes();
-                player->resetFigures();
+                jouerTourIAvsHumain(joueurs[num_player].get(), false);
             }
-       
         }
     }
     afficherScoresTousJoueurs();

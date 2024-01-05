@@ -51,6 +51,7 @@ private:
     void jouerHardcore();
     void jouerTourHardcore(int num_player);
 
+    void YahtzeeGame::jouerTourIAvsHumain(Joueur* player, bool isIA);
     void jouerIAvsHumain();
     
     void afficherScoresTousJoueurs();

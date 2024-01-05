@@ -296,13 +296,23 @@ int Joueur::getTotalScore() const
     return m_totalScore;
 }
 
+/**
+ * @brief Checks if the figures for the player are empty.
+ *
+ * @return True if the figures are empty, false otherwise.
+ */
 bool Joueur::isFiguresEmpty() const {
     return m_figures.size() == 0;
 }
 
+/**
+ * @brief Calculates the score for each figure based on the given dice values.
+ *
+ * @param diceValues A vector of integers representing the values of the dices.
+ */
 void Joueur::calculateFiguresScore(const std::vector<int>& diceValues) const
 {
-    for(auto figure : m_figures){
+    for(std::shared_ptr<Figure> figure : m_figures){
         figure->calculateScore(diceValues);
     }
 }
