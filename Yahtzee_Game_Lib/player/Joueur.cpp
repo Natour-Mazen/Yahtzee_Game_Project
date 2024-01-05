@@ -102,7 +102,7 @@ std::shared_ptr<Figure> Joueur::createFigures(unsigned int id) const {
         }
         return std::make_shared<Yahtzee<YAHTZEEFIRST_ID>>();
     case 13: case 14: // The 14 for the load sys
-        return std::make_shared<Chance<14>>();
+        return std::make_shared<Chance<CHANCE_ID>>();
     default:
         return nullptr;
     }
