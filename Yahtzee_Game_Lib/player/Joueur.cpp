@@ -231,8 +231,12 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
 
     if (figureId == ONE_ID || figureId == TWO_ID || figureId == THREE_ID || figureId == FOUR_ID || figureId == FIVE_ID || figureId == SIX_ID) {
         m_minorScore += scoreForFigure;
-        if (m_minorScore >= 63) {
+
+        static bool bonusMinor = true;
+        if (m_minorScore >= 63 && bonusMinor) {
             m_totalScore += 35;
+            std::cout << "   <<=>> Bonus ! +35 points, score mineur > 62 <<=>>   " << std::endl;
+            bonusMinor = false;
         }
     }
 

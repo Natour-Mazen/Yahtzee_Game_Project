@@ -393,7 +393,6 @@ void YahtzeeGame::jouerTourIAvsHumain(Joueur* player, bool isIA) {
     player->resetFigures();
 }
 
-
 /**
  * @brief Plays the Yahtzee game with easy difficulty level for all players.
  */
@@ -525,6 +524,3 @@ void YahtzeeGame::deserialize() {
         std::cerr << "\n  <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;
     }
 }
-
-
-
