@@ -20,7 +20,7 @@ protected:
     JoueurTestable m_player;
 };
 
-
+/** Test case for Joueur::createMinorFigures. **/
 TEST_F(JoueurTest, createMinorFigures) {
 
     m_player.createMinorFigures();
@@ -33,6 +33,7 @@ TEST_F(JoueurTest, createMinorFigures) {
     }
 }
 
+/** Test case for Joueur::createMajorFigures. **/
 TEST_F(JoueurTest, createMajorFigures) {
 
     m_player.createMajorFigures();
@@ -48,6 +49,7 @@ TEST_F(JoueurTest, createMajorFigures) {
     }
 }
 
+/** Test case for Joueur::createAllFigures. **/
 TEST_F(JoueurTest, createAllFigures) {
 
     m_player.createAllFigures();
@@ -63,7 +65,7 @@ TEST_F(JoueurTest, createAllFigures) {
     }
 }
 
-
+/** Test case for Joueur::getTotalScore. **/
 TEST_F(JoueurTest, getTotalScore) {
 
     m_player.m_totalScore = 30;

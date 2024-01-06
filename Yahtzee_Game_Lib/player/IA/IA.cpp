@@ -1,4 +1,5 @@
 #include "IA.h"
+#include "../enums/figureId.h"
 
 IA::IA() : Joueur() {}
 
@@ -31,6 +32,10 @@ void IA::chooseFigure() {
     // Update the scores and add the best figure to the list of used figures
     if (bestFigure != nullptr) {
         int score = bestFigure->getScore();
+
+        if (bestFigure.get()->getId() == YAHTZEEFIRST_ID && score > 0) {
+            m_firstYahtzee = true;
+        }
         updateScores(score, bestFigure);
         m_figuresUsed.push_back(bestFigure);
     }

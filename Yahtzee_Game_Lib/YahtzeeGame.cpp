@@ -383,13 +383,13 @@ void YahtzeeGame::jouerTourIAvsHumain(Joueur* player, bool isIA) {
     lancer.printDices();
     player->createAllFigures();
     player->calculateFiguresScore(lancer.getDiceValues());
+    player->handleYahtzeeBonus();
     if (isIA) {
         dynamic_cast<IA*>(player)->chooseFigure();
     }
     else {
         player->chooseFigureFacileAndPlusModes();
     }
-    player->handleYahtzeeBonus();
     player->resetFigures();
 }
 
