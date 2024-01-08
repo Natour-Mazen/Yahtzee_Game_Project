@@ -12,7 +12,7 @@ This project was made with Visual Studio 2022.
 ====== RUN ======
 
 To run the projet you just need to open it with Visual Studio and have the "Google Test" extension installed.
-(the "Google Test" extension is needed if you want to run the tests but to run the game )
+(the "Google Test" extension is needed if you want to run the tests but to run the game you don't need it)
 
 Run the game: select the "Yahtzee_Game_App" project, select "Set as Startup Project" and click on run.
 
