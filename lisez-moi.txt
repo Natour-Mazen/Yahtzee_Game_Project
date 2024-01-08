@@ -1,1 +1,51 @@
 By AL NATOUR Mazen and HERVOUET Leo
+
+
+=== GOAL OF THE PROJET ===
+
+The goal of this project was to recreate the Yahtzee game to play it easily. 
+Base on this Rules: https://fr.wikipedia.org/wiki/Yahtzee#Yahtzee_Domaine_public.
+
+This project was made with Visual Studio 2022.
+
+=== RUN ===
+
+To run the projet you just need to open it with Visual Studio and have the "Google Test" extension installed.
+
+Run the game: select the "Yahtzee_Game_App" project, select "Set as Startup Project" and click on run.
+
+Run the tests: select the "Yahtzee_Game_Tests" project, select "Set as Startup Project" and click on run.
+
+=== STRUCTURE ===
+
+/Yahtzee_Game_App
+	main.cpp
+
+/Yahtzee_Game_Lib
+	/dice
+		Lancer.cpp
+		Lancer.h
+	/enums
+		difficulty.h
+		figureId.h
+	/figure
+		/figures
+			Brelan.h
+			Carre.h
+			Chance.h
+			Full.h
+			GrandeSuite.h
+			Number.h
+			PetiteSuite.h
+			Yahtzee.h
+		figure.h
+	/player
+		/IA
+			IA.cpp
+			IA.h
+	YahtzeeGame.cpp
+	YahtzeeGame.h
+
+
+/Yahtzee_Game_Tests
+
