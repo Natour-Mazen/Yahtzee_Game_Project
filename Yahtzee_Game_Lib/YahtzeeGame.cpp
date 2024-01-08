@@ -162,11 +162,14 @@ void YahtzeeGame::sauvegarderPartie() {
  * @brief Resumes a saved game by loading the game state from a file.
  */
 void YahtzeeGame::reprendrePartie() {
-    deserialize();
-    std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
-    std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
-    std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
-    playHelper();
+    bool isOkayDeserialize = false;
+    deserialize(&isOkayDeserialize);
+    if (isOkayDeserialize) {
+        std::cout << "  <<=>> La partie a repris avec : <<=>>   " << std::endl;
+        std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
+        std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
+        playHelper();
+    }
 }
 
 /**
@@ -498,9 +501,11 @@ void YahtzeeGame::serialize() const {
 }
 
 /**
- * @brief Loads a saved game state from a file and resumes the game.
+ *@brief This method loads a saved game state from a file and resumes the game.
+ *
+ * @param isDeserializeOk A boolean pointer that indicates whether the deserialization was successful.
  */
-void YahtzeeGame::deserialize() {
+void YahtzeeGame::deserialize(bool* isDeserializeOk) {
     std::ifstream fichier("sauvegarde.txt");
     if (fichier.is_open()) {
         std::string ligne;
@@ -519,6 +524,7 @@ void YahtzeeGame::deserialize() {
         }
 
         std::cout << "\n  <<===>> Partie chargee <<===>>   \n" << std::endl;
+        *isDeserializeOk = true;
     }
     else {
         std::cerr << "\n  <<===>> Impossible d'ouvrir le fichier de sauvegarde <<===>>   \n" << std::endl;

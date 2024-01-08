@@ -344,7 +344,7 @@ bool Joueur::isFiguresEmpty() const {
  */
 void Joueur::calculateFiguresScore(const std::vector<int>& diceValues) const
 {
-    for(std::shared_ptr<Figure> figure : m_figures){
+    for(const std::shared_ptr<Figure>& figure : m_figures){
         figure->calculateScore(diceValues);
     }
 }

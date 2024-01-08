@@ -57,6 +57,6 @@ private:
     void afficherScoresEtFuilleMarqueTousJoueurs();
 
     void serialize() const;
-    void deserialize();
+    void deserialize(bool* isDeserializeOk);
 };
 
