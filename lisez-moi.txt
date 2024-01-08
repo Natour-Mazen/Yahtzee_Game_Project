@@ -9,6 +9,9 @@ Base on this Rules: https://fr.wikipedia.org/wiki/Yahtzee#Yahtzee_Domaine_public
 This project was made with Visual Studio 2022.
 
 
+>>> Video of the project : https://youtu.be/pS5cwXoAqGw <<<
+
+
 ====== RUN ======
 
 To run the projet you just need to open it with Visual Studio and have the "Google Test" extension installed.
