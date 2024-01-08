@@ -1,51 +1,76 @@
 By AL NATOUR Mazen and HERVOUET Leo
 
 
-=== GOAL OF THE PROJET ===
+====== GOAL OF THE PROJET ======
 
 The goal of this project was to recreate the Yahtzee game to play it easily. 
 Base on this Rules: https://fr.wikipedia.org/wiki/Yahtzee#Yahtzee_Domaine_public.
 
 This project was made with Visual Studio 2022.
 
-=== RUN ===
+
+====== RUN ======
 
 To run the projet you just need to open it with Visual Studio and have the "Google Test" extension installed.
+(the "Google Test" extension is needed if you want to run the tests but to run the game )
 
 Run the game: select the "Yahtzee_Game_App" project, select "Set as Startup Project" and click on run.
 
 Run the tests: select the "Yahtzee_Game_Tests" project, select "Set as Startup Project" and click on run.
 
-=== STRUCTURE ===
 
+====== STRUCTURE ======
+
+Project where we use the lib for the Yahtzee Game.
 /Yahtzee_Game_App
-	main.cpp
+	main.cpp				>>> Simple main where we use the lib.
 
+
+Project where all the code to run the Yahtzee Game.
 /Yahtzee_Game_Lib
 	/dice
-		Lancer.cpp
-		Lancer.h
+		Lancer.cpp		
+		Lancer.h			>>> Used to create a random set of dices.
 	/enums
-		difficulty.h
-		figureId.h
+		difficulty.h		>>> Used to represent the difficulty level.
+		figureId.h			>>> Used to give ID to all the figures.
 	/figure
 		/figures
-			Brelan.h
-			Carre.h
-			Chance.h
-			Full.h
-			GrandeSuite.h
-			Number.h
-			PetiteSuite.h
-			Yahtzee.h
+			Brelan.h		>>> Represent a "Three Of A Kind". 
+			Carre.h			>>> Represent a "Four Of A Kind". 
+			Chance.h		>>> Represent a "Chance". 
+			Full.h			>>> Represent a "Full House". 
+			GrandeSuite.h	>>> Represent a "Large Straight". 
+			Number.h		>>> Can represent "Aces", "Twos", "Threes", "Fours", "Fives" and "Sixes". 
+			PetiteSuite.h	>>> Represent a "Small Straight". 
+			Yahtzee.h		>>> Represent a "Yahtzee". 
 		figure.h
 	/player
 		/IA
 			IA.cpp
-			IA.h
+			IA.h			>>> Represent a player that can play with no humain input.
+		Joueur.cpp
+		Joueur.h			>>> Represent player with its score and grid.
 	YahtzeeGame.cpp
-	YahtzeeGame.h
+	YahtzeeGame.h			>>> Handle the game, the game start function is here.
 
 
+Project where we have all the tests to test our Game.
 /Yahtzee_Game_Tests
-
+	/dice
+		LancerTest.cpp
+	/figure
+		/figures
+			BrelanTest.cpp
+			CarreTest.cpp
+			ChanceTest.cpp
+			FullTest.cpp
+			GrandeSuiteTest.cpp
+			NumberTest.cpp
+			PetiteSuiteTest.cpp
+			YahtzeeTest.cpp
+	/player
+		/IA
+			IATest.cpp
+		JoueurTest.cpp
+	EntryPOintTests.cpp
