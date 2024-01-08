@@ -154,7 +154,8 @@ void YahtzeeGame::nouvellePartie() {
 /**
  * @brief Saves the current game state to a file.
  */
-void YahtzeeGame::sauvegarderPartie() {
+void YahtzeeGame::sauvegarderPartie() const
+{
     serialize();
 }
 
@@ -263,7 +264,8 @@ const char* YahtzeeGame::getDifficultyName(DifficultyLevel level) {
  * @brief Displays the scores of all players at the end of the game.
  *        Asks the user if they want to display the scorecards of each player.
  */
-void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() {
+void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() const
+{
     std::cout << "\n|------------------Fin du Jeu-----------------|\n";
     std::cout << "|                                             |\n";
     std::cout << "|------Voici les scores de chaque joueur------|\n";
@@ -513,7 +515,7 @@ void YahtzeeGame::deserialize(bool* isDeserializeOk) {
         variante = static_cast<DifficultyLevel>(std::stoi(ligne.substr(ligne.find(":") + 1)));
 
         getline(fichier, ligne);
-        int nombreJoueurs = std::stoi(ligne.substr(ligne.find(":") + 1));
+        const int nombreJoueurs = std::stoi(ligne.substr(ligne.find(":") + 1));
 
         joueurs.clear();
         for (int i = 0; i < nombreJoueurs; i++) {

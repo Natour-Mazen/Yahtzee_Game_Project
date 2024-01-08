@@ -32,7 +32,7 @@ void Joueur::handleYahtzeeBonus() {
     if (m_firstYahtzee)
     {
         for (auto it = m_figures.begin(); it != m_figures.end(); ++it) {
-            Figure* figure = it->get();
+	        const Figure* figure = it->get();
             if (figure->getId() == YAHTZEEBONUS_ID) {
                 if (!m_yahtzeeBonus && figure->getScore() > 0) {
                     std::cout << "   <<=>> Yahtzee encore ! +100 points <<=>>   " << std::endl;
@@ -54,8 +54,8 @@ void Joueur::handleYahtzeeBonus() {
 *   @return : true if the figure is in the used figures else false.
 */
 bool Joueur::isFigureUsed(Figure* figure) const {
-    auto is_figure = [figure](const std::shared_ptr<Figure> usedFigure) {
-        return figure->getId() == usedFigure.get()->getId();
+    auto is_figure = [figure](const std::shared_ptr<Figure>& usedFigure) {
+        return figure->getId() == usedFigure->getId();
         };
 
     return std::find_if(m_figuresUsed.begin(), m_figuresUsed.end(), is_figure) != std::end(m_figuresUsed);
@@ -249,7 +249,6 @@ void Joueur::updateScores(int scoreForFigure, std::shared_ptr<Figure> selectedFi
  */
 void Joueur::chooseFigureHelper(const int& maxFigures) {
     int choice;
-    bool isNumber;
 
     displayFigureAndScores();
 
@@ -265,7 +264,7 @@ void Joueur::chooseFigureHelper(const int& maxFigures) {
         std::cin >> choice;
 
         // Check if the previous input to the stream was an integer
-        isNumber = std::cin.good();
+        bool isNumber = std::cin.good();
 
         if (!isNumber) {
             std::cout << "   /!\\ Erreur : Veuillez entrer un chiffre  /!\\ \n";
@@ -334,7 +333,7 @@ int Joueur::getTotalScore() const
  * @return True if the figures are empty, false otherwise.
  */
 bool Joueur::isFiguresEmpty() const {
-    return m_figures.size() == 0;
+    return m_figures.empty();
 }
 
 /**
@@ -363,7 +362,7 @@ void Joueur::serialize(std::ostream& out) const {
     out << "m_totalScore: " << m_totalScore << "\n";
  
     out << "m_figuresUsed size: " << m_figuresUsed.size() << "\n";
-    for (const auto& figure : m_figuresUsed) {
+    for (const std::shared_ptr<Figure>& figure : m_figuresUsed) {
         figure->serialize(out);
     }
 }
@@ -388,13 +387,13 @@ void Joueur::deserialize(std::istream& in) {
     m_totalScore = std::stoi(ligne.substr(ligne.find(":") + 1));
 
     getline(in, ligne);
-    int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));
+    const int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));
 
     m_figuresUsed.clear();
 
     for (int i = 0; i < tailleFiguresUtilisees; i++) {
         getline(in, ligne);
-        int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
+        const int figureId = std::stoi(ligne.substr(ligne.find(":") + 1));
 
         std::shared_ptr<Figure> figure = createFigures(figureId);
         figure->deserializeScore(in);

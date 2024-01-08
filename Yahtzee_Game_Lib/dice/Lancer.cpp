@@ -25,7 +25,8 @@ void Lancer::rollDices() {
 
 /** Display the 5 dices in the console.
 **/
-void Lancer::printDices() {
+void Lancer::printDices() const
+{
     std::cout << "   <<=>> Valeurs des Des : ";
     for (int value : m_diceValues) {
         std::cout << value << " ";

@@ -20,7 +20,7 @@ void IA::chooseFigure() {
         if (isFigureUsed(figure.get())) continue;
 
         // Calculate the expected score for this figure
-        int expectedScore = figure->getScore();
+        const int expectedScore = figure->getScore();
 
         // If the expected score is higher than the current maximum score, update the maximum score and the best figure choice
         if (expectedScore >= maxExpectedScore) {
@@ -31,7 +31,7 @@ void IA::chooseFigure() {
 
     // Update the scores and add the best figure to the list of used figures
     if (bestFigure != nullptr) {
-        int score = bestFigure->getScore();
+	    const int score = bestFigure->getScore();
 
         if (bestFigure.get()->getId() == YAHTZEEFIRST_ID && score > 0) {
             m_firstYahtzee = true;

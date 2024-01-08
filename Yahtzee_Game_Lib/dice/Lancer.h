@@ -10,7 +10,7 @@ class Lancer {
 public:
     const std::vector<int>& getDiceValues() const;
     void rollDices();
-    void printDices();
+    void printDices() const;
     void reRollDices();
 
 private:

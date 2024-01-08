@@ -16,7 +16,7 @@ public:
     ~YahtzeeGame();
 
     void playGame();
-    void sauvegarderPartie();
+    void sauvegarderPartie() const;
     void reprendrePartie();
 
 private:
@@ -25,15 +25,15 @@ private:
     Lancer lancer;
 
     void afficherMenuDifficulte();
-    const char* getDifficultyName(DifficultyLevel level);
+    static const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
 
     void nouvellePartie();
     void nouvellePartieIaVsHumain();
     void playHelper();
-  
- 
-    void afficherMenuPrincipal();
+
+
+    static void afficherMenuPrincipal();
     int saisirChoix(int min, int max);
 
     void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick, const bool& isDifficileMode);
@@ -54,7 +54,7 @@ private:
     void jouerTourIAvsHumain(Joueur* player, bool isIA);
     void jouerIAvsHumain();
     
-    void afficherScoresEtFuilleMarqueTousJoueurs();
+    void afficherScoresEtFuilleMarqueTousJoueurs() const;
 
     void serialize() const;
     void deserialize(bool* isDeserializeOk);
