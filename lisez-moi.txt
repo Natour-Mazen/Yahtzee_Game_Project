@@ -1,4 +1,5 @@
 By AL NATOUR Mazen and HERVOUET Leo
+M1 CL 2024
 
 
 ====== GOAL OF THE PROJET ======
@@ -90,3 +91,22 @@ It's the best solution that we found, this is useful for example to differentiat
 In our code we have one ID for the first Yahtzee that we can have (ex: Yahtzee<1>) and for the bonus Yahtzee, 
 we have a different ID (ex: Yahtzee<2>) to know which is which.
 With that ID we spot the difference between the first Yahtzee and the bonus one with the "same" class.
+
+
+====== EXTENSIONS ======
+
+The project was about recreating the Yahtzee game but we had the possibility to add-ons.
+So it's what we did, we added : 
+
+- 4 difficulties : 
+	- easy : you can choose all the figures in the order that you want.
+	- normal : the game is split in two part, one with the minor part and the second with the major part.
+		But you can still choose the figures that you want in the minor part and the major part.
+	- difficult : you can choose just one figure in the order of the minor part and after the major part.
+	- hardcore : its the same as difficult but the figures are in a randomized order.
+
+- A system of saves : when you finished a round (turn), the game is saved in a file.
+	If you quit the game, then you can reload it in the menu and you will get back to the last save.
+
+- IA : in the menu you can choose to face a IA, its a basic one, that just take the figure with the best points
+	but it work well. In this game mode, the game is not saved and it's just 1 player VS IA.
