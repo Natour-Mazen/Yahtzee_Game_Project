@@ -11,7 +11,7 @@ This project was made with Visual Studio 2022.
 
 
 >>> Video of the project : https://youtu.be/pS5cwXoAqGw <<<
-	Start of a game with the reload of that game, Full game with max points and full game vs an ia. 
+	Start of a game with the reload of that game, Full game with max points and full game vs an AI. 
 
 ====== RUN ======
 
@@ -108,5 +108,5 @@ So it's what we did, we added :
 - A system of saves : when you finished a round (turn), the game is saved in a file.
 	If you quit the game, then you can reload it in the menu and you will get back to the last save.
 
-- IA : in the menu you can choose to face a IA, its a basic one, that just take the figure with the best points
-	but it work well. In this game mode, the game is not saved and it's just 1 player VS IA.
+- AI : in the menu you can choose to face a AI, its a basic one, that just take the figure with the best points
+	but it work well. In this game mode, the game is not saved and it's just 1 player VS AI.
