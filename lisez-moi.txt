@@ -10,7 +10,7 @@ This project was made with Visual Studio 2022.
 
 
 >>> Video of the project : https://youtu.be/pS5cwXoAqGw <<<
-
+	Start of a game with the reload of that game, Full game with max points and full game vs an ia. 
 
 ====== RUN ======
 
@@ -76,4 +76,17 @@ Project where we have all the tests to test our Game.
 		/IA
 			IATest.cpp
 		JoueurTest.cpp
-	EntryPOintTests.cpp
+	EntryPointTests.cpp
+
+
+====== SOFTWARE DESIGN ======
+
+We needed to add a template if a figure had one or more values that changed, like a Brelan for example.
+A Brelan can be of 1, 2, 3, ..., 6.
+
+So for the template we decided to give to all the figures an ID given by a template (template<short ID>).
+It's the best solution that we found, this is useful for example to differentiate two figures or for the Yahtzee figures.
+
+In our code we have one ID for the first Yahtzee that we can have (ex: Yahtzee<1>) and for the bonus Yahtzee, 
+we have a different ID (ex: Yahtzee<2>) to know which is which.
+With that ID we spot the difference between the first Yahtzee and the bonus one with the "same" class.
