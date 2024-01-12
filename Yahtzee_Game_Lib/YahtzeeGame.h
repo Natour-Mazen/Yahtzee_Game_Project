@@ -36,7 +36,7 @@ private:
     static void afficherMenuPrincipal();
     int saisirChoix(int min, int max);
 
-    void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick, const bool& isDifficileMode);
+    void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0, const bool& isDifficileMode = false);
    
     void jouerFacile();
     void jouerTourFacile(int num_player);

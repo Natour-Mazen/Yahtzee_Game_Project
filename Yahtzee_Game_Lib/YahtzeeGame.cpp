@@ -314,7 +314,7 @@ void YahtzeeGame::afficherScoresEtFuilleMarqueTousJoueurs() const
  * @param NombreMaxOfFigureTopick The maximum number of figures the player can choose (for difficult mode).
  * @param isDifficileMode Indicates if the game is in difficult mode.
  */
-void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0,const bool& isDifficileMode = false) {
+void YahtzeeGame::jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick ,const bool& isDifficileMode ) {
     Joueur* player = joueurs[num_player].get();
     (player->*createFiguresFunc)();
     if (!player->isFiguresEmpty())

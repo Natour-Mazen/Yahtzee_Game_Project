@@ -17,9 +17,12 @@ public:
         m_score = justCalculateScore(diceValues);
     }
 
-    /** Give the description of the Brelan.
-    *   @return : the string of the description.
-    **/
+    /**
+	 * Provides the name of the figure.
+	 * The choice to define this function instead of overloading the << operator
+	 * is optimal for us as it enhances the readability of our code.
+	 * @return : the string of the name.
+	 **/
     virtual std::string getName() const = 0;
 
     /** Give the Id of this class.
