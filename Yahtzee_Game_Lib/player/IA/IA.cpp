@@ -1,7 +1,21 @@
-#include "IA.h"
+﻿#include "IA.h"
 #include "../enums/figureId.h"
 
 IA::IA() : Joueur() {}
+
+
+/*
+ *This code is a member function of the IA class that makes a strategic choice for a figure based on the current values ​​of the dice. Here's how it works:
+ 
+ * Displaying available Figures and scores: The function starts by displaying the available Figures and their scores.
+ 
+ * Finding the best figure: Next, it initializes two variables, maxExpectedScore and bestFigure, to track the maximum expected score and the best figure choice. It goes through all the available
+	figures and, for each figure that has not yet been used, it calculates the expected score. If the expected score is higher than the current maximum score, it updates the maximum score and the best figure choice.
+
+ * Updating scores and adding the best figure to the list of used figures: Finally, if a better figure has been found, it updates the scores and adds the best figure to the list of used figures.
+    If the best trick ID is equal to YAHTZEEFIRST_ID and the score is greater than 0, it updates the m_firstYahtzee variable to true.
+
+ */
 
 /**
  * @brief Makes a strategic choice for a figure based on the current dice values.
@@ -40,5 +54,6 @@ void IA::chooseFigure() {
         m_figuresUsed.push_back(bestFigure);
     }
 }
+
 
 
