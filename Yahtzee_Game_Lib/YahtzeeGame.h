@@ -7,7 +7,10 @@
 #include <algorithm>
 #include <iomanip>
 #include <thread>  // pour std::this_thread::sleep_for
-#include <chrono> 
+#include <chrono>
+#include <../../RapidXML-master/RapidXML/rapidxml_print.hpp>
+#include <../../RapidXML-master/RapidXML/rapidxml.hpp>
+#include <../../RapidXML-master/RapidXML/rapidxml_utils.hpp>
 
 class YahtzeeGame {
 public:
@@ -31,9 +34,11 @@ private:
     void nouvellePartie();
     void nouvellePartieIaVsHumain();
     void playHelper();
+    void ajoutJoueurClassement() const;
 
 
-    static void afficherMenuPrincipal();
+    void afficherMenuPrincipal();
+    void afficherClassement();
     int saisirChoix(int min, int max);
 
     void jouerTour(int num_player, void (Joueur::* createFiguresFunc)(), const int& NombreMaxOfFigureTopick = 0, const bool& isDifficileMode = false);

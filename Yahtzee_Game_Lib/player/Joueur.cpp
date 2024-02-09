@@ -1,4 +1,4 @@
-#include "Joueur.h"
+    #include "Joueur.h"
 #include <algorithm>
 #include <iomanip>
 #include "../enums/figureId.h"
@@ -6,8 +6,9 @@
 
 /** Create a player with a total and minor score of 0 and a game grid empty.
 **/
-Joueur::Joueur() : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false), aleardyHardFigureCreated(false){
-    // Already init.
+Joueur::Joueur(int number) : m_totalScore(0), m_yahtzeeBonus(false), m_minorScore(0), m_firstYahtzee(false), aleardyHardFigureCreated(false){
+    std::cout << ">> Entrez votre Nom joueur numero " << number+1 << " : " ;
+    std::cin >> m_name;
 }
 
 /** Destructor for a player, destroy all the vectors with allocated figures.
@@ -336,6 +337,11 @@ bool Joueur::isFiguresEmpty() const {
     return m_figures.empty();
 }
 
+const std::string& Joueur::getJoueurName() const
+{
+    return m_name;
+}
+
 /**
  * @brief Calculates the score for each figure based on the given dice values.
  *
@@ -360,6 +366,7 @@ void Joueur::serialize(std::ostream& out) const {
     out << "m_yahtzeeBonus: " << m_yahtzeeBonus << "\n";
     out << "m_minorScore: " << m_minorScore << "\n";
     out << "m_totalScore: " << m_totalScore << "\n";
+    out << "m_name: " << m_name << "\n";
  
     out << "m_figuresUsed size: " << m_figuresUsed.size() << "\n";
     for (const std::shared_ptr<Figure>& figure : m_figuresUsed) {
@@ -385,6 +392,9 @@ void Joueur::deserialize(std::istream& in) {
 
     getline(in, ligne);
     m_totalScore = std::stoi(ligne.substr(ligne.find(":") + 1));
+
+    getline(in, ligne);
+    m_name = std::stoi(ligne.substr(ligne.find(":") + 1));
 
     getline(in, ligne);
     const int tailleFiguresUtilisees = std::stoi(ligne.substr(ligne.find(":") + 1));

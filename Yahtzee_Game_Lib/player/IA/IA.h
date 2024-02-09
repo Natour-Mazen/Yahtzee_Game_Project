@@ -6,6 +6,9 @@ class IA : public Joueur {
 public:
     IA();
     void chooseFigure();
+    double calculateExpectedValue(std::shared_ptr<Figure>& figure);
+    double estimatePotentialScore(std::shared_ptr<Figure>& figure, int round);
+    int remainingRounds();
 };
 
 

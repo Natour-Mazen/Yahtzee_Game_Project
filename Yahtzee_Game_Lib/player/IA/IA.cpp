@@ -1,7 +1,7 @@
 ﻿#include "IA.h"
 #include "../enums/figureId.h"
 
-IA::IA() : Joueur() {}
+IA::IA() : Joueur(1) {}
 
 
 /*
@@ -33,6 +33,9 @@ void IA::chooseFigure() {
         // Check if the figure has already been used
         if (isFigureUsed(figure.get())) continue;
 
+        // Calculate the expected value for this figure
+        //const double expectedValue = calculateExpectedValue(figure);
+
         // Calculate the expected score for this figure
         const int expectedScore = figure->getScore();
 
@@ -53,6 +56,31 @@ void IA::chooseFigure() {
         updateScores(score, bestFigure);
         m_figuresUsed.push_back(bestFigure);
     }
+}
+
+double IA::calculateExpectedValue(std::shared_ptr<Figure>& figure) {
+    // Calculate the current score of the figure
+    double expectedValue = figure->getScore();
+
+    // Estimate the potential score in future rounds
+    // This is a simplified example and the actual calculation would depend on the rules of Yahtzee
+    for (int round = 0; round < remainingRounds(); ++round) {
+        expectedValue += estimatePotentialScore(figure, round);
+    }
+
+    return expectedValue;
+}
+
+double IA::estimatePotentialScore(std::shared_ptr<Figure>& figure, int round) {
+    // Estimate the potential score of the figure in a future round
+    // This is a placeholder implementation and the actual calculation would depend on the rules of Yahtzee
+    return figure->getScore() / (round + 1);
+}
+
+int IA::remainingRounds() {
+    // Calculate the remaining rounds
+    // This is a placeholder implementation and the actual calculation would depend on the rules of Yahtzee
+    return 13 - m_figuresUsed.size();
 }
 
 

@@ -1,0 +1,12 @@
+<classement>
+	<variante nom="Facile">
+		<joueur>
+			<nom>mazen</nom>
+			<score>79</score>
+		</joueur>
+	</variante>
+	<variante nom="Moyen"/>
+	<variante nom="Difficile"/>
+	<variante nom="Hardcore"/>
+</classement>
+

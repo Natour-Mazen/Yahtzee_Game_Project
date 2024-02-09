@@ -1,6 +1,7 @@
 ﻿#include "YahtzeeGame.h"
 #include "player/IA/IA.h"
 
+
 /**
  * @brief Constructor for the YahtzeeGame class.
  * Initializes the random seed based on the current time.
@@ -60,8 +61,55 @@ void YahtzeeGame::afficherMenuPrincipal() {
     std::cout << VERTICAL_LINE << " 1. Nouvelle partie                            " << VERTICAL_LINE << "\n";
     std::cout << VERTICAL_LINE << " 2. Charger partie                             " << VERTICAL_LINE << "\n";
     std::cout << VERTICAL_LINE << " 3. IA vs Humain                               " << VERTICAL_LINE << "\n";
-    std::cout << VERTICAL_LINE << " 4. Quitter                                    " << VERTICAL_LINE << "\n";
+    std::cout << VERTICAL_LINE << " 4. Classement                                 " << VERTICAL_LINE << "\n";
+    std::cout << VERTICAL_LINE << " 5. Quitter                                    " << VERTICAL_LINE << "\n";
     std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
+}
+
+
+/**
+ * @brief Displays the ranking stats of the Yahtzee game.
+ */
+void YahtzeeGame::afficherClassement()
+{
+    const unsigned char T_UP = 185;
+    const unsigned char VERTICAL_LINE = 186;
+    const unsigned char UPPER_RIGHT_CORNER = 187;
+    const unsigned char LOWER_RIGHT_CORNER = 188;
+    const unsigned char LOWER_LEFT_CORNER = 200;
+    const unsigned char UPPER_LEFT_CORNER = 201;
+    const unsigned char T_DOWN = 204;
+    const unsigned char HORIZONTAL_LINE = 205;
+
+
+    std::cout <<  "\n\n\n";
+
+    std::cout << UPPER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << UPPER_RIGHT_CORNER << "\n";
+    std::cout << VERTICAL_LINE << " Classement :                                  " << VERTICAL_LINE << "\n";
+    std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
+    std::cout << UPPER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << UPPER_RIGHT_CORNER << "\n";
+    rapidxml::file<> xmlFile("classement.xml");
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(xmlFile.data());
+
+    // Accéder aux données du document XML
+    rapidxml::xml_node<>* root = doc.first_node("classement");
+
+    // Parcourir les variantes
+    for (rapidxml::xml_node<>* varianteNode = root->first_node("variante"); varianteNode; varianteNode = varianteNode->next_sibling()) {
+        std::string varianteNom = varianteNode->first_attribute("nom")->value();
+        std::cout << VERTICAL_LINE << " Difficulte : " << std::setw(14) << std::left << varianteNom << "                   " << VERTICAL_LINE << std::endl;
+
+        // Parcourir les joueurs dans chaque variante
+        for (rapidxml::xml_node<>* joueurNode = varianteNode->first_node("joueur"); joueurNode; joueurNode = joueurNode->next_sibling()) {
+            std::string nom = joueurNode->first_node("nom")->value();
+            std::string score = joueurNode->first_node("score")->value();
+
+            std::cout << VERTICAL_LINE << "    Joueur : " << std::setw(13) << std::left << nom << " -> Score : " << std::setw(3) << std::right << score << "      " << VERTICAL_LINE << std::endl;
+        }
+    }
+
+    std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n\n\n\n";
 }
 
 /*============================================================*/
@@ -74,7 +122,7 @@ void YahtzeeGame::playGame() {
     do {
         joueurs.clear();
         afficherMenuPrincipal();
-        choix = saisirChoix(1, 4);
+        choix = saisirChoix(1, 5);
 
         switch (choix) {
         case 1:
@@ -87,13 +135,16 @@ void YahtzeeGame::playGame() {
             nouvellePartieIaVsHumain();
             break;      
         case 4:
+            afficherClassement();
+            break;
+        case 5:
             std::cout << "  <<=>> Au revoir ! <<=>>   " << std::endl;
             break;
         default:
             std::cout << "Choix invalide. Veuillez choisir a nouveau." << std::endl;
             break;
         }
-    } while (choix != 4);
+    } while (choix != 5);
 }
 
 /**
@@ -118,6 +169,55 @@ void YahtzeeGame::playHelper() {
         throw std::exception("erreur de variante");
         break;
     }
+    ajoutJoueurClassement();
+}
+
+/**
+ * @brief Adds a player to the leaderboard.
+ *
+ * This function reads the leaderboard XML file, finds the corresponding game variant,
+ * then adds each player and their score to this variant in the XML file.
+ * If the player's name is longer than 10 characters, it is truncated and an ellipsis is added.
+ * Finally, the XML file is rewritten with the new information.
+ */
+void YahtzeeGame::ajoutJoueurClassement() const
+{
+    rapidxml::file<> xmlFile("classement.xml");
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(xmlFile.data());
+
+    rapidxml::xml_node<>* root = doc.first_node("classement");
+    rapidxml::xml_node<>* varianteNode = root->first_node("variante");
+
+    while (varianteNode) {
+        std::string varianteNom = varianteNode->first_attribute("nom")->value();
+        if (varianteNom == getDifficultyName(variante)) {
+            break;
+        }
+        varianteNode = varianteNode->next_sibling("variante");
+    }
+
+    if (varianteNode) {
+        for (auto& joueur : joueurs) {
+            rapidxml::xml_node<>* joueurNode = doc.allocate_node(rapidxml::node_type::node_element, "joueur");
+
+            std::string nom = joueur.get()->getJoueurName();
+            int score = joueur.get()->getTotalScore();
+            std::string nomTronque = (nom.length() > 10) ? nom.substr(0, 10) + "..." : nom;
+
+            rapidxml::xml_node<>* nomNode = doc.allocate_node(rapidxml::node_type::node_element, "nom", doc.allocate_string(nomTronque.c_str()));
+            rapidxml::xml_node<>* scoreNode = doc.allocate_node(rapidxml::node_type::node_element, "score", doc.allocate_string(std::to_string(score).c_str()));
+
+            joueurNode->append_node(nomNode);
+            joueurNode->append_node(scoreNode);
+
+            varianteNode->append_node(joueurNode);
+        }
+    }
+    std::ofstream fichierSortie("classement.xml");
+    fichierSortie << doc;
+    fichierSortie.close();
+    doc.clear();
 }
 
 /**
@@ -142,9 +242,12 @@ void YahtzeeGame::nouvellePartie() {
         }
     } while (numberOfPlayers <= 0 || numberOfPlayers > 8);
 
+    std::cout << std::endl;
+
     for (int i = 0; i < numberOfPlayers; ++i) {
-        std::shared_ptr<Joueur> player = std::make_shared<Joueur>();
+        std::shared_ptr<Joueur> player = std::make_shared<Joueur>(i);
         joueurs.push_back(player);
+       
     }
     std::cout << std::endl;
     choisirDifficulte();
@@ -182,7 +285,7 @@ void YahtzeeGame::nouvellePartieIaVsHumain() {
     std::cout << "                                   <<=>> La diffculte est Facile <<=>>         \n" << std::endl;
 
     // Créer un joueur humain
-    std::shared_ptr<Joueur> joueurHumain = std::make_shared<Joueur>();
+    std::shared_ptr<Joueur> joueurHumain = std::make_shared<Joueur>(1);
     joueurs.push_back(joueurHumain);
 
     // Créer une IA
@@ -520,7 +623,7 @@ void YahtzeeGame::deserialize(bool* isDeserializeOk) {
         joueurs.clear();
         for (int i = 0; i < nombreJoueurs; i++) {
             getline(fichier, ligne);  // Lire "Joueur numero X"
-            auto joueur = std::make_shared<Joueur>();
+            auto joueur = std::make_shared<Joueur>(i);
             joueur->deserialize(fichier);
             joueurs.push_back(joueur);
         }

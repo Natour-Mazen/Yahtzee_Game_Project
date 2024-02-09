@@ -15,7 +15,7 @@
 
 class Joueur {
 public:
-    Joueur();
+    Joueur(int number);
     virtual ~Joueur();
 
     virtual void createAllFigures();
@@ -35,6 +35,8 @@ public:
     int getTotalScore() const;
     bool isFiguresEmpty() const;
 
+    const std::string& getJoueurName() const;
+
     void calculateFiguresScore(const std::vector<int>& diceValues) const;
 
 
@@ -49,6 +51,7 @@ protected:
     bool m_yahtzeeBonus;
     int m_minorScore;
     int m_totalScore;
+    std::string m_name;
 
 
     bool aleardyHardFigureCreated;
