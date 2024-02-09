@@ -31,6 +31,9 @@ private:
     static const char* getDifficultyName(DifficultyLevel level);
     void choisirDifficulte();
 
+
+    void creerFichierClassementSiAbsent() const;
+
     void nouvellePartie();
     void nouvellePartieIaVsHumain();
     void playHelper();

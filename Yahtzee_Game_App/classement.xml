@@ -4,6 +4,10 @@
 			<nom>mazen</nom>
 			<score>79</score>
 		</joueur>
+		<joueur>
+			<nom>mazen2</nom>
+			<score>32</score>
+		</joueur>
 	</variante>
 	<variante nom="Moyen"/>
 	<variante nom="Difficile"/>

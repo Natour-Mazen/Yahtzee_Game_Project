@@ -88,6 +88,7 @@ void YahtzeeGame::afficherClassement()
     std::cout << VERTICAL_LINE << " Classement :                                  " << VERTICAL_LINE << "\n";
     std::cout << LOWER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << LOWER_RIGHT_CORNER << "\n";
     std::cout << UPPER_LEFT_CORNER << std::string(47, HORIZONTAL_LINE) << UPPER_RIGHT_CORNER << "\n";
+    creerFichierClassementSiAbsent();
     rapidxml::file<> xmlFile("classement.xml");
     rapidxml::xml_document<> doc;
     doc.parse<0>(xmlFile.data());
@@ -182,6 +183,7 @@ void YahtzeeGame::playHelper() {
  */
 void YahtzeeGame::ajoutJoueurClassement() const
 {
+    creerFichierClassementSiAbsent();
     rapidxml::file<> xmlFile("classement.xml");
     rapidxml::xml_document<> doc;
     doc.parse<0>(xmlFile.data());
@@ -212,6 +214,31 @@ void YahtzeeGame::ajoutJoueurClassement() const
             joueurNode->append_node(scoreNode);
 
             varianteNode->append_node(joueurNode);
+        }
+        std::vector<std::pair<std::string, int>> v_joueurs;
+        for (rapidxml::xml_node<>* joueurNode = varianteNode->first_node("joueur"); joueurNode; joueurNode = joueurNode->next_sibling()) {
+            std::pair<std::string, int> pair;
+            pair.first = joueurNode->first_node("nom")->value();
+            pair.second = std::stoi(joueurNode->first_node("score")->value());
+            v_joueurs.push_back(pair);
+        }
+
+        std::sort(v_joueurs.begin(), v_joueurs.end(), [](const auto& a, const auto& b) {
+            return a.second > b.second;
+        });
+
+        varianteNode->remove_all_nodes();
+
+        for (const auto& joueur : v_joueurs) {
+            rapidxml::xml_node<>* nouveauJoueurNode = doc.allocate_node(rapidxml::node_type::node_element, "joueur");
+
+            rapidxml::xml_node<>* nouveauNomNode = doc.allocate_node(rapidxml::node_type::node_element, "nom", doc.allocate_string(joueur.first.c_str()));
+            rapidxml::xml_node<>* nouveauScoreNode = doc.allocate_node(rapidxml::node_type::node_element, "score", doc.allocate_string(std::to_string(joueur.second).c_str()));
+
+            nouveauJoueurNode->append_node(nouveauNomNode);
+            nouveauJoueurNode->append_node(nouveauScoreNode);
+
+            varianteNode->append_node(nouveauJoueurNode);
         }
     }
     std::ofstream fichierSortie("classement.xml");
@@ -273,6 +300,22 @@ void YahtzeeGame::reprendrePartie() {
         std::cout << "\t   <> " << joueurs.size() << " joueur(s)    " << std::endl;
         std::cout << "\t   <> la difficulte " << getDifficultyName(variante) << std::endl;
         playHelper();
+    }
+}
+
+void YahtzeeGame::creerFichierClassementSiAbsent() const
+{
+    std::ifstream fichier("classement.xml");
+    if (!fichier.good()) {
+        std::ofstream fichierSortie("classement.xml");
+        fichierSortie << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        fichierSortie << "<classement>\n";
+        fichierSortie << "        <variante nom=\"Facile\"/>\n";
+        fichierSortie << "        <variante nom=\"Normal\"/>\n";
+        fichierSortie << "        <variante nom=\"Difficile\"/>\n";
+        fichierSortie << "        <variante nom=\"Hardcore\"/>\n";
+        fichierSortie << "</classement>\n";
+        fichierSortie.close();
     }
 }
 
