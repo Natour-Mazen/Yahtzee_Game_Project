@@ -247,6 +247,7 @@ void YahtzeeGame::ajoutJoueurClassement() const
     doc.clear();
 }
 
+
 /**
  * @brief Initiates a new game by prompting the user for the number of players and difficulty level.
  */
